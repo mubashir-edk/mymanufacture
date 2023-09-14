@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>My App</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+
+    <!-- Bootstrapcdn -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/css/bootstrap-grid.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/keenweb.css' %}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+
+</head>
+<body>
+    <input type="checkbox" id="check" class="d-none">
+    <!-- NAVBAR -->
+        
+        <div class="main-nav">
+
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                        <li class="nav-item active-link m-1 nav-content">        
+                            <a class="nav-link active" aria-current="page" href="#">Dashboards</a>
+                        </li>
+
+                        <li class="nav-item m-1 nav-content">
+
+                            <div class="dropdown">
+
+                                <a class="nav-link hover-dropdown-toggle" href="#" id="dropdownMenu" aria-expanded="false">Pages</a>
+
+                                <div class="dropdown-menu" id="pages-dropdown" aria-labelledby="dropdownMenu">
+
+                                    <div class="pages-header">
+                                        <ul class="d-flex" style="list-style-type: none;">
+                                            <li><a href="#" style="text-decoration:none; color: lightslategray;">General</a></li>
+                                            <li><a href="#" style="text-decoration:none; color: lightslategray;">Account</a></li>
+                                            <li><a href="#" style="text-decoration:none; color: lightslategray;">Authentication</a></li>
+                                            <li><a href="#" style="text-decoration:none; color: lightslategray;">Utilities</a></li>
+                                        </ul>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="d-flex justify-content-between pb-4 pages-category">
+
+                                        <div class="ps-5 pe-3">
+                                            
+                                            <span class="ps-1">User Profile</span>
+
+                                            <ul class="p-0" style="list-style-type: none;">
+                                                <li><a href="#" style="text-decoration:none;">Overview</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Projects</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Campaigns</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Documents</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Followers</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Activity</a></li>
+                                            </ul>
+
+                                        </div>
+
+                                        <div class="ps-3 pe-3">
+
+                                            <span class="ps-1">Corporate</span>
+
+                                            <ul class="p-0" style="list-style-type: none;">
+                                                <li><a href="#" style="text-decoration:none;">About</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Our Team</a></li>
+                                                <li><a href="#" style="text-decoration:none;">FAQ</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Contact Us</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Pricing</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Licenses</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Sitemap</a></li>
+                                            </ul>
+
+                                        </div>
+
+                                        <div class="ps-3 pe-3">
+
+                                            <div>
+                                                <span class="ps-1">Blog</span>
+
+                                                <ul class="p-0" style="list-style-type: none;">
+                                                    <li><a href="#" style="text-decoration:none;">Blog Home</a></li>
+                                                    <li><a href="#" style="text-decoration:none;">Blog Post</a></li>
+                                                </ul>
+
+                                            </div>
+
+                                            <div class="mt-4">
+                                                <span class="ps-1">Careers</span>
+
+                                                <ul class="p-0" style="list-style-type: none;">
+                                                    <li><a href="#" style="text-decoration:none;">Careers List</a></li>
+                                                    <li><a href="#" style="text-decoration:none;">Careers Apply</a></li>
+                                                </ul>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="ps-3 pe-3">
+
+                                            <span class="ps-1">Social</span>
+
+                                            <ul class="p-0" style="list-style-type: none;">
+                                                <li><a href="#" style="text-decoration:none;">Feeds</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Activity</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Followers</a></li>
+                                                <li><a href="#" style="text-decoration:none;">Settings</a></li>
+                                            </ul>
+
+                                        </div>
+
+                                        <div class="ps-3 pe-3 d-flex flex-column justify-content-center">
+
+                                            <img src="{% static 'image/bg-person.jpg' %}" style="width: 250px; height: 250px;" alt="">
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </li>
+                        <li class="nav-item m-1 nav-content">
+                            <a class="nav-link" href="#">Apps</a>
+                        </li>
+                        <li class="nav-item m-1 nav-content">
+                            <a class="nav-link" href="#">Layouts</a>
+                        </li>
+                        <li class="nav-item m-1 nav-content">
+                            <a class="nav-link" href="#">Help</a>
+                        </li>
+                        </ul>
+                    </div>
+                    <div class="d-flex align-items-center">
+
+                        <i class="bi bi-search me-3 ms-3"></i>
+                        <i class="bi bi-bell me-3 ms-3"></i>
+                        <i class="bi bi-app-indicator me-3 ms-3"></i>
+                        <i class="bi bi-chat-square-text-fill me-3 ms-3"></i>
+                        <i class="me-3 ms-3"><img src="{% static 'image/bg-person.jpg' %}" style="width: 20px;height: 20px; border-radius: 6px;"></i>
+                        <i class="bi bi-circle-half me-3 ms-3"></i>
+                        <i class="me-3 ms-3"><img src="{% static 'image/bg-person.jpg' %}" style="width: 35px;height: 35px; border-radius: 6px;"></i>
+
+                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+
+
+                    </div>
+                </div>
+            </nav>
+
+        </div>
+
+        <div class="side-nav collapse navbar-collapse align-items-stretch d-flex flex-column justify-content-between" id="sideNav">
+
+                    <div class="wrapper">
+
+                        <div class="position-sticky top-0 p-3 pb-0 align-items-center" style="background:#202B46;">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <img src="{% static 'image/bg-person.jpg' %}" class="navbrand" id="navbrandImg" alt="..." style="width: 100px; height:45px;">
+                                </div>
+                                <div>
+                                    
+                                    <label for="check">
+                                        <button id="checkButton" type="button" class="btn btn-primary newbtn">&lt;&lt;</button>
+                                    </label>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+
+                        
+
+                        <div class="side-nav-content ps-4 pe-4">
+
+                            <!-- DASHBOARD -->
+                            <div class="dropdown-sidenav">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownDashboard">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid m-0 p-0"></i>
+                                        <span class="ms-1 dashboard" id="sideNavContent">Dashboards</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownDashboard">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li class="active"><a href="#">Default</a></li>
+                                        <li><a href="#">Projects</a></li>
+                                        <li><a href="#">eCommerce</a></li>
+                                        <li><a href="#">Marketing</a></li>
+                                        <li><a href="#">Social</a></li>
+                                        <li><a href="#">Bidding</a></li>
+                                        <li><a href="#">Online Courses</a></li>
+                                        <li><a href="#">Logistics</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <p class="mt-4 mb-2 sidenav-subhead">PAGES</p>
+
+                            <!-- EMPLOYEE -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownUser">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Employees</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownUser">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="#">View Employees</a></li>
+                                        <li><a href="#">Add New Employee</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- CUSTOMER -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownAccount">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Customer</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownAccount">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="{% url 'view_customers' %}">View Customers</a></li>
+                                        <li><a href="{% url 'create_customer' %}">Add New Customer</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- QUOTATION -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownAuthentication">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Quotation</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownAuthentication">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="{% url 'create_quotation' %}">Create Quotation</a></li>
+                                        <li><a href="{% url 'view_quotations' %}">View Quotations</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- CORPORATE -->
+                            {% comment %} <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownCorporate">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Corporate</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownCorporate">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="#">About</a></li>
+                                        <li><a href="#">Our Team</a></li>
+                                        <li><a href="#">FAQ</a></li>
+                                        <li><a href="#">Contact Us</a></li>
+                                        <li><a href="#">Pricing</a></li>
+                                        <li><a href="#">Licenses</a></li>
+                                        <li><a href="#">Sitemap</a></li>
+                                    </ul>
+                                </div>
+                            </div> {% endcomment %}
+
+                            <!-- SOCIAL -->
+                            {% comment %} <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownSocial">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Social</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownSocial">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="#">Feeds</a></li>
+                                        <li><a href="#">Activity</a></li>
+                                        <li><a href="#">Followers</a></li>
+                                        <li><a href="#">Settings</a></li>
+                                    </ul>
+                                </div>
+                            </div> {% endcomment %}
+
+                            <!-- BLOG -->
+                            {% comment %} <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownBlog">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Blog</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownBlog">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="#">Blog Home</a></li>
+                                        <li><a href="#">Blog Post</a></li>
+                                    </ul>
+                                </div>
+                            </div> {% endcomment %}
+
+                            <!-- CAREERS -->
+                            {% comment %} <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownCareers">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Careers</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownCareers">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="#">Careers List</a></li>
+                                        <li><a href="#">Careers Apply</a></li>
+                                    </ul>
+                                </div>
+                            </div> {% endcomment %}
+
+                            <!-- UTILITIES -->
+                            {% comment %} <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownUtilities">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Utilities</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownUtilities">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="#">Modals</a></li>
+                                        <li><a href="#">Search</a></li>
+                                        <li><a href="#">Wizards</a></li>
+                                    </ul>
+                                </div>
+                            </div> {% endcomment %}
+
+                            <p class="mt-4 mb-2 sidenav-subhead">APPS</p>
+
+                            <!-- PROJECTS -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownProjects">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Projects</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownProjects">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="#">My Projects</a></li>
+                                        <li><a href="#">View Project</a></li>
+                                        <li><a href="#">Targets</a></li>
+                                        <li><a href="#">Budget</a></li>
+                                        <li><a href="#">Users</a></li>
+                                        <li><a href="#">Files</a></li>
+                                        <li><a href="#">Activity</a></li>
+                                        <li><a href="#">Settings</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- ECOMMERCE -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownEcommerce">
+                                    
+                                    <div>
+                                        <i id="icongrid" class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">eCommerce</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownEcommerce">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="#">Catalog</a></li>
+                                        <li><a href="#">Sales</a></li>
+                                        <li><a href="#">Customers</a></li>
+                                        <li><a href="#">Reports</a></li>
+                                        <li><a href="#">Settings</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <!-- INBOX -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownInbox">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Inbox</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownInbox">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li class="d-flex justify-content-between"><a href="#">Messages</a><span class="badge bg-success text-white">3</span></li>
+                                        <li><a href="#">Compose</a></li>
+                                        <li><a href="#">View &amp; Reply</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                            
+
+                        </div>
+
+                        {% comment %} <div class="side-footer d-flex justify-content-center p-3" id="sideNavFooter">
+                            <button type="button" class="btn btn-secondary" data-bs-toggle="hover" data-bs-placement="body">Docs &amp; Components</button>
+                        </div> {% endcomment %}
+
+                    </div>
+
+                    
+
+                </div>
+
+        </div>
+
+    <section>
+        
+        <div class="web-content m-3">
+            {% block content %}
+            {% endblock content %}
+        </div>
+
+        <!-- FOOTER -->
+        <div class="keen-footer bg-white">
+            <div class="d-flex justify-content-between p-4">
+                <div>
+                    <b class="text-muted">2023 &copy;</b>
+                    <span>&nbsp; Keenthemes</span>
+                </div>
+                <div>
+                    <a href="#" class="text-muted ps-2 pe-2" style="text-decoration: none;">About</a>
+                    <a href="#" class="text-muted ps-2 pe-2" style="text-decoration: none;">Support</a>
+                    <a href="#" class="text-muted ps-2" style="text-decoration: none;">Purchase</a>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <button type="button" id="" class="btn btn-danger scroll-top">&#8673</button>
+
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+
+    <!-- Bootstrapcdn -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+
+
+</body>
+</html>

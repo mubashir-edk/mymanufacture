@@ -1,0 +1,40 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="row ms-4 me-4 d-grid justify-content-center">
+        <div class="col mb-4">
+            <label for="formImage" class="form-label">Profile</label>
+            {{ form.profile_image }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formName" class="form-label">Name</label>
+            {{ form.name }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formAddress" class="form-label">Address</label>
+            {{ form.address }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formContact" class="form-label">Contact</label>
+            {{ form.contact }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formEmail" class="form-label">Email</label>
+            {{ form.email }}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <input type="submit" class="btn bg-primary text-white" id="customercreatebtn" value="Save">
+    </div>
+
+</form>
+
+{% endblock content %}

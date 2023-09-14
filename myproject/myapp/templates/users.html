@@ -1,0 +1,35 @@
+{% extends 'index.html' %}
+{% block content %}
+
+{% comment %} <span><a href="{% url 'create-user' %}">Sign Up</a></span> {% endcomment %}
+
+<div class="container">
+    <table class="table text-center table-bordered">
+        <thead>
+
+            <tr>
+                <th>Username</th>
+                <th>Contact</th>
+                <th>Email</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.mobile }}</td>
+                <td>{{ user.email }}</td>
+                <td><a href="{% url 'update-user' user.id %}" class="btn btn-warning">Edit</a></td>
+                <td><a href="{% url 'delete-user' user.id %}" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+
+    </table>
+</div>
+
+{% endblock content%}

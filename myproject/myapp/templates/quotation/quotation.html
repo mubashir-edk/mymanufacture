@@ -1,0 +1,122 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<form method="POST" action="" enctype="multipart/form-data">
+    {{quotation.id}}
+    {% csrf_token %}
+
+    {% if quotation_form.errors %}
+<div class="alert alert-danger">
+    {{ quotation_form.errors }}
+</div>
+{% endif %}
+
+{% if job_formset.errors %}
+<div class="alert alert-danger">
+    {{ job_formset.errors }}
+</div>
+{% endif %}
+    
+    <div class="row ms-4 me-4 d-flex justify-content-center">
+        <div class="col mb-4">
+            <label for="formCustomerName" class="form-label">Customer</label>
+            {{ quotation_form.customer_id }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formChalan" class="form-label">Chalan No.</label>
+            {{ quotation_form.chalan_no }}
+        </div>
+        <div class="col mb-4">
+            <label for="formChalan" class="form-label">Chalan No.</label>
+            {{ quotation_form.created_on }}
+        </div>
+        <div class="col mb-4">
+            <label for="formChalan" class="form-label">Chalan No.</label>
+            {{ quotation_form.status }}
+        </div>
+    </div>
+
+    <table class="table" id="jobTable">
+
+        <thead>
+
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Length</th>
+                <th scope="col">Width</th>
+                <th scope="col">Height</th>
+                <th scope="col">Remarks</th>
+                <th scope="col">Qty</th>
+                <th scope="col">Attachment</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {{ job_formset.management_form }}
+
+        {% if quotation_form.instance %}
+
+        {% for job in job_formset %}
+
+            <tr class="d-flex">
+                <th scope="col">{{ forloop.counter }}</th>
+
+                <th scope="col">{{ job.length }}</th>
+
+                <th scope="col">{{ job.width }}</th>
+
+                <th scope="col">{{ job.height }}</th>
+
+                <th scope="col">{{ job.remarks }}</th>
+
+                <th scope="col">{{ job.quantity }}</th>
+
+                <th scope="col">{{ job.attachment }}</th>
+            </tr>
+
+        {% endfor %}
+
+        {% endif %}
+
+        </tbody>
+
+    </table>
+
+    <div>
+        <button type="button" id="addJobButton" class="btn btn-secondary">Add Job</button>
+    </div>
+
+    <div>
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const addJobButton = document.getElementById("addJobButton");
+            const jobTableBody = document.querySelector("#jobTable tbody");
+            let jobRowCounter = {{ job_formset|length }};
+            
+            addJobButton.addEventListener("click", function () {
+                const newRow = document.createElement("tr");
+                newRow.innerHTML = `
+                    <th scope="col">${jobRowCounter + 1}</th>
+                    <th scope="col"><input type="text" class="form-control" name="form-${jobRowCounter}-length" /></th>
+                    <th scope="col"><input type="text" class="form-control" name="form-${jobRowCounter}-width" /></th>
+                    <th scope="col"><input type="text" class="form-control" name="form-${jobRowCounter}-height" /></th>
+                    <th scope="col"><input type="text" class="form-control" name="form-${jobRowCounter}-remarks" /></th>
+                    <th scope="col"><input type="number" class="form-control" name="form-${jobRowCounter}-quantity" /></th>
+                    <th scope="col"><input type="file" name="form-${jobRowCounter}-attachment" /></th>
+                `;
+                jobTableBody.appendChild(newRow);
+                jobRowCounter++;
+            });
+        
+            // Trigger the "Add Job" button click to add the initial set of job fields.
+            //addJobButton.click();
+        });
+        </script>
+
+{% endblock content %}

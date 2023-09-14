@@ -1,0 +1,51 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class='justify-content-end'>
+    <a href = "{% url 'create_customer' %}"class="btn btn-primary">Add</a>
+</div>
+
+<div class='table-responsive'>
+    <table class="table table-striped mt-2 align-middle">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Chalan No.</th>
+            <th scope="col">Customer</th>
+            <th scope="col">created_on</th>
+            <th scope="col">status</th>
+            <th scope="col">update</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for quotation in quotations %}
+            <tr style="height: 42px;">
+                <td class="text-center">{{forloop.counter}}</td>
+                <td>{{quotation.chalan_no}}</td>
+                <td>
+                    {% if quotation.customer_id.profile_image %}
+                        <img src="{{quotation.customer_id.profile_image.url}}" alt="Profile not loading..." style="width: 25px; height: 25px;">{{quotation.customer_id.name}}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>{{quotation.created_on|date:"m/d/Y g:i a" }}</td>
+                <td>
+                    {% if quotation.status == 'draft' %}
+                        <span class="badge bg-secondary rounded-pill">{{quotation.status}}</span>
+                    {% elif quotation.status == 'in_process' %}
+                        <span class="badge bg-warning rounded-pill">{{quotation.status}}</span>
+                    {% elif quotation.status == 'ready_to_deliver' %}
+                        <span class="badge bg-info rounded-pill">{{quotation.status}}</span>
+                    {% else %}
+                        <span class="badge bg-success rounded-pill">{{quotation.status}}</span>
+                    {% endif %}
+                </td>
+                <td><a href="{% url 'update_quotation' quotation.id %}">Edit</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock content %}
