@@ -2,7 +2,7 @@
 {% block content %}
 
 <form method="POST" action="" enctype="multipart/form-data">
-    {{quotation.id}}
+    {% comment %} {{quotation.id}} {% endcomment %}
     {% csrf_token %}
 
     {% if quotation_form.errors %}
@@ -16,6 +16,10 @@
     {{ job_formset.errors }}
 </div>
 {% endif %}
+
+    <div class="d-flex justify-content-end">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
     
     <div class="row ms-4 me-4 d-flex justify-content-center">
         <div class="col mb-4">
@@ -43,12 +47,12 @@
 
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Length</th>
-                <th scope="col">Width</th>
-                <th scope="col">Height</th>
-                <th scope="col">Remarks</th>
-                <th scope="col">Qty</th>
-                <th scope="col">Attachment</th>
+                <th>Length</th>
+                <th>Width</th>
+                <th>Height</th>
+                <th>Remarks</th>
+                <th>Qty</th>
+                <th>Attachment</th>
             </tr>
 
         </thead>
@@ -61,22 +65,20 @@
 
         {% for job in job_formset %}
 
-            
-
             <tr class="d-flex">
                 <th scope="col">{{ forloop.counter }}{{ job.id }}</th>
 
-                <th scope="col">{{ job.length }}</th>
+                <th>{{ job.length }}</th>
 
-                <th scope="col">{{ job.width }}</th>
+                <th>{{ job.width }}</th>
 
-                <th scope="col">{{ job.height }}</th>
+                <th>{{ job.height }}</th>
 
-                <th scope="col">{{ job.remarks }}</th>
+                <th>{{ job.remarks }}</th>
 
-                <th scope="col">{{ job.quantity }}</th>
+                <th>{{ job.quantity }}</th>
 
-                <th scope="col">{{ job.attachment }}</th>
+                <th>{{ job.attachment }}</th>
             </tr>
 
         {% endfor %}
@@ -89,10 +91,6 @@
 
     <div>
         <button type="button" id="addJobButton" class="btn btn-secondary">Add Job</button>
-    </div>
-
-    <div>
-        <button type="submit" class="btn btn-primary">Save</button>
     </div>
 
     <script>

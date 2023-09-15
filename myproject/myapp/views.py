@@ -99,5 +99,12 @@ def viewQuotations(request):
     return render(request, "quotation/view_quotations.html", {'quotations': quotations, 'quotations_exist': quotations_exist})
 
 
+def viewQuotationJobs(request):
+    
+    quotation_jobs = QuotationJob.objects.all()
+    quotation_jobs_exist = quotation_jobs.exists()
+    return render(request, "quotation_job/view_quotation_jobs.html", {'quotation_jobs': quotation_jobs, 'quotation_jobs_exist': quotation_jobs_exist})
+
+
 
     

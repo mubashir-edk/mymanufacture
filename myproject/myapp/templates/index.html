@@ -292,22 +292,22 @@
                                 </div>
                             </div>
 
-                            <!-- CORPORATE -->
-                            {% comment %} <div class="dropdown-sidenav mt-3">
+                            <!-- QUOTATION_JOBS -->
+                            <div class="dropdown-sidenav mt-3">
 
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownCorporate">
+                                {% comment %} <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownCorporate"> {% endcomment %}
                                     
                                     <div>
                                         <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">Corporate</span>
+                                        <span class="ms-1" id="sideNavContent"><a href="{% url 'view_quotation_jobs' %}">Quotation Jobs</a></span>
                                     </div>
-                                    <div>
+                                    {% comment %} <div>
                                         <i id="chevron-icon" class="bi bi-chevron-down"></i>
-                                    </div>
+                                    </div> {% endcomment %}
 
-                                </div>
+                                {% comment %} </div> {% endcomment %}
 
-                                <div class="collapse" id="dropdownCorporate">
+                                {% comment %} <div class="collapse" id="dropdownCorporate">
                                     <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
                                         <li><a href="#">About</a></li>
                                         <li><a href="#">Our Team</a></li>
@@ -317,8 +317,8 @@
                                         <li><a href="#">Licenses</a></li>
                                         <li><a href="#">Sitemap</a></li>
                                     </ul>
-                                </div>
-                            </div> {% endcomment %}
+                                </div> {% endcomment %}
+                            </div>
 
                             <!-- SOCIAL -->
                             {% comment %} <div class="dropdown-sidenav mt-3">

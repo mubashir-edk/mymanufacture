@@ -1,0 +1,33 @@
+{% extends 'index.html' %}
+{% block content %}
+
+{% if quotation_jobs_exist %}
+<div class='table-responsive'>
+    <table class="table table-striped mt-2 align-middle">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Chalan</th>
+            <th scope="col">Length/Width/Height</th>
+            <th scope="col">Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for quotation_job in quotation_jobs %}
+            <tr style="height: 42px;">
+                <td class="text-center">{{forloop.counter}}</td>
+                <td>{{quotation_job.quotation_id.chalan_no}}</td>
+                <td>{{quotation_job.length}}x{{quotation_job.width}}x{{quotation_job.height}}</td>
+                <td>empty</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="d-flex justify-content-center">
+    <span class="pt-5">Empty Jobs. <a href="{% url 'create_quotation' %}">Create</a> a new quotation for jobs.</span>
+</div>
+{% endif %}
+
+{% endblock content %}

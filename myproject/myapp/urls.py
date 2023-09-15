@@ -13,6 +13,8 @@ urlpatterns = [
     path('update_quotation/<uuid:quotation_id>', views.updateQuotation, name='update_quotation'),
     path('view_quotations', views.viewQuotations, name='view_quotations'),
     
+    path('view_quotation_jobs', views.viewQuotationJobs, name='view_quotation_jobs'),
+    
     
     # path('view-users/', views.viewUsers, name='view-users'),
     # path('update-user/<int:id>/', views.updateUsers, name='update-user'),
