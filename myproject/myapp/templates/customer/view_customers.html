@@ -5,6 +5,7 @@
     <a href = "{% url 'create_customer' %}"class="btn btn-primary">Add</a>
 </div>
 
+{% if customers_exist %}
 <div class='table-responsive'>
     <table class="table table-striped mt-2 align-middle">
         <thead>
@@ -41,5 +42,10 @@
         </tbody>
     </table>
 </div>
+{% else %}
+<div class="d-flex justify-content-center">
+    <span class="pt-5">No customers yet.<a href="{% url 'create_customer' %}">Create</a> a new customer.</span>
+</div>
+{% endif %}
 
 {% endblock content %}

@@ -57,7 +57,7 @@ class QuotationForm(forms.ModelForm):
 class QuotationJobForm(forms.ModelForm):
     class Meta:
         model = QuotationJob
-        exclude = ['quotation_id',]
+        exclude = ('id', 'quotation_id',)
         
         widgets = {
             'length': forms.NumberInput(attrs={

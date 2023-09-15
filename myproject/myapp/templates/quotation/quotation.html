@@ -61,8 +61,10 @@
 
         {% for job in job_formset %}
 
+            
+
             <tr class="d-flex">
-                <th scope="col">{{ forloop.counter }}</th>
+                <th scope="col">{{ forloop.counter }}{{ job.id }}</th>
 
                 <th scope="col">{{ job.length }}</th>
 

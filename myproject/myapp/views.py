@@ -23,7 +23,8 @@ def createCustomer(request):
 def viewCustomers(request):
     
     customers = Customer.objects.all()
-    return render(request, 'customer/view_customers.html',{'customers': customers})
+    customers_exist = customers.exists()
+    return render(request, 'customer/view_customers.html',{'customers': customers, 'customers_exist': customers_exist})
 
 
 def createQuotation(request):
@@ -72,26 +73,18 @@ def updateQuotation(request, quotation_id):
             print("Inside form validation")
             quotation = quotation_form.save()
             
-            # Loop through job fields and update them
-            # for job_form in job_formset:
-                
-            #     job = job_form.save(commit=False)
-            #     job.quotation_id = quotation
-            #     job.save()
-            for key, value in request.POST.items():
-                if key.startswith("form-") and key.endswith("-length"):
-                    job_index = key.split("-")[1]
-                    job = QuotationJob(
-                        quotation_id=quotation,
-                        length=request.POST[f"form-{job_index}-length"],
-                        width=request.POST[f"form-{job_index}-width"],
-                        height=request.POST[f"form-{job_index}-height"],
-                        remarks=request.POST[f"form-{job_index}-remarks"],
-                        quantity=request.POST[f"form-{job_index}-quantity"],
-                        attachment=request.FILES.get(f"form-{job_index}-attachment"),
-                    )
+            for job_index, job_form in enumerate(job_formset):
+                if job_form.has_changed():
+                    job = job_formset[job_index]
+                    job.length = job_form.cleaned_data['length']
+                    job.width = job_form.cleaned_data['width']
+                    job.height = job_form.cleaned_data['height']
+                    job.remarks = job_form.cleaned_data['remarks']
+                    job.quantity = job_form.cleaned_data['quantity']
+                    if 'attachment' in job_form.changed_data:
+                        job.attachment = job_form.cleaned_data['attachment']
                     job.save()
-            
+
             return redirect('view_quotations')
         
         print("After form validation")
@@ -102,7 +95,8 @@ def updateQuotation(request, quotation_id):
 def viewQuotations(request):
     
     quotations = Quotation.objects.all()
-    return render(request, "quotation/view_quotations.html", {'quotations': quotations})
+    quotations_exist = quotations.exists()
+    return render(request, "quotation/view_quotations.html", {'quotations': quotations, 'quotations_exist': quotations_exist})
 
 
 
