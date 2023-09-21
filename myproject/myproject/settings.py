@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myapp.apps.MyappConfig',
     'customuser',
+    'rest_framework',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap5'

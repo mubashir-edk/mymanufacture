@@ -2,7 +2,7 @@
 {% block content %}
 
 <div class='justify-content-end'>
-    <a href = "{% url 'create_quotation' %}"class="btn btn-primary">Add</a>
+    {% comment %} <a href = "{% url 'create_quotation' %}"class="btn btn-primary">Add</a> {% endcomment %}
 </div>
 
 {% if quotations_exist %}
