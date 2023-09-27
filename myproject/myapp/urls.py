@@ -6,6 +6,7 @@ urlpatterns = [
     
     # Customer
     path('create_customer', views.createCustomer, name='create_customer'),
+    path('update_customer/<uuid:customer_id>', views.updateCustomer, name='update_customer'),
     path('view_customers', views.viewCustomers, name='view_customers'),
     
     #quotation

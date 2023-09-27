@@ -46,7 +46,7 @@
         <thead>
 
             <tr>
-                <th scope="col">#</th>
+                <th>#</th>
                 <th>Length</th>
                 <th>Width</th>
                 <th>Height</th>
@@ -66,19 +66,19 @@
         {% for job in job_formset %}
 
             <tr class="d-flex">
-                <th scope="col">{{ forloop.counter }}{{ job.id }}</th>
+                <td>{{ forloop.counter }}{{ job.id }}</td>
 
-                <th>{{ job.length }}</th>
+                <td>{{ job.length }}</td>
 
-                <th>{{ job.width }}</th>
+                <td>{{ job.width }}</td>
 
-                <th>{{ job.height }}</th>
+                <td>{{ job.height }}</td>
 
-                <th>{{ job.remarks }}</th>
+                <td>{{ job.remarks }}</td>
 
-                <th>{{ job.quantity }}</th>
+                <td>{{ job.quantity }}</td>
 
-                <th>{{ job.attachment }}</th>
+                <td>{{ job.attachment }}</td>
             </tr>
 
         {% endfor %}
@@ -115,8 +115,9 @@
             });
         
             // Trigger the "Add Job" button click to add the initial set of job fields.
-            //addJobButton.click();
+            // addJobButton.click();
         });
+        
         </script>
 
 {% endblock content %}
