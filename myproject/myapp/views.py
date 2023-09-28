@@ -5,7 +5,7 @@ from myapp.models import *
 from myapp.forms import *
 from django.urls import reverse
 from django.contrib import messages
-
+from django.forms import inlineformset_factory
 # Create your views here.
 
 def home(request):
@@ -44,66 +44,162 @@ def viewCustomers(request):
     return render(request, 'customer/view_customers.html',{'customers': customers, 'customers_exist': customers_exist})
 
 
+# def createQuotation(request):
+#     quotation_form = QuotationForm()
+#     job_formset = QuotationJobFormSet(queryset=QuotationJob.objects.none())
+    
+#     if request.method == 'POST':
+#         quotation_form = QuotationForm(request.POST)
+#         job_formset = QuotationJobFormSet(request.POST, request.FILES)
+
+#         if quotation_form.is_valid() and job_formset.is_valid():
+#             quotation = quotation_form.save()
+            
+#             # Loop through job fields and associate them with the quotation
+#             for key, value in request.POST.items():
+#                 if key.startswith("form-") and key.endswith("-length"):
+#                     job_index = key.split("-")[1]
+#                     job = QuotationJob(
+#                         quotation_id=quotation,
+#                         length=request.POST[f"form-{job_index}-length"],
+#                         width=request.POST[f"form-{job_index}-width"],
+#                         height=request.POST[f"form-{job_index}-height"],
+#                         remarks=request.POST[f"form-{job_index}-remarks"],
+#                         quantity=request.POST[f"form-{job_index}-quantity"],
+#                         attachment=request.FILES.get(f"form-{job_index}-attachment"),
+#                     )
+#                     job.save()
+            
+            
+            
+#             return redirect(reverse('update_quotation', kwargs={'quotation_id': quotation.id}))
+
+#     return render(request, 'quotation/quotation.html', {'quotation_form': quotation_form, 'job_formset': job_formset})
+
+
 def createQuotation(request):
     quotation_form = QuotationForm()
-    job_formset = QuotationJobFormSet(queryset=QuotationJob.objects.none())
     
+    # Initialize the QuotationJobFormSet without the queryset parameter.
+    QuotationJobFormSet = inlineformset_factory(Quotation, QuotationJob, form=QuotationJobForm, extra=0)
+
     if request.method == 'POST':
         quotation_form = QuotationForm(request.POST)
-        job_formset = QuotationJobFormSet(request.POST, request.FILES)
+        
+        # Create an empty formset instance
+        job_formset = QuotationJobFormSet()
 
-        if quotation_form.is_valid() and job_formset.is_valid():
+        if quotation_form.is_valid():
+            # Save the quotation
             quotation = quotation_form.save()
-            
+
             # Loop through job fields and associate them with the quotation
             for key, value in request.POST.items():
                 if key.startswith("form-") and key.endswith("-length"):
                     job_index = key.split("-")[1]
-                    job = QuotationJob(
-                        quotation_id=quotation,
-                        length=request.POST[f"form-{job_index}-length"],
-                        width=request.POST[f"form-{job_index}-width"],
-                        height=request.POST[f"form-{job_index}-height"],
-                        remarks=request.POST[f"form-{job_index}-remarks"],
-                        quantity=request.POST[f"form-{job_index}-quantity"],
-                        attachment=request.FILES.get(f"form-{job_index}-attachment"),
-                    )
-                    job.save()
-            
-            
+                    job_data = {
+                        'quotation_id': quotation,
+                        'length': request.POST[f"form-{job_index}-length"],
+                        'width': request.POST[f"form-{job_index}-width"],
+                        'height': request.POST[f"form-{job_index}-height"],
+                        'remarks': request.POST[f"form-{job_index}-remarks"],
+                        'quantity': request.POST[f"form-{job_index}-quantity"],
+                        'attachment': request.FILES.get(f"form-{job_index}-attachment"),
+                    }
+                    QuotationJob.objects.create(**job_data)
             
             return redirect(reverse('update_quotation', kwargs={'quotation_id': quotation.id}))
 
-    return render(request, 'quotation/quotation.html', {'quotation_form': quotation_form, 'job_formset': job_formset})
+    return render(request, 'quotation/quotation.html', {'quotation_form': quotation_form})
+
+# def updateQuotation(request, quotation_id):
+#     quotation = get_object_or_404(Quotation, pk=quotation_id)
+
+#     quotation_form = QuotationForm(instance=quotation)
+#     job_formset = QuotationJobFormSet(queryset=QuotationJob.objects.filter(quotation_id=quotation))
+    
+#     if request.method == 'POST':
+        
+#         quotation_form = QuotationForm(request.POST, instance=quotation)
+#         job_formset = QuotationJobFormSet(request.POST, request.FILES, queryset=QuotationJob.objects.filter(quotation_id=quotation))
+        
+#         if quotation_form.is_valid() and job_formset.is_valid():
+            
+#             quotation = quotation_form.save()
+            
+#             for job_index, job_form in enumerate(job_formset):
+#                 if job_form.has_changed():
+#                     job = job_formset[job_index]
+#                     job.length = job_form.cleaned_data['length']
+#                     job.width = job_form.cleaned_data['width']
+#                     job.height = job_form.cleaned_data['height']
+#                     job.remarks = job_form.cleaned_data['remarks']
+#                     job.quantity = job_form.cleaned_data['quantity']
+#                     if 'attachment' in job_form.changed_data:
+#                         job.attachment = job_form.cleaned_data['attachment']
+#                     job.save()
+
+#             return redirect(reverse('update_quotation', kwargs={'quotation_id': quotation_id}))
+
+#     return render(request, 'quotation/quotation.html', {'quotation_form': quotation_form, 'job_formset': job_formset, 'quotation': quotation})
+
+
+# def updateQuotation(request, quotation_id):
+#     quotation = get_object_or_404(Quotation, pk=quotation_id)
+#     QuotationJobFormSet = inlineformset_factory(Quotation, QuotationJob, form=QuotationJobForm, extra=1)
+
+#     if request.method == 'POST':
+#         quotation_form = QuotationForm(request.POST, instance=quotation)
+#         job_formset = QuotationJobFormSet(request.POST, request.FILES, instance=quotation)
+
+#         if quotation_form.is_valid() and job_formset.is_valid():
+#             quotation = quotation_form.save()
+
+#             # Save the job entries using the formset
+#             job_formset.save()
+
+#             return redirect(reverse('update_quotation', kwargs={'quotation_id': quotation_id}))
+#     else:
+#         quotation_form = QuotationForm(instance=quotation)
+#         job_formset = QuotationJobFormSet(instance=quotation)
+
+#     return render(request, 'quotation/quotation.html', {'quotation_form': quotation_form, 'job_formset': job_formset, 'quotation': quotation})
+
 
 def updateQuotation(request, quotation_id):
     quotation = get_object_or_404(Quotation, pk=quotation_id)
-
-    quotation_form = QuotationForm(instance=quotation)
-    job_formset = QuotationJobFormSet(queryset=QuotationJob.objects.filter(quotation_id=quotation))
     
+    # Initialize the QuotationJobFormSet without the extra parameter.
+    QuotationJobFormSet = inlineformset_factory(Quotation, QuotationJob, form=QuotationJobForm, extra=0)
+
     if request.method == 'POST':
-        
         quotation_form = QuotationForm(request.POST, instance=quotation)
-        job_formset = QuotationJobFormSet(request.POST, request.FILES, queryset=QuotationJob.objects.filter(quotation_id=quotation))
-        
+        job_formset = QuotationJobFormSet(request.POST, request.FILES, instance=quotation)
+
         if quotation_form.is_valid() and job_formset.is_valid():
-            
             quotation = quotation_form.save()
             
-            for job_index, job_form in enumerate(job_formset):
-                if job_form.has_changed():
-                    job = job_formset[job_index]
-                    job.length = job_form.cleaned_data['length']
-                    job.width = job_form.cleaned_data['width']
-                    job.height = job_form.cleaned_data['height']
-                    job.remarks = job_form.cleaned_data['remarks']
-                    job.quantity = job_form.cleaned_data['quantity']
-                    if 'attachment' in job_form.changed_data:
-                        job.attachment = job_form.cleaned_data['attachment']
-                    job.save()
+            # Save the job entries using the formset
+            job_formset.save()
+
+            # Process the data from dynamically added rows
+            for key, value in request.POST.items():
+                if key.startswith("form-") and key.endswith("-length"):
+                    job_data = {
+                        'quotation_id': quotation,
+                        'length': request.POST[key],
+                        'width': request.POST[key.replace("-length", "-width")],
+                        'height': request.POST[key.replace("-length", "-height")],
+                        'remarks': request.POST[key.replace("-length", "-remarks")],
+                        'quantity': request.POST[key.replace("-length", "-quantity")],
+                        'attachment': request.FILES.get(key.replace("-length", "-attachment")),
+                    }
+                    QuotationJob.objects.create(**job_data)
 
             return redirect(reverse('update_quotation', kwargs={'quotation_id': quotation_id}))
+    else:
+        quotation_form = QuotationForm(instance=quotation)
+        job_formset = QuotationJobFormSet(instance=quotation)
 
     return render(request, 'quotation/quotation.html', {'quotation_form': quotation_form, 'job_formset': job_formset, 'quotation': quotation})
 
