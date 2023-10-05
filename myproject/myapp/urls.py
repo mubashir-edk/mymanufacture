@@ -17,6 +17,7 @@ urlpatterns = [
     
     path('view_quotation_jobs', views.viewQuotationJobs, name='view_quotation_jobs'),
     path('each_quotation_job/<uuid:job_id>', views.eachQuotationJob, name='each_quotation_job'),
+    path('delete_attachment/<uuid:job_id>', views.deleteAttachment, name='delete_attachment'),
     
     
     # path('view-users/', views.viewUsers, name='view-users'),

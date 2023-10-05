@@ -168,4 +168,15 @@ def eachQuotationJob(request, job_id):
     #     job_form.fields['attachment'].initial = quotation_job.attachment.url
         
     return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job})
+
+@login_required
+def deleteAttachment(request, job_id):
+    quotation_job = get_object_or_404(QuotationJob, pk=job_id)
+    
+    # Check if the job has an attachment
+    if quotation_job.attachment:
+        quotation_job.attachment.delete()  # Delete the attachment file
+        quotation_job.save()  # Save the changes
+    
+    return redirect(reverse('each_quotation_job', kwargs={'job_id': job_id}))
     
