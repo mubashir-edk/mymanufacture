@@ -75,10 +75,11 @@ class QuotationJobForm(forms.ModelForm):
                 'placeholder': 'height', 
                 'id': 'formHeight', 
             }),
-            'remarks': forms.TextInput(attrs={
+            'remarks': forms.Textarea(attrs={
                 'class': 'form-control', 
                 'placeholder': 'remarks', 
-                'id': 'formRemarks', 
+                'id': 'formRemarks',
+                'rows': '1',
             }),
             'quantity': forms.NumberInput(attrs={
                 'class': 'form-control', 

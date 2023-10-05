@@ -1,13 +1,26 @@
 {% extends 'index.html' %}
+{% load static %}
 {% block content %}
 
 <form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %}
     
     <div class="row ms-4 me-4 d-grid justify-content-center">
-        <div class="col mb-4">
-            <label for="formImage" class="form-label">Profile</label>
-            {{ customer_form.profile_image }}
+        <div class="col mb-4 d-flex justify-content-center">
+
+            <img id="image-preview" src="" alt="Image Preview" style="width: 100px; height: 100px; border-radius: 50%; display: none;">
+
+            {% if customer.profile_image %}
+                <img src="{{customer.profile_image.url}}" alt="Profile not loading..." style="width: 100px; height: 100px; border-radius: 50%;">
+                {{ customer_form.profile_image }}
+            {% else %}
+                <img src="{% static 'image/default.png' %}" alt="Profile not loading..." style="width: 100px; height: 100px; border-radius: 50%;">
+                {{ customer_form.profile_image }}
+            {% endif %}
+
+            <label for="formImage" class="form-label">
+                <i class="bi bi-pencil-square"></i>
+            </label>
         </div>
 
         <div class="col mb-4">
@@ -36,5 +49,38 @@
     </div>
 
 </form>
+
+
+
+<script>
+    const imageInput = document.getElementById('formImage');
+    const imagePreview = document.getElementById('image-preview');
+
+    imageInput.addEventListener('change', function () {
+        const file = imageInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+            
+            // Hide the existing/default image
+            const existingImage = document.querySelector('.col.mb-4.d-flex.justify-content-center img:not(#image-preview)');
+            existingImage.style.display = 'none';
+        } else {
+            imagePreview.src = '';
+            imagePreview.style.display = 'none';
+            
+            // Show the existing/default image again
+            const existingImage = document.querySelector('.col.mb-4.d-flex.justify-content-center img:not(#image-preview)');
+            existingImage.style.display = 'block';
+        }
+    });
+</script>
+
 
 {% endblock content %}

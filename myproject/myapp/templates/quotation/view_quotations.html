@@ -3,7 +3,7 @@
 {% load static %}
 
 <div class='justify-content-end'>
-    {% comment %} <a href = "{% url 'create_quotation' %}"class="btn btn-primary">Add</a> {% endcomment %}
+    <a href = "{% url 'create_quotation' %}"class="btn btn-primary">Create</a>
 </div>
 
 {% if quotations_exist %}
@@ -16,7 +16,7 @@
             <th scope="col">Customer</th>
             <th scope="col">created_on</th>
             <th scope="col">status</th>
-            {% comment %} <th scope="col">update</th> {% endcomment %}
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
@@ -45,16 +45,78 @@
                     {% endif %}
                 </a>
                 </td>
-                {% comment %} <td><a href="{% url 'update_quotation' quotation.id %}">Edit</a></td> {% endcomment %}
+                <td>
+                    <a href="{% url 'delete_quotation' quotation.id %}" class="deleteQuotation" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-id="{{quotation.id}}" data-bs-name="{{ quotation.customer_id.name }}" data-bs-chalan="{{ quotation.chalan_no }}" style="color: black;"><i class="bi bi-trash"></i>
+                    </a>
+
+                    <!-- Modal for confirming deleting Quotation -->
+                    <div class="modal fade" id="deleteModal" role="dialog" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Are you sure you want to delete the record with the following details?</p>
+                                    <p id="customerId"></p>
+                                    <p id="customerName"></p>
+                                    <p id="chalanNumber"></p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="" class="btn btn-danger" id="confirmDelete" style="color: black;">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 </div>
+
+<!-- JavaScript to display the values -->
+<script>
+    // Add click event listeners to each deleteQuotation link
+    var deleteQuotationLinks = document.querySelectorAll('.deleteQuotation');
+
+    deleteQuotationLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            // Prevent the default behavior of the link
+            event.preventDefault();
+
+            // Get the 'data-bs-id' and 'data-bs-name' and 'data-bs-chalan' attributes for the clicked link
+            var id = link.getAttribute('data-bs-id');
+            var name = link.getAttribute('data-bs-name');
+            var chalan = link.getAttribute('data-bs-chalan');
+
+            // Set the values in the modal
+            var customerId = document.getElementById('customerId');
+            var customerName = document.getElementById('customerName');
+            var chalanNumber = document.getElementById('chalanNumber');
+
+            customerId.textContent = 'Customer Id: ' + id;
+            customerName.textContent = 'Customer Name: ' + name;
+            chalanNumber.textContent = 'Chalan Number: ' + chalan;
+
+            console.log(id);
+
+            // Set the href attribute of the "Delete" link
+            var confirmDeleteLink = document.getElementById('confirmDelete');
+            confirmDeleteLink.href = '{% url 'delete_quotation' 'e7d72076-0e46-47f5-b802-8a03f4cad328' %}';
+        });
+    });
+</script>
+
+
+
 {% else %}
 <div class="d-flex justify-content-center">
     <span class="pt-5">Empty quotations. <a href="{% url 'create_quotation' %}">Create</a> a new one.</span>
 </div>
 {% endif %}
+
+
 
 {% endblock content %}

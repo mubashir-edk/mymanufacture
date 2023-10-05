@@ -16,8 +16,8 @@
         {% for quotation_job in quotation_jobs %}
             <tr style="height: 42px;">
                 <td class="text-center">{{forloop.counter}}</td>
-                <td>{{quotation_job.quotation_id.chalan_no}}</td>
-                <td>{{quotation_job.length}}x{{quotation_job.width}}x{{quotation_job.height}}</td>
+                <td><a href="{% url 'each_quotation_job' quotation_job.id %}" style="text-decoration: none; color: black;">{{quotation_job.quotation_id.chalan_no}}</a></td>
+                <td><a href="{% url 'each_quotation_job' quotation_job.id %}" style="text-decoration: none; color: black;">{{quotation_job.length}}x{{quotation_job.width}}x{{quotation_job.height}}</a></td>
                 <td>empty</td>
             </tr>
         {% endfor %}
@@ -26,7 +26,7 @@
 </div>
 {% else %}
 <div class="d-flex justify-content-center">
-    <span class="pt-5">Empty Jobs. <a href="{% url 'create_quotation' %}">Create</a> a new quotation for jobs.</span>
+    <span class="pt-5">Empty Jobs. <a href="{% url 'create_quotation' %}">Create</a> a new quotation or <a href="{% url 'view_quotations' %}">Create</a> jobs for quotations </span>
 </div>
 {% endif %}
 

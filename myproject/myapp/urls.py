@@ -12,9 +12,11 @@ urlpatterns = [
     #quotation
     path('create_quotation', views.createQuotation, name='create_quotation'),
     path('update_quotation/<uuid:quotation_id>', views.updateQuotation, name='update_quotation'),
+    path('delete_quotation/<uuid:quotation_id>', views.deleteQuotation, name='delete_quotation'),
     path('view_quotations', views.viewQuotations, name='view_quotations'),
     
     path('view_quotation_jobs', views.viewQuotationJobs, name='view_quotation_jobs'),
+    path('each_quotation_job/<uuid:job_id>', views.eachQuotationJob, name='each_quotation_job'),
     
     
     # path('view-users/', views.viewUsers, name='view-users'),
