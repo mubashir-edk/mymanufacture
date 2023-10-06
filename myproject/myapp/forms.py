@@ -2,6 +2,48 @@ from django import forms
 from django.forms import modelformset_factory
 from .models import *
 
+class EmployeeForm(forms.ModelForm):
+    class Meta:
+        model = Employee
+        fields = '__all__'
+        
+        widgets = {
+            'profile_image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'id': 'formEmployee_Profile',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Employee Name',
+                'id': 'formEmployee_Name',
+            }),
+            'designation': forms.Select(attrs={
+                'class': 'form-select',
+                'placeholder': 'Employee Designation',
+                'id': 'formEmployee_Designation',
+            }),
+            'address': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Employee Address',
+                'id': 'formEmployee_Address',
+            }),
+            'contact_one': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Employee Contact 1',
+                'id': 'formEmployee_ContactOne',
+            }),
+            'contact_two': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Employee Contact 2',
+                'id': 'formEmployee_ContactTwo',
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Employee Email',
+                'id': 'formEmployee_Email',
+            }),
+        }
+
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer

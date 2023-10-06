@@ -4,7 +4,6 @@ from django.shortcuts import get_object_or_404
 from myapp.models import *
 from myapp.forms import *
 from django.urls import reverse
-from django.contrib import messages
 from django.forms import inlineformset_factory
 # Create your views here.
 
@@ -12,15 +11,52 @@ def home(request):
     return render(request, 'home.html')
 
 
-# Customer Functions
+# Employee Functions --------------------------------------------------------------------------------------------------------------------
+@login_required
+def createEmployee(request):
+    
+    employee_form = EmployeeForm()
+    if request.method == 'POST':
+        employee_form = EmployeeForm(request.POST, request.FILES)
+        if employee_form.is_valid():
+            employee_form.save()
+            return redirect('view_employees')
+    return render(request, 'employee/employee.html', {'employee_form': employee_form})
+
+@login_required
+def updateEmployee(request, employee_id):
+    employee = get_object_or_404(Employee, pk=employee_id)
+    
+    employee_form = EmployeeForm(instance=employee)
+    
+    if request.method == 'POST':
+        employee_form = EmployeeForm(request.POST, request.FILES, instance=employee)
+        
+        if employee_form.is_valid():
+            
+            employee_form.save()
+            
+            return redirect(reverse('update_employee', kwargs={'employee_id': employee_id}))
+    
+    return render(request, 'employee/employee.html', {'employee_form': employee_form, 'employee': employee})
+
+@login_required
+def viewEmployees(request):
+    
+    employees = Employee.objects.all()
+    employees_exists = employees.exists()
+    return render(request, 'employee/view_employees.html',{'employees': employees, 'employees_exist': employees_exists})
+
+
+# Customer Functions --------------------------------------------------------------------------------------------------------------------
 @login_required
 def createCustomer(request):
     
     customer_form = CustomerForm()
     if request.method=='POST':
-        form = CustomerForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
+        customer_form = CustomerForm(request.POST, request.FILES)
+        if customer_form.is_valid():
+            customer_form.save()
             return redirect('view_customers')
     return render(request, 'customer/customer.html',{'customer_form': customer_form})
 
@@ -49,7 +85,7 @@ def viewCustomers(request):
     return render(request, 'customer/view_customers.html',{'customers': customers, 'customers_exist': customers_exist})
 
 
-# Quotation Functions
+# Quotation Functions -------------------------------------------------------------------------------------------------------------------
 @login_required
 def createQuotation(request):
     
@@ -155,6 +191,8 @@ def eachQuotationJob(request, job_id):
     
     job_form = QuotationJobForm(instance=quotation_job)
     
+    operators = Employee.objects.filter(designation__designation = 'Operator')
+    
     if request.method == 'POST':
         job_form = QuotationJobForm(request.POST, request.FILES, instance=quotation_job)
         
@@ -164,10 +202,7 @@ def eachQuotationJob(request, job_id):
             
             return redirect(reverse('each_quotation_job', kwargs={'job_id': job_id}))
         
-    # if quotation_job.attachment:
-    #     job_form.fields['attachment'].initial = quotation_job.attachment.url
-        
-    return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job})
+    return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job, 'operators': operators})
 
 @login_required
 def deleteAttachment(request, job_id):

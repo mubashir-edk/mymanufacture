@@ -4,12 +4,17 @@ from . import views
 urlpatterns = [
     path('', views.home, name='home'),
     
+    # Employee
+    path('create_employee', views.createEmployee, name='create_employee'),
+    path('update_employee/<uuid:employee_id>', views.updateEmployee, name='update_employee'),
+    path('view_employees', views.viewEmployees, name='view_employees'),
+    
     # Customer
     path('create_customer', views.createCustomer, name='create_customer'),
     path('update_customer/<uuid:customer_id>', views.updateCustomer, name='update_customer'),
     path('view_customers', views.viewCustomers, name='view_customers'),
     
-    #quotation
+    # Quotation
     path('create_quotation', views.createQuotation, name='create_quotation'),
     path('update_quotation/<uuid:quotation_id>', views.updateQuotation, name='update_quotation'),
     path('delete_quotation/<uuid:quotation_id>', views.deleteQuotation, name='delete_quotation'),

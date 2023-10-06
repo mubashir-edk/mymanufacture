@@ -1,0 +1,93 @@
+{% extends 'index.html' %}
+{% load static %}
+{% block content %}
+
+<form method="POST" action="" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <div class="row ms-4 me-4 d-grid justify-content-center">
+        <div class="col mb-4 d-flex justify-content-center">
+
+            <img id="image-preview" src="" alt="Image Preview" style="width: 100px; height: 100px; border-radius: 50%; display: none;">
+
+            {% if employee.profile_image %}
+                <img src="{{employee.profile_image.url}}" alt="Profile not loading..." style="width: 100px; height: 100px; border-radius: 50%;">
+                {{ employee_form.profile_image }}
+            {% else %}
+                <img src="{% static 'image/default.png' %}" alt="Profile not loading..." style="width: 100px; height: 100px; border-radius: 50%;">
+                {{ employee_form.profile_image }}
+            {% endif %}
+
+            <label for="formEmployee_Profile" class="form-label">
+                <i class="bi bi-pencil-square" style="cursor: pointer;"></i>
+            </label>
+        </div>
+
+        <div class="col mb-4">
+            <label for="formEmployee_Name" class="form-label">Name</label>
+            {{ employee_form.name }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formEmployee_Designation" class="form-label">Designation</label>
+            {{ employee_form.designation }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formEmployee_Address" class="form-label">Address</label>
+            {{ employee_form.address }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formEmployee_email" class="form-label">Email</label>
+            {{ employee_form.email }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formEmployee_ContactOne" class="form-label">Contact(1)</label>
+            {{ employee_form.contact_one }}
+        </div>
+
+        <div class="col mb-4">
+            <label for="formEmployee_ContactTwo" class="form-label">Contact(2)</label>
+            {{ employee_form.contact_two }}
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+        <input type="submit" class="btn bg-primary text-white" id="customercreatebtn" value="Save">
+    </div>
+
+</form>
+
+<script>
+    const imageInput = document.getElementById('formEmployee_Profile');
+    const imagePreview = document.getElementById('image-preview');
+
+    imageInput.addEventListener('change', function () {
+        const file = imageInput.files[0];
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                imagePreview.src = e.target.result;
+                imagePreview.style.display = 'block';
+            };
+
+            reader.readAsDataURL(file);
+            
+            // Hide the existing/default image
+            const existingImage = document.querySelector('.col.mb-4.d-flex.justify-content-center img:not(#image-preview)');
+            existingImage.style.display = 'none';
+        } else {
+            imagePreview.src = '';
+            imagePreview.style.display = 'none';
+            
+            // Show the existing/default image again
+            const existingImage = document.querySelector('.col.mb-4.d-flex.justify-content-center img:not(#image-preview)');
+            existingImage.style.display = 'block';
+        }
+    });
+</script>
+
+{% endblock content %}

@@ -18,6 +18,11 @@
                 </div>
                 <div class="modal-body">
                     <p>Select the operator:</p>
+                    <select name="operator" class='form-select'>
+                        {% for operator in operators %}
+                            <option value="{{ operator.id }}">{{ operator.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

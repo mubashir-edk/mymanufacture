@@ -4,6 +4,29 @@ from django.utils import timezone
 
 # Create your models here.
 
+class EmployeeDesignation(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    designation = models.CharField(max_length=30)
+    
+    def __str__(self) -> str:
+        return self.designation
+
+class Employee(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    name = models.CharField(max_length=30)
+    designation = models.ForeignKey(EmployeeDesignation, on_delete=models.CASCADE)
+    address = models.CharField(max_length=150)
+    contact_one = models.IntegerField()
+    contact_two =models.IntegerField()
+    email = models.EmailField()
+    profile_image = models.ImageField(null=True, blank=True, upload_to="employees_profile/")
+    
+    def __str__(self) -> str:
+        return self.name
+
+
 class Customer(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)

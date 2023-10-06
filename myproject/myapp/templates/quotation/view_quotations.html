@@ -46,7 +46,7 @@
                 </a>
                 </td>
                 <td>
-                    <a href="{% url 'delete_quotation' quotation.id %}" class="deleteQuotation" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-id="{{quotation.id}}" data-bs-name="{{ quotation.customer_id.name }}" data-bs-chalan="{{ quotation.chalan_no }}" style="color: black;"><i class="bi bi-trash"></i>
+                    <a href="" class="deleteQuotation" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-id="{{quotation.id}}" data-bs-name="{{ quotation.customer_id.name }}" data-bs-chalan="{{ quotation.chalan_no }}" style="color: black;"><i class="bi bi-trash"></i>
                     </a>
 
                     <!-- Modal for confirming deleting Quotation -->
@@ -92,11 +92,11 @@
             var chalan = link.getAttribute('data-bs-chalan');
 
             // Set the values in the modal
-            var customerId = document.getElementById('customerId');
+            {% comment %} var customerId = document.getElementById('customerId'); {% endcomment %}
             var customerName = document.getElementById('customerName');
             var chalanNumber = document.getElementById('chalanNumber');
 
-            customerId.textContent = 'Customer Id: ' + id;
+            {% comment %} customerId.textContent = 'Customer Id: ' + id; {% endcomment %}
             customerName.textContent = 'Customer Name: ' + name;
             chalanNumber.textContent = 'Chalan Number: ' + chalan;
 
@@ -104,7 +104,7 @@
 
             // Set the href attribute of the "Delete" link
             var confirmDeleteLink = document.getElementById('confirmDelete');
-            confirmDeleteLink.href = '{% url 'delete_quotation' 'e7d72076-0e46-47f5-b802-8a03f4cad328' %}';
+            confirmDeleteLink.href = `delete_quotation/${id}`;
         });
     });
 </script>
