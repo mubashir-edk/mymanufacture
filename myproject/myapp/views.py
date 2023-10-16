@@ -48,6 +48,27 @@ def viewEmployees(request):
     return render(request, 'employee/view_employees.html',{'employees': employees, 'employees_exist': employees_exists})
 
 
+# HRM Functions -------------------------------------------------------------------------------------------------------------------------
+@login_required
+def createCompanyPosition(request):
+    
+    designation_form = DesignationForm()
+    if request.method=='POST':
+        designation_form = DesignationForm(request.POST)
+        print(designation_form)
+        if designation_form.is_valid():
+            designation_form.save()
+            return redirect('view_company_positions')
+    return render(request, 'hrm/company_positions/company_positions.html', {'designation_form': designation_form})
+
+@login_required
+def viewCompanyPositions(request):
+    
+    designations = EmployeeDesignation.objects.all().order_by('designation')
+    designations_exists = designations.exists()
+    return render(request, 'hrm/company_positions/company_positions.html',{'designations': designations, 'designations_exists': designations_exists}) 
+
+
 # Customer Functions --------------------------------------------------------------------------------------------------------------------
 @login_required
 def createCustomer(request):
@@ -192,6 +213,9 @@ def eachQuotationJob(request, job_id):
     job_form = QuotationJobForm(instance=quotation_job)
     
     operators = Employee.objects.filter(designation__designation = 'Operator')
+    
+    print(operators)
+    
     
     if request.method == 'POST':
         job_form = QuotationJobForm(request.POST, request.FILES, instance=quotation_job)

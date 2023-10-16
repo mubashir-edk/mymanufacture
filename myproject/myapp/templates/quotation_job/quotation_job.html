@@ -18,6 +18,7 @@
                 </div>
                 <div class="modal-body">
                     <p>Select the operator:</p>
+                    {{ job_form.assigned_employee }}
                     <select name="operator" class='form-select'>
                         {% for operator in operators %}
                             <option value="{{ operator.id }}">{{ operator.name }}</option>

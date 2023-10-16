@@ -43,6 +43,20 @@ class EmployeeForm(forms.ModelForm):
                 'id': 'formEmployee_Email',
             }),
         }
+        
+
+class DesignationForm(forms.ModelForm):
+    class Meta:
+        model = EmployeeDesignation
+        fields = '__all__'
+        
+        widgets = {
+            'designation': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formDesignation',    
+            }),
+        }
+
 
 class CustomerForm(forms.ModelForm):
     class Meta:

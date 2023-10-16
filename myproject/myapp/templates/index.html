@@ -222,53 +222,7 @@
                                 </div>
                             </div>
 
-                            <p class="mt-4 mb-2 sidenav-subhead">PAGES</p>
-
-                            <!-- EMPLOYEE -->
-                            <div class="dropdown-sidenav mt-3">
-
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownUser">
-                                    
-                                    <div>
-                                        <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">Employees</span>
-                                    </div>
-                                    <div>
-                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
-                                    </div>
-
-                                </div>
-
-                                <div class="collapse" id="dropdownUser">
-                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="{% url 'create_employee' %}">Add New Employee</a></li>
-                                        <li><a href="{% url 'view_employees' %}">View Employees</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <!-- CUSTOMER -->
-                            <div class="dropdown-sidenav mt-3">
-
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownAccount">
-                                    
-                                    <div>
-                                        <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">Customer</span>
-                                    </div>
-                                    <div>
-                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
-                                    </div>
-
-                                </div>
-
-                                <div class="collapse" id="dropdownAccount">
-                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="{% url 'view_customers' %}">View Customers</a></li>
-                                        <li><a href="{% url 'create_customer' %}">Add New Customer</a></li>
-                                    </ul>
-                                </div>
-                            </div>
+                            <p class="mt-4 mb-2 sidenav-subhead">WORK STATION</p>
 
                             <!-- QUOTATION -->
                             <div class="dropdown-sidenav mt-3">
@@ -296,136 +250,23 @@
                             <!-- QUOTATION_JOBS -->
                             <div class="dropdown-sidenav mt-3">
 
-                                {% comment %} <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownCorporate"> {% endcomment %}
-                                    
-                                    <div>
-                                        <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent"><a href="{% url 'view_quotation_jobs' %}">Quotation Jobs</a></span>
-                                    </div>
-                                    {% comment %} <div>
-                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
-                                    </div> {% endcomment %}
+                                <div>
+                                    <i class="bi bi-ui-checks-grid"></i>
+                                    <span class="ms-1" id="sideNavContent"><a href="{% url 'view_quotation_jobs' %}">Quotation Jobs</a></span>
+                                </div>
 
-                                {% comment %} </div> {% endcomment %}
-
-                                {% comment %} <div class="collapse" id="dropdownCorporate">
-                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="#">About</a></li>
-                                        <li><a href="#">Our Team</a></li>
-                                        <li><a href="#">FAQ</a></li>
-                                        <li><a href="#">Contact Us</a></li>
-                                        <li><a href="#">Pricing</a></li>
-                                        <li><a href="#">Licenses</a></li>
-                                        <li><a href="#">Sitemap</a></li>
-                                    </ul>
-                                </div> {% endcomment %}
                             </div>
 
-                            <!-- SOCIAL -->
-                            {% comment %} <div class="dropdown-sidenav mt-3">
+                            <p class="mt-4 mb-2 sidenav-subhead">CRM</p>
 
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownSocial">
-                                    
-                                    <div>
-                                        <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">Social</span>
-                                    </div>
-                                    <div>
-                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
-                                    </div>
-
-                                </div>
-
-                                <div class="collapse" id="dropdownSocial">
-                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="#">Feeds</a></li>
-                                        <li><a href="#">Activity</a></li>
-                                        <li><a href="#">Followers</a></li>
-                                        <li><a href="#">Settings</a></li>
-                                    </ul>
-                                </div>
-                            </div> {% endcomment %}
-
-                            <!-- BLOG -->
-                            {% comment %} <div class="dropdown-sidenav mt-3">
-
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownBlog">
-                                    
-                                    <div>
-                                        <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">Blog</span>
-                                    </div>
-                                    <div>
-                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
-                                    </div>
-
-                                </div>
-
-                                <div class="collapse" id="dropdownBlog">
-                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="#">Blog Home</a></li>
-                                        <li><a href="#">Blog Post</a></li>
-                                    </ul>
-                                </div>
-                            </div> {% endcomment %}
-
-                            <!-- CAREERS -->
-                            {% comment %} <div class="dropdown-sidenav mt-3">
-
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownCareers">
-                                    
-                                    <div>
-                                        <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">Careers</span>
-                                    </div>
-                                    <div>
-                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
-                                    </div>
-
-                                </div>
-
-                                <div class="collapse" id="dropdownCareers">
-                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="#">Careers List</a></li>
-                                        <li><a href="#">Careers Apply</a></li>
-                                    </ul>
-                                </div>
-                            </div> {% endcomment %}
-
-                            <!-- UTILITIES -->
-                            {% comment %} <div class="dropdown-sidenav mt-3">
-
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownUtilities">
-                                    
-                                    <div>
-                                        <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">Utilities</span>
-                                    </div>
-                                    <div>
-                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
-                                    </div>
-
-                                </div>
-
-                                <div class="collapse" id="dropdownUtilities">
-                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="#">Modals</a></li>
-                                        <li><a href="#">Search</a></li>
-                                        <li><a href="#">Wizards</a></li>
-                                    </ul>
-                                </div>
-                            </div> {% endcomment %}
-
-                            <p class="mt-4 mb-2 sidenav-subhead">APPS</p>
-
-                            <!-- PROJECTS -->
+                            <!-- CUSTOMER -->
                             <div class="dropdown-sidenav mt-3">
 
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownProjects">
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownAccount">
                                     
                                     <div>
                                         <i class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">Projects</span>
+                                        <span class="ms-1" id="sideNavContent">Customer</span>
                                     </div>
                                     <div>
                                         <i id="chevron-icon" class="bi bi-chevron-down"></i>
@@ -433,28 +274,25 @@
 
                                 </div>
 
-                                <div class="collapse" id="dropdownProjects">
+                                <div class="collapse" id="dropdownAccount">
                                     <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="#">My Projects</a></li>
-                                        <li><a href="#">View Project</a></li>
-                                        <li><a href="#">Targets</a></li>
-                                        <li><a href="#">Budget</a></li>
-                                        <li><a href="#">Users</a></li>
-                                        <li><a href="#">Files</a></li>
-                                        <li><a href="#">Activity</a></li>
-                                        <li><a href="#">Settings</a></li>
+                                        <li><a href="{% url 'view_customers' %}">View Customers</a></li>
+                                        <li><a href="{% url 'create_customer' %}">Add New Customer</a></li>
                                     </ul>
                                 </div>
                             </div>
 
-                            <!-- ECOMMERCE -->
+
+                            <p class="mt-4 mb-2 sidenav-subhead">HRM</p>
+
+                            <!-- EMPLOYEE -->
                             <div class="dropdown-sidenav mt-3">
 
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownEcommerce">
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownUser">
                                     
                                     <div>
-                                        <i id="icongrid" class="bi bi-ui-checks-grid"></i>
-                                        <span class="ms-1" id="sideNavContent">eCommerce</span>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Employees</span>
                                     </div>
                                     <div>
                                         <i id="chevron-icon" class="bi bi-chevron-down"></i>
@@ -462,15 +300,22 @@
 
                                 </div>
 
-                                <div class="collapse" id="dropdownEcommerce">
+                                <div class="collapse" id="dropdownUser">
                                     <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
-                                        <li><a href="#">Catalog</a></li>
-                                        <li><a href="#">Sales</a></li>
-                                        <li><a href="#">Customers</a></li>
-                                        <li><a href="#">Reports</a></li>
-                                        <li><a href="#">Settings</a></li>
+                                        <li><a href="{% url 'create_employee' %}">Add New Employee</a></li>
+                                        <li><a href="{% url 'view_employees' %}">View Employees</a></li>
                                     </ul>
                                 </div>
+                            </div>
+
+                            <!-- COMPANY_POSITIONS -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div>
+                                    <i class="bi bi-ui-checks-grid"></i>
+                                    <span class="ms-1" id="sideNavContent"><a href="{% url 'view_company_positions' %}">Company Positions</a></span>
+                                </div>
+
                             </div>
 
                             <!-- INBOX -->

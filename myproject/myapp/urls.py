@@ -9,6 +9,10 @@ urlpatterns = [
     path('update_employee/<uuid:employee_id>', views.updateEmployee, name='update_employee'),
     path('view_employees', views.viewEmployees, name='view_employees'),
     
+    #hrm
+    path('create_company_position', views.createCompanyPosition, name='create_company_position'),
+    path('view_company_positions', views.viewCompanyPositions, name='view_company_positions'),
+    
     # Customer
     path('create_customer', views.createCustomer, name='create_customer'),
     path('update_customer/<uuid:customer_id>', views.updateCustomer, name='update_customer'),
@@ -24,10 +28,4 @@ urlpatterns = [
     path('each_quotation_job/<uuid:job_id>', views.eachQuotationJob, name='each_quotation_job'),
     path('delete_attachment/<uuid:job_id>', views.deleteAttachment, name='delete_attachment'),
     
-    
-    # path('view-users/', views.viewUsers, name='view-users'),
-    # path('update-user/<int:id>/', views.updateUsers, name='update-user'),
-    # path('delete-user/<int:id>/', views.deleteUsers, name='delete-user'),
-    
-    # path('dashboard/', views.viewDashboard, name='dashboard'),
 ]

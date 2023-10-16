@@ -1,0 +1,74 @@
+{% extends 'index.html' %}
+{% block content %}
+
+<div class="d-flex justify-content-end">
+
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal" id="createButton">Create</button>
+
+</div>
+
+<!-- Modal to create designation -->
+<div class="modal fade" id="createModal" role="dialog" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create new Designation</h5>
+            </div>
+            <form method="POST" id="createForm" action="{% url 'create_company_position' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="formDesignation" class="form-label">Designation</label>
+                        {{ designation_form.designation }}
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <input type="submit" class="btn bg-primary text-white" id="customercreatebtn" value="Save">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if designations_exists %}
+<div class='table-responsive'>
+    <table class="table table-striped mt-2 align-middle">
+        <thead>
+        <tr>
+            <th scope="col"></th>
+            <th scope="col">Designations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for designation in designations %}
+            <tr style="height: 42px;">
+                <td class="text-center">{{forloop.counter}}</td>
+                <td><a href="#" style="text-decoration: none; color: black;">{{ designation.designation }}</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="d-flex justify-content-center">
+    <span class="pt-5">No Company positions. <a href="" data-bs-toggle="modal" data-bs-target="#deleteModal">Create</a> a new position.</span>
+</div>
+{% endif %}
+
+
+<script>
+    $(document).ready(function() {
+        // Load content from 'second_url' and insert it into the modal body
+        $(document).on('click', '[data-target="#createModal"]', function(e) {
+            e.preventDefault();
+            var modalBody = $('#createModal .modal-body');
+            
+            $.get("{% url 'create_company_position' %}", function(data) {
+                modalBody.html(data);
+            });
+        });
+    });
+</script>
+
+{% endblock content %}

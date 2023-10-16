@@ -64,6 +64,8 @@ class QuotationJob(models.Model):
     quantity = models.IntegerField(null=False, blank=False)
     attachment = models.FileField(null=True, blank=True)
     
+    assigned_employee = models.ManyToManyField(Employee, blank=True)
+    
     def __str__(self) -> str:
         return str(self.quotation_id.chalan_no)
     
