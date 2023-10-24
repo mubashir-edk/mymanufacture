@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from myapp.models import *
 from myapp.forms import *
 from django.urls import reverse
 from django.forms import inlineformset_factory
+from django.forms.models import model_to_dict
+
 # Create your views here.
 
 def home(request):
@@ -44,8 +47,9 @@ def updateEmployee(request, employee_id):
 def viewEmployees(request):
     
     employees = Employee.objects.all()
+    number_of_employees = len(employees)
     employees_exists = employees.exists()
-    return render(request, 'employee/view_employees.html',{'employees': employees, 'employees_exist': employees_exists})
+    return render(request, 'employee/view_employees.html',{'employees': employees, 'employees_exist': employees_exists, 'number_of_employees': number_of_employees})
 
 
 # HRM Functions -------------------------------------------------------------------------------------------------------------------------
@@ -65,8 +69,9 @@ def createCompanyPosition(request):
 def viewCompanyPositions(request):
     
     designations = EmployeeDesignation.objects.all().order_by('designation')
+    number_of_designations = len(designations)
     designations_exists = designations.exists()
-    return render(request, 'hrm/company_positions/company_positions.html',{'designations': designations, 'designations_exists': designations_exists}) 
+    return render(request, 'hrm/company_positions/company_positions.html',{'designations': designations, 'designations_exists': designations_exists, 'number_of_designations': number_of_designations}) 
 
 
 # Customer Functions --------------------------------------------------------------------------------------------------------------------
@@ -102,8 +107,9 @@ def updateCustomer(request, customer_id):
 def viewCustomers(request):
     
     customers = Customer.objects.all()
+    number_of_customers = len(customers)
     customers_exist = customers.exists()
-    return render(request, 'customer/view_customers.html',{'customers': customers, 'customers_exist': customers_exist})
+    return render(request, 'customer/view_customers.html',{'customers': customers, 'customers_exist': customers_exist, 'number_of_customers': number_of_customers})
 
 
 # Quotation Functions -------------------------------------------------------------------------------------------------------------------
@@ -186,8 +192,13 @@ def updateQuotation(request, quotation_id):
 def viewQuotations(request):
     
     quotations = Quotation.objects.all()
+    
+    draft_quotation = len(Quotation.objects.filter(status = 'draft'))
+    in_process_quotation = len(Quotation.objects.filter(status = 'in_process'))
+    ready_to_deliver_quotation = len(Quotation.objects.filter(status = 'ready_to_deliver'))
+    
     quotations_exist = quotations.exists()
-    return render(request, "quotation/view_quotations.html", {'quotations': quotations, 'quotations_exist': quotations_exist})
+    return render(request, "quotation/view_quotations.html", {'quotations': quotations, 'quotations_exist': quotations_exist, 'draft_quotation': draft_quotation, 'in_process_quotation': in_process_quotation, 'ready_to_deliver_quotation': ready_to_deliver_quotation})
 
 @login_required
 def deleteQuotation(request, quotation_id):
@@ -212,10 +223,6 @@ def eachQuotationJob(request, job_id):
     
     job_form = QuotationJobForm(instance=quotation_job)
     
-    operators = Employee.objects.filter(designation__designation = 'Operator')
-    
-    print(operators)
-    
     
     if request.method == 'POST':
         job_form = QuotationJobForm(request.POST, request.FILES, instance=quotation_job)
@@ -226,7 +233,7 @@ def eachQuotationJob(request, job_id):
             
             return redirect(reverse('each_quotation_job', kwargs={'job_id': job_id}))
         
-    return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job, 'operators': operators})
+    return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job})
 
 @login_required
 def deleteAttachment(request, job_id):
@@ -238,4 +245,37 @@ def deleteAttachment(request, job_id):
         quotation_job.save()  # Save the changes
     
     return redirect(reverse('each_quotation_job', kwargs={'job_id': job_id}))
+
+
+# JobAssign Functions -------------------------------------------------------------------------------------------------------------------
+@login_required
+def jobAssigning(request):
+        
+    employees_to_assign = Employee.objects.filter(designation__designation = "Operator")
+    print(employees_to_assign)
+    print("Number of employees to assign:", employees_to_assign.count())
     
+    employees_data = [{'id': employee.id, 'name': employee.name} for employee in employees_to_assign]
+    
+    if request.method == "GET":
+        
+        json_data = {'employees_to_assign': employees_data}
+        return  JsonResponse(json_data)
+    
+    if request.method == 'POST':
+        
+        selected_employee_id = request.POST.get('employee_id')
+        job_id = request.POST.get('job_id')
+        
+        print(selected_employee_id)
+        print(job_id)
+
+        # Retrieve the Employee and Job objects
+        selected_employee = get_object_or_404(Employee, id=selected_employee_id)
+        job = get_object_or_404(QuotationJob, id=job_id)
+
+        # Create a new JobAssign instance with the associated Employee and Job
+        job_assignment = JobAssign(employee_id=selected_employee, job_id=job)
+        job_assignment.save()
+            
+    return JsonResponse({'error': 'Form is not valid'})

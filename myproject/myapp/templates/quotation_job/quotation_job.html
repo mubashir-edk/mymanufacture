@@ -5,33 +5,13 @@
     {% csrf_token %}
 
     <div class="d-flex justify-content-between">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#deleteModal">Assign</button>
+        <a href="" id="openModalLink" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobAssignModal">Assign</a>
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
 
     <!-- Modal to Assign job to operators -->
-    <div class="modal fade" id="deleteModal" role="dialog" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Assigning job</h5>
-                </div>
-                <div class="modal-body">
-                    <p>Select the operator:</p>
-                    {{ job_form.assigned_employee }}
-                    <select name="operator" class='form-select'>
-                        {% for operator in operators %}
-                            <option value="{{ operator.id }}">{{ operator.name }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <a href="#" class="btn btn-primary" id="jobAssign">Assign</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    {% include "quotation_job/job_assign_modal.html" %}
+
     
     <!-- Existing Quotation Job details -->
     <div class="row mt-3 ms-4 me-4 d-flex justify-content-center">
@@ -86,5 +66,84 @@
 
         </div>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#openModalLink').click(function (e) {
+            // When the link is clicked, load data via AJAX and populate the modal
+            $.ajax({
+                url: '{% url 'job_assigning' %}',
+                type: 'GET',
+                dataType: 'json', // Expect JSON response
+                success: function (data) {
+                    console.log(data);
+
+                    // Handle the success response and populate the modal
+                    // Employees to assign
+                    const employeesToAssign = data.employees_to_assign;
+                    const employeeSelect = $('#formAssignEmployee');
+            
+                    employeeSelect.empty(); // Clear the select options
+            
+                    
+                    employeesToAssign.forEach(function (employee) {
+                        employeeSelect.append($('<option>', {
+                            value: employee.id,
+                            text: employee.name
+                        }));
+                    });
+                    
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    // Handle any errors that occur during the AJAX request
+                    console.log("AJAX request failed:", textStatus, errorThrown);
+                }
+            });            
+        });
+
+
+        // Add an event listener for the "Assign" button click
+        $('#jobassignbtn').click(function (e) {
+            event.preventDefault();
+            // Get the selected employee and the job_id
+            const selectedEmployee = $('#formAssignEmployee').val();
+            const job_id = '{{ job_id.id }}';  // Get the current job_id from the page
+            
+            console.log({job_id});
+            console.log({selectedEmployee});
+
+            // Include the CSRF token in the headers
+            const csrfToken = $('input[name=csrfmiddlewaretoken]').val();
+            console.log(csrfToken);
+            const headers = {
+                'X-CSRFToken': csrfToken
+            };
+
+            // Make an AJAX request to save the assignment
+            $.ajax({
+                url: '{% url 'job_assigning' %}',
+                type: 'POST',
+                data: {
+                    employee_id: selectedEmployee,
+                    job_id: job_id  // Automatically save the job_id
+                },
+                headers: headers,
+                success: function (data) {
+                    // Handle the success response, e.g., close the modal or display a message
+                    // You may also want to refresh the page or update the UI as needed
+                    console.log("saving successful");
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    // Handle any errors that occur during the AJAX request
+                    console.log("AJAX request failed:", textStatus, errorThrown);
+                }
+            });
+        });
+
+    });
+</script>
 
 {% endblock content %}

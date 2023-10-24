@@ -2,7 +2,8 @@
 {% block content %}
 {% load static %}
 
-<div class='justify-content-end'>
+<div class='d-flex justify-content-between'>
+    <h5> <span class="badge bg-dark">Number of Customers:  {{ number_of_customers }}</span> </h5>
     <a href = "{% url 'create_customer' %}"class="btn btn-primary">Add</a>
 </div>
 

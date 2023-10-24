@@ -155,4 +155,21 @@ QuotationJobFormSet = modelformset_factory(
     extra = 0,
     # can_delete = True,
 )
+
+
+class JobAssignForm(forms.ModelForm):
+    class Meta:
+        model = JobAssign
+        fields = ['employee_id']
+        
+        widgets = {
+            'employee_id': forms.Select(attrs={
+                'class': 'form-select',
+                'id': 'formAssignEmployee',
+            }),
+            # 'job_id': forms.Select(attrs={
+            #     'class': 'form-select',
+            #     'id': 'formAssignJob',
+            # }),
+        }
         

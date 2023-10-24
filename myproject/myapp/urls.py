@@ -9,7 +9,7 @@ urlpatterns = [
     path('update_employee/<uuid:employee_id>', views.updateEmployee, name='update_employee'),
     path('view_employees', views.viewEmployees, name='view_employees'),
     
-    #hrm
+    # HRM
     path('create_company_position', views.createCompanyPosition, name='create_company_position'),
     path('view_company_positions', views.viewCompanyPositions, name='view_company_positions'),
     
@@ -27,5 +27,8 @@ urlpatterns = [
     path('view_quotation_jobs', views.viewQuotationJobs, name='view_quotation_jobs'),
     path('each_quotation_job/<uuid:job_id>', views.eachQuotationJob, name='each_quotation_job'),
     path('delete_attachment/<uuid:job_id>', views.deleteAttachment, name='delete_attachment'),
+    
+    # JobAssign
+    path('job_assigning', views.jobAssigning, name='job_assigning'),
     
 ]

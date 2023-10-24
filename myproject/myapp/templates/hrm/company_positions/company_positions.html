@@ -1,8 +1,8 @@
 {% extends 'index.html' %}
 {% block content %}
 
-<div class="d-flex justify-content-end">
-
+<div class="d-flex justify-content-between">
+    <h5> <span class="badge bg-dark">Number of Designations:  {{ number_of_designations }}</span> </h5>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal" id="createButton">Create</button>
 
 </div>

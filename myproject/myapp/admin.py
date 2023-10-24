@@ -10,4 +10,5 @@ admin.site.register(Quotation)
 admin.site.register(QuotationJob)
 admin.site.register(Machine)
 admin.site.register(Task)
+admin.site.register(JobAssign)
 

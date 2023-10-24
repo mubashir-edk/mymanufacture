@@ -2,8 +2,16 @@
 {% block content %}
 {% load static %}
 
-<div class='justify-content-end'>
-    <a href = "{% url 'create_quotation' %}"class="btn btn-primary">Create</a>
+<div class='d-flex justify-content-between'>
+    <div class="d-flex">
+        <h5> <span class="badge bg-secondary">Draft: {{ draft_quotation }} </span> </h5>
+        <h5> <span class="badge bg-warning ms-2">In Process: {{ in_process_quotation }} </span> </h5>
+        <h5> <span class="badge bg-info ms-2">Ready to Deliver: {{ ready_to_deliver_quotation }} </span> </h5>
+    </div>
+    
+    <div>
+        <a href = "{% url 'create_quotation' %}"class="btn btn-primary">Create</a>
+    </div>
 </div>
 
 {% if quotations_exist %}

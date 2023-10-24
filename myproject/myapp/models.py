@@ -1,3 +1,4 @@
+from typing import Any
 from django.db import models
 import uuid
 from django.utils import timezone
@@ -57,14 +58,12 @@ class QuotationJob(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     quotation_id = models.ForeignKey(Quotation, on_delete=models.CASCADE)
-    length = models.IntegerField(null=False, blank=False)
-    width = models.IntegerField(null=False, blank=False)
-    height = models.IntegerField(null=False, blank=False)
+    length = models.FloatField(null=False, blank=False)
+    width = models.FloatField(null=False, blank=False)
+    height = models.FloatField(null=False, blank=False)
     remarks = models.CharField(max_length=700, null=True, blank=True)
     quantity = models.IntegerField(null=False, blank=False)
     attachment = models.FileField(null=True, blank=True)
-    
-    assigned_employee = models.ManyToManyField(Employee, blank=True)
     
     def __str__(self) -> str:
         return str(self.quotation_id.chalan_no)
@@ -93,5 +92,14 @@ class Task(models.Model):
     
     def __str__(self) -> str:
         return self.job_id
+    
+class JobAssign(models.Model):
+    
+    employee_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    job_id = models.ForeignKey(QuotationJob, on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return str(self.employee_id)
+    
     
     

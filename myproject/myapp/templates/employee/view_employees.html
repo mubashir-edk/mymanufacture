@@ -2,6 +2,11 @@
 {% block content %}
 {% load static %}
 
+<div class="d-flex justify-content-between">
+    <h5> <span class="badge bg-dark">Number of Employees:  {{ number_of_employees }}</span> </h5>
+    <a href = "{% url 'create_employee' %}"class="btn btn-primary">Add</a>
+</div>
+
 {% if employees_exist %}
 <div class='table-responsive'>
     <table class="table table-striped mt-2 align-middle">
