@@ -128,6 +128,7 @@ def createQuotation(request):
         job_formset = QuotationJobFormSet()
 
         if quotation_form.is_valid():
+            
             # Save the quotation
             quotation = quotation_form.save()
 
@@ -143,8 +144,10 @@ def createQuotation(request):
                         'remarks': request.POST[f"form-{job_index}-remarks"],
                         'quantity': request.POST[f"form-{job_index}-quantity"],
                         'attachment': request.FILES.get(f"form-{job_index}-attachment"),
+                        
                     }
                     QuotationJob.objects.create(**job_data)
+                    
             
             return redirect(reverse('update_quotation', kwargs={'quotation_id': quotation.id}))
 
@@ -277,5 +280,38 @@ def jobAssigning(request):
         # Create a new JobAssign instance with the associated Employee and Job
         job_assignment = JobAssign(employee_id=selected_employee, job_id=job)
         job_assignment.save()
+        
+        # return redirect(reverse('each_quotation_job', kwargs={'job_id': job}))
             
     return JsonResponse({'error': 'Form is not valid'})
+
+
+# SequentialCode Functions --------------------------------------------------------------------------------------------------------------
+@login_required
+def sequentialCode(request):
+    
+    sequential_code_form = SequentialCodeForm()
+    
+    quotation_codes = SequentialCode.objects.filter(code_of="quotation")
+    for quotation_code in quotation_codes:
+        quotation_code = quotation_code
+
+    quotation_job_codes = SequentialCode.objects.filter(code_of="quotation_job")
+    for quotation_job_code in quotation_job_codes:
+        quotation_job_code = quotation_job_code
+        
+    task_codes = SequentialCode.objects.filter(code_of="task")
+    for task_code in task_codes:
+        task_code = task_code
+
+    
+    context = {'sequential_code_form': sequential_code_form, 'quotation_code': quotation_code, 'quotation_job_code': quotation_job_code, 'task_code': task_code}
+    
+    return render(request, 'sequential_code/sequential_code.html', context)
+
+@login_required
+def generateQuotationCode(request):
+    
+    
+    
+    return print("hi")

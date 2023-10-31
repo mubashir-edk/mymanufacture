@@ -51,8 +51,23 @@ class Quotation(models.Model):
     created_on = models.DateTimeField(default=timezone.now ,null=False, blank=False)
     status = models.CharField(max_length=50, choices=status_choices, default='draft')
     
+    sequential_code = models.CharField(max_length=30, null=True, blank=True, unique=True)
+    
     def __str__(self) -> str:
         return self.customer_id.name
+    
+class SequentialCode(models.Model):
+    
+    models_choices=( ('quotation', 'Quotation'), ('quotation_job', 'Quotation Job'), ('task', 'Task') )
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    code_prefix = models.CharField(max_length=3)
+    code_size = models.IntegerField()
+    code_suffix = models.CharField(max_length=3, null=True, blank=True)
+    code_of = models.CharField(max_length=30, choices=models_choices)
+    
+    def __str__(self) -> str:
+        return self.code_of
     
 class QuotationJob(models.Model):
     
@@ -101,5 +116,6 @@ class JobAssign(models.Model):
     def __str__(self) -> str:
         return str(self.employee_id)
     
-    
+
+
     

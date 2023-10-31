@@ -1,0 +1,19 @@
+.modelsHeading {
+    font-size: 20px;
+    font-weight: 550;
+}
+
+.modelsHeadingLine {
+    margin: 0;
+    margin-bottom: 10px;
+    padding: 0;
+}
+
+.settings_content .form-control {
+    width: 45%;
+}
+
+.settings_content .form-label {
+    font-size: 14px;
+    font-weight: 600;
+}

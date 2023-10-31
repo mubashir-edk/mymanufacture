@@ -20,6 +20,7 @@
         <thead>
         <tr>
             <th scope="col"></th>
+            <th scope="col">Number</th>
             <th scope="col">Chalan No.</th>
             <th scope="col">Customer</th>
             <th scope="col">created_on</th>
@@ -31,6 +32,7 @@
         {% for quotation in quotations %}
             <tr style="height: 42px;">
                 <td class="text-center">{{forloop.counter}}</td>
+                <td><a href="{% url 'update_quotation' quotation.id %}" style="text-decoration: none; color: black;">{{quotation.sequential_code}}</a></td>
                 <td><a href="{% url 'update_quotation' quotation.id %}" style="text-decoration: none; color: black;">{{quotation.chalan_no}}</a></td>
                 <td><a href="{% url 'update_quotation' quotation.id %}" style="text-decoration: none; color: black;">
                     {% if quotation.customer_id.profile_image %}

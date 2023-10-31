@@ -66,6 +66,7 @@
 
         </div>
     </div>
+</form>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -85,10 +86,7 @@
                     // Employees to assign
                     const employeesToAssign = data.employees_to_assign;
                     const employeeSelect = $('#formAssignEmployee');
-            
-                    employeeSelect.empty(); // Clear the select options
-            
-                    
+                                
                     employeesToAssign.forEach(function (employee) {
                         employeeSelect.append($('<option>', {
                             value: employee.id,
@@ -107,7 +105,7 @@
 
         // Add an event listener for the "Assign" button click
         $('#jobassignbtn').click(function (e) {
-            event.preventDefault();
+            {% comment %} event.preventDefault(); {% endcomment %}
             // Get the selected employee and the job_id
             const selectedEmployee = $('#formAssignEmployee').val();
             const job_id = '{{ job_id.id }}';  // Get the current job_id from the page
@@ -132,12 +130,9 @@
                 },
                 headers: headers,
                 success: function (data) {
-                    // Handle the success response, e.g., close the modal or display a message
-                    // You may also want to refresh the page or update the UI as needed
-                    console.log("saving successful");
+                    console.log("Job Assigned Successfully");
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    // Handle any errors that occur during the AJAX request
                     console.log("AJAX request failed:", textStatus, errorThrown);
                 }
             });

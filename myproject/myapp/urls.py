@@ -31,4 +31,7 @@ urlpatterns = [
     # JobAssign
     path('job_assigning', views.jobAssigning, name='job_assigning'),
     
+    # SequentialCode
+    path('sequential_code', views.sequentialCode, name='sequential_code'),
+    
 ]

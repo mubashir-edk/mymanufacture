@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
     <link rel="stylesheet" href="{% static 'css/image_profile.css' %}">
+    <link rel="stylesheet" href="{% static 'css/sequential_code.css' %}">
     <link rel="stylesheet" href="{% static 'css/keenweb.css' %}">
 
 </head>
@@ -187,6 +188,7 @@
                                 </div>
                             </div>
                             <hr>
+
                         </div>
 
                         
@@ -220,6 +222,7 @@
                                         <li><a href="#">Logistics</a></li>
                                     </ul>
                                 </div>
+
                             </div>
 
                             <p class="mt-4 mb-2 sidenav-subhead">SALES</p>
@@ -227,7 +230,7 @@
                             <!-- QUOTATION -->
                             <div class="dropdown-sidenav mt-3">
 
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownAuthentication">
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownQuotation">
                                     
                                     <div>
                                         <i class="bi bi-ui-checks-grid"></i>
@@ -239,12 +242,13 @@
 
                                 </div>
 
-                                <div class="collapse" id="dropdownAuthentication">
+                                <div class="collapse" id="dropdownQuotation">
                                     <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
                                         <li><a href="{% url 'create_quotation' %}">Create Quotation</a></li>
                                         <li><a href="{% url 'view_quotations' %}">View Quotations</a></li>
                                     </ul>
                                 </div>
+
                             </div>
 
                             <!-- QUOTATION_JOBS -->
@@ -262,7 +266,7 @@
                             <!-- CUSTOMER -->
                             <div class="dropdown-sidenav mt-3">
 
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownAccount">
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownCustomer">
                                     
                                     <div>
                                         <i class="bi bi-ui-checks-grid"></i>
@@ -274,12 +278,13 @@
 
                                 </div>
 
-                                <div class="collapse" id="dropdownAccount">
+                                <div class="collapse" id="dropdownCustomer">
                                     <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
                                         <li><a href="{% url 'view_customers' %}">View Customers</a></li>
                                         <li><a href="{% url 'create_customer' %}">Add New Customer</a></li>
                                     </ul>
                                 </div>
+
                             </div>
 
 
@@ -288,7 +293,7 @@
                             <!-- EMPLOYEE -->
                             <div class="dropdown-sidenav mt-3">
 
-                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownUser">
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownEmployee">
                                     
                                     <div>
                                         <i class="bi bi-ui-checks-grid"></i>
@@ -300,12 +305,13 @@
 
                                 </div>
 
-                                <div class="collapse" id="dropdownUser">
+                                <div class="collapse" id="dropdownEmployee">
                                     <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
                                         <li><a href="{% url 'create_employee' %}">Add New Employee</a></li>
                                         <li><a href="{% url 'view_employees' %}">View Employees</a></li>
                                     </ul>
                                 </div>
+
                             </div>
 
                             <!-- COMPANY_POSITIONS -->
@@ -340,9 +346,34 @@
                                         <li><a href="#">View &amp; Reply</a></li>
                                     </ul>
                                 </div>
+
                             </div>
 
 
+                            <p class="mt-4 mb-2 sidenav-subhead">SETTINGS</p>
+
+                            <!-- SETTINGS -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div class="navbar-toggle d-flex" id="dropdownMenuLink" data-bs-toggle="collapse" data-bs-target="#dropdownSettings">
+                                    
+                                    <div>
+                                        <i class="bi bi-ui-checks-grid"></i>
+                                        <span class="ms-1" id="sideNavContent">Settings</span>
+                                    </div>
+                                    <div>
+                                        <i id="chevron-icon" class="bi bi-chevron-down"></i>
+                                    </div>
+
+                                </div>
+
+                                <div class="collapse" id="dropdownSettings">
+                                    <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
+                                        <li><a href="{% url 'sequential_code' %}">Sequential Code</a></li>
+                                    </ul>
+                                </div>
+
+                            </div>
                             
 
                         </div>

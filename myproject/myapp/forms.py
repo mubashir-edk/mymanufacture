@@ -94,7 +94,8 @@ class CustomerForm(forms.ModelForm):
 class QuotationForm(forms.ModelForm):
     class Meta:
         model = Quotation
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('sequential_code',)
         
         widgets = {
             'customer_id': forms.Select(attrs={
@@ -173,3 +174,23 @@ class JobAssignForm(forms.ModelForm):
             # }),
         }
         
+        
+class SequentialCodeForm(forms.ModelForm):
+    class Meta:
+        model = SequentialCode
+        fields = '__all__'
+        
+        widgets = {
+            'code_prefix': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodePrefix',
+            }),
+            'code_size': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodeSize',
+            }),
+            'code_suffix': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodeSuffix',
+            }),
+        }
