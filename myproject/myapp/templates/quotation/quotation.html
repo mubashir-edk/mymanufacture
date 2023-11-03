@@ -6,19 +6,60 @@
     {% csrf_token %}
 
     {% if quotation_form.errors %}
-<div class="alert alert-danger">
-    {{ quotation_form.errors }}
-</div>
-{% endif %}
+        <div class="alert alert-danger">
+            {{ quotation_form.errors }}
+        </div>
+    {% endif %}
 
-{% if job_formset.errors %}
-<div class="alert alert-danger">
-    {{ job_formset.errors }}
-</div>
-{% endif %}
+    {% if job_formset.errors %}
+        <div class="alert alert-danger">
+            {{ job_formset.errors }}
+        </div>
+    {% endif %}
 
-    <div class="d-flex justify-content-end">
+    <div class="d-flex justify-content-between">
+        <button type="button" class="btn btn-secondary"><a href="{% url 'view_quotations' %}" style="text-decoration: none; color: white;">Back</a></button>
         <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+
+    <hr>
+
+    <div class="d-flex justify-content-between">
+
+        <div>
+            {% if quotation.id %}
+                <h2 class="d-none">{{ quotation_form.sequential_code }}</h2>
+                <h2>{{ quotation.sequential_code }}</h2>
+            {% endif %}
+        </div>
+        
+        <div style="font-size: 24px;">
+
+                <span class="d-none">{{ quotation_form.status }}</span>
+                
+                {% if quotation.id %}
+                    {% if quotation.status == 'draft' %}
+                        <span class="badge bg-secondary rounded-pill">{{quotation.status}}</span>
+                    {% elif quotation.status == 'in_process' %}
+                        <span class="badge bg-warning rounded-pill">{{quotation.status}}</span>
+                    {% elif quotation.status == 'ready_to_deliver' %}
+                        <span class="badge bg-info rounded-pill">{{quotation.status}}</span>
+                    {% else %}
+                            <span class="badge bg-success rounded-pill">{{quotation.status}}</span>
+                    {% endif %}
+                {% else %}
+                    {% if quotation_form.status == 'draft' %}
+                        <span class="badge bg-secondary rounded-pill">{{quotation_form.status}}</span>
+                    {% elif quotation_form.status == 'in_process' %}
+                        <span class="badge bg-warning rounded-pill">{{quotation_form.status}}</span>
+                    {% elif quotation_form.status == 'ready_to_deliver' %}
+                        <span class="badge bg-info rounded-pill">{{quotation_form.status}}</span>
+                    {% else %}
+                            <span class="badge bg-success rounded-pill">{{quotation_form.status}}</span>
+                    {% endif %}
+                {% endif %}
+
+        </div>
     </div>
     
     <div class="row ms-4 me-4 d-flex justify-content-center">
@@ -31,13 +72,9 @@
             <label for="formChalan" class="form-label">Chalan No.</label>
             {{ quotation_form.chalan_no }}
         </div>
-        <div class="col mb-4">
-            <label for="formChalan" class="form-label">Chalan No.</label>
+        <div class="col mb-4 d-none">
+            <label for="formChalan" class="form-label">Created On</label>
             {{ quotation_form.created_on }}
-        </div>
-        <div class="col mb-4">
-            <label for="formChalan" class="form-label">Chalan No.</label>
-            {{ quotation_form.status }}
         </div>
     </div>
 

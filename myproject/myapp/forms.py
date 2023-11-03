@@ -94,8 +94,7 @@ class CustomerForm(forms.ModelForm):
 class QuotationForm(forms.ModelForm):
     class Meta:
         model = Quotation
-        # fields = '__all__'
-        exclude = ('sequential_code',)
+        fields = '__all__'
         
         widgets = {
             'customer_id': forms.Select(attrs={

@@ -5,16 +5,30 @@
     {% csrf_token %}
 
     <div class="d-flex justify-content-between">
-        <a href="" id="openModalLink" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobAssignModal">Assign</a>
-        <button type="submit" class="btn btn-primary">Save</button>
+        <div>
+            <a href="{% url 'view_quotation_jobs' %}" class="btn btn-secondary">Back</a>
+            <a href="" id="openModalLink" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobAssignModal">Assign</a>
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
     </div>
+
+    <hr>
 
     <!-- Modal to Assign job to operators -->
     {% include "quotation_job/job_assign_modal.html" %}
 
+    <div>
+
+        {% comment %} <h2 class="d-none">{{ job_form.sequential_code }}</h2> {% endcomment %}
+        <h2>{{ job_id.sequential_code }}</h2>
+
+    </div>
     
     <!-- Existing Quotation Job details -->
-    <div class="row mt-3 ms-4 me-4 d-flex justify-content-center">
+    <div class="row mt-3 ms-2 me-2 d-flex justify-content-center">
+
         <div class="col mb-4">
             <label for="formLength" class="form-label">Length</label>
             {{ job_form.length }}
@@ -32,7 +46,7 @@
 
     </div>
 
-    <div class="row ms-4 me-4 d-flex justify-content-center">
+    <div class="row ms-2 me-2 d-flex justify-content-center">
 
         <div class="col mb-4">
             <label for="formQuantity" class="form-label">Quantity</label>

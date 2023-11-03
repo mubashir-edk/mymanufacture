@@ -8,13 +8,13 @@
     <div class="row ms-4 me-4 d-grid justify-content-center">
         <div class="col mb-4 d-flex justify-content-center">
 
-            <img id="image-preview" src="" alt="Image Preview" style="width: 100px; height: 100px; border-radius: 50%; display: none;">
+            <img id="image-preview" src="" alt="Image Preview" style="width: 150px; height: 150px; border-radius: 50%; display: none;">
 
             {% if employee.profile_image %}
-                <img src="{{employee.profile_image.url}}" alt="Profile not loading..." style="width: 100px; height: 100px; border-radius: 50%;">
+                <img src="{{employee.profile_image.url}}" alt="Profile not loading..." style="width: 150px; height: 150px; border-radius: 50%;">
                 {{ employee_form.profile_image }}
             {% else %}
-                <img src="{% static 'image/default.png' %}" alt="Profile not loading..." style="width: 100px; height: 100px; border-radius: 50%;">
+                <img src="{% static 'image/default.png' %}" alt="Profile not loading..." style="width: 150px; height: 150px; border-radius: 50%;">
                 {{ employee_form.profile_image }}
             {% endif %}
 

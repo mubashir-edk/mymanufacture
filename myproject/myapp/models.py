@@ -54,7 +54,7 @@ class Quotation(models.Model):
     sequential_code = models.CharField(max_length=30, null=True, blank=True, unique=True)
     
     def __str__(self) -> str:
-        return self.customer_id.name
+        return self.sequential_code
     
 class SequentialCode(models.Model):
     
@@ -79,6 +79,8 @@ class QuotationJob(models.Model):
     remarks = models.CharField(max_length=700, null=True, blank=True)
     quantity = models.IntegerField(null=False, blank=False)
     attachment = models.FileField(null=True, blank=True)
+    
+    sequential_code = models.CharField(max_length=30, null=True, blank=True, unique=True)
     
     def __str__(self) -> str:
         return str(self.quotation_id.chalan_no)

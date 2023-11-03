@@ -6,7 +6,6 @@ from myapp.models import *
 from myapp.forms import *
 from django.urls import reverse
 from django.forms import inlineformset_factory
-from django.forms.models import model_to_dict
 
 # Create your views here.
 
@@ -59,7 +58,6 @@ def createCompanyPosition(request):
     designation_form = DesignationForm()
     if request.method=='POST':
         designation_form = DesignationForm(request.POST)
-        print(designation_form)
         if designation_form.is_valid():
             designation_form.save()
             return redirect('view_company_positions')
@@ -120,8 +118,49 @@ def createQuotation(request):
     
     # Initialize the QuotationJobFormSet without the queryset parameter.
     QuotationJobFormSet = inlineformset_factory(Quotation, QuotationJob, form=QuotationJobForm, extra=0)
+    
+    # Generating Quotation Sequential Code
+    quotation_codes = SequentialCode.objects.filter(code_of="quotation")
+    for quotation_code in quotation_codes:
+        code_prefix = quotation_code.code_prefix
+        code_size = quotation_code.code_size
+        code_suffix = quotation_code.code_suffix  
+    
+    codes_only = Quotation.objects.values_list('sequential_code', flat=True)
+    
+    loop = True
+    sequence_number = 1
+    
+    while loop:
+        
+        if not code_suffix:
+            
+            leading_zeros = code_size - len(str(sequence_number))
+            
+            code = "0" * leading_zeros + str(sequence_number)
+            
+            quotation_sequence = code_prefix + code
+        
+            if quotation_sequence in codes_only:
+                sequence_number += 1
+            else:
+                break
+            
+        if code_suffix:
+            
+            leading_zeros = code_size - len(str(sequence_number))
+            
+            code = "0" * leading_zeros + str(sequence_number)
+            
+            quotation_sequence = code_prefix + code + code_suffix
+        
+            if quotation_sequence in codes_only:
+                sequence_number += 1
+            else:
+                break
 
     if request.method == 'POST':
+        
         quotation_form = QuotationForm(request.POST)
         
         # Create an empty formset instance
@@ -131,9 +170,55 @@ def createQuotation(request):
             
             # Save the quotation
             quotation = quotation_form.save()
+            
+            quotation.sequential_code = quotation_sequence
+            
+            quotation.save()
 
             # Loop through job fields and associate them with the quotation
             for key, value in request.POST.items():
+                
+                # Generating QuotationJob Sequential Code
+                quotationjob_codes = SequentialCode.objects.filter(code_of="quotation_job")
+                for quotationjob_code in quotationjob_codes:
+                    job_code_prefix = quotationjob_code.code_prefix
+                    job_code_size = quotationjob_code.code_size
+                    job_code_suffix = quotationjob_code.code_suffix
+              
+                job_codes_only = QuotationJob.objects.values_list('sequential_code', flat=True)
+                
+                job_loop = True
+                job_sequence_number = 1
+                
+                while job_loop:
+                    
+                    if not job_code_suffix:
+                        
+                        job_leading_zeros = job_code_size - len(str(job_sequence_number))
+                        
+                        job_code = "0" * job_leading_zeros + str(job_sequence_number)
+                        
+                        job_sequence = job_code_prefix + job_code
+                    
+                        if job_sequence in job_codes_only:
+                            job_sequence_number += 1
+                        else:
+                            break
+                        
+                    if job_code_suffix:
+                        
+                        job_leading_zeros = job_code_size - len(str(job_sequence_number))
+                        
+                        job_code = "0" * job_leading_zeros + str(job_sequence_number)
+                        
+                        job_sequence = job_code_prefix + job_code + job_code_suffix
+                    
+                        if job_sequence in job_codes_only:
+                            job_sequence_number += 1
+                        else:
+                            break
+                
+                #Saving each Job Data
                 if key.startswith("form-") and key.endswith("-length"):
                     job_index = key.split("-")[1]
                     job_data = {
@@ -146,7 +231,7 @@ def createQuotation(request):
                         'attachment': request.FILES.get(f"form-{job_index}-attachment"),
                         
                     }
-                    QuotationJob.objects.create(**job_data)
+                    QuotationJob.objects.create(**job_data, sequential_code=job_sequence)
                     
             
             return redirect(reverse('update_quotation', kwargs={'quotation_id': quotation.id}))
@@ -208,7 +293,6 @@ def deleteQuotation(request, quotation_id):
     
     quotation = Quotation.objects.get(id=quotation_id)
     quotation.delete()
-    print(quotation.customer_id.name)
     return redirect('view_quotations')
 
 
@@ -234,7 +318,7 @@ def eachQuotationJob(request, job_id):
             
             job_form.save()
             
-            return redirect(reverse('each_quotation_job', kwargs={'job_id': job_id}))
+            return redirect(reverse('each_quotation_job', kwargs={'id': job_id}))
         
     return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job})
 
@@ -255,8 +339,6 @@ def deleteAttachment(request, job_id):
 def jobAssigning(request):
         
     employees_to_assign = Employee.objects.filter(designation__designation = "Operator")
-    print(employees_to_assign)
-    print("Number of employees to assign:", employees_to_assign.count())
     
     employees_data = [{'id': employee.id, 'name': employee.name} for employee in employees_to_assign]
     
@@ -269,9 +351,6 @@ def jobAssigning(request):
         
         selected_employee_id = request.POST.get('employee_id')
         job_id = request.POST.get('job_id')
-        
-        print(selected_employee_id)
-        print(job_id)
 
         # Retrieve the Employee and Job objects
         selected_employee = get_object_or_404(Employee, id=selected_employee_id)
@@ -308,10 +387,3 @@ def sequentialCode(request):
     context = {'sequential_code_form': sequential_code_form, 'quotation_code': quotation_code, 'quotation_job_code': quotation_job_code, 'task_code': task_code}
     
     return render(request, 'sequential_code/sequential_code.html', context)
-
-@login_required
-def generateQuotationCode(request):
-    
-    
-    
-    return print("hi")
