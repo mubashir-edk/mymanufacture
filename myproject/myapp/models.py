@@ -83,7 +83,7 @@ class QuotationJob(models.Model):
     sequential_code = models.CharField(max_length=30, null=True, blank=True, unique=True)
     
     def __str__(self) -> str:
-        return str(self.quotation_id.chalan_no)
+        return str(self.sequential_code)
     
 class Machine(models.Model):
     

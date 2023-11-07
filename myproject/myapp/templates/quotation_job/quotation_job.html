@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 {% block content %}
 
-<form method="POST" action="" enctype="multipart/form-data">
+<form method="POST" action="" enctype="multipart/form-data" id="jobForm">
     {% csrf_token %}
 
     <div class="d-flex justify-content-between">
@@ -16,14 +16,11 @@
 
     <hr>
 
-    <!-- Modal to Assign job to operators -->
-    {% include "quotation_job/job_assign_modal.html" %}
+    
 
     <div>
-
-        {% comment %} <h2 class="d-none">{{ job_form.sequential_code }}</h2> {% endcomment %}
+        <h2 class="d-none">{{ job_form.sequential_code }}</h2>
         <h2>{{ job_id.sequential_code }}</h2>
-
     </div>
     
     <!-- Existing Quotation Job details -->
@@ -82,6 +79,12 @@
     </div>
 </form>
 
+<!-- Modal to Assign job to operators -->
+{% include "quotation_job/job_assign_modal.html" %}
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
@@ -94,7 +97,6 @@
                 type: 'GET',
                 dataType: 'json', // Expect JSON response
                 success: function (data) {
-                    console.log(data);
 
                     // Handle the success response and populate the modal
                     // Employees to assign
@@ -119,32 +121,40 @@
 
         // Add an event listener for the "Assign" button click
         $('#jobassignbtn').click(function (e) {
-            {% comment %} event.preventDefault(); {% endcomment %}
+            {% comment %} e.preventDefault(); {% endcomment %}
             // Get the selected employee and the job_id
             const selectedEmployee = $('#formAssignEmployee').val();
             const job_id = '{{ job_id.id }}';  // Get the current job_id from the page
-            
-            console.log({job_id});
-            console.log({selectedEmployee});
 
             // Include the CSRF token in the headers
             const csrfToken = $('input[name=csrfmiddlewaretoken]').val();
-            console.log(csrfToken);
             const headers = {
-                'X-CSRFToken': csrfToken
+                'X-CSRFToken': csrfToken,
+                "Content-Type": 'application/json',
             };
 
+            const data =  {
+                employee_id: selectedEmployee,
+                job_id: job_id  // Automatically save the job_id
+            }
+          
+            console.log({data})
+   
+            //return
             // Make an AJAX request to save the assignment
             $.ajax({
                 url: '{% url 'job_assigning' %}',
                 type: 'POST',
-                data: {
-                    employee_id: selectedEmployee,
-                    job_id: job_id  // Automatically save the job_id
-                },
+                data:JSON.stringify(data),
                 headers: headers,
-                success: function (data) {
-                    console.log("Job Assigned Successfully");
+                success: function (response) {
+                    if (response.redirect_url) {
+                        // Redirect to the specified URL
+                        window.location.href = response.redirect_url;
+                    } else {
+                        // Handle any other response conditions
+                        console.log("Error: " + response.error);
+                    }
                 },
                 error: function (xhr, textStatus, errorThrown) {
                     console.log("AJAX request failed:", textStatus, errorThrown);

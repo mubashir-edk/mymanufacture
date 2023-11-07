@@ -2,7 +2,6 @@
 {% block content %}
 
 <form method="POST" action="" enctype="multipart/form-data">
-    {% comment %} {{quotation.id}} {% endcomment %}
     {% csrf_token %}
 
     {% if quotation_form.errors %}
@@ -104,6 +103,12 @@
 
             <tr class="d-flex">
                 <td>{{ forloop.counter }}{{ job.id }}</td>
+
+                {% if job.id %}
+                    <td class="d-none">
+                        <h2 class="d-none">{{ job.sequential_code }}</h2>
+                    </td>
+                {% endif %}
 
                 <td>{{ job.length }}</td>
 

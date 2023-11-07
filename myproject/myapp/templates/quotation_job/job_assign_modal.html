@@ -6,7 +6,7 @@
                 <h5 class="modal-title" id="exampleModalLabel">Assigning job</h5>
             </div>
             <div class="modal-body" id="modalContent">
-                <form method="POST" id="createForm" action="{% url 'job_assigning' %}" enctype="multipart/form-data">
+                <form method="POST" id="createForm" action="{% url 'job_assigning' %}" enctype="multipart/form-data" id="assignForm">
                     {% csrf_token %}
                     <div class="modal-body">
                         <div class="form-group">

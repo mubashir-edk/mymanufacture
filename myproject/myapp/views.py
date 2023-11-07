@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
+import json
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from myapp.models import *
@@ -314,11 +315,13 @@ def eachQuotationJob(request, job_id):
     if request.method == 'POST':
         job_form = QuotationJobForm(request.POST, request.FILES, instance=quotation_job)
         
+        print(job_form.errors)
+        
         if job_form.is_valid():
             
             job_form.save()
             
-            return redirect(reverse('each_quotation_job', kwargs={'id': job_id}))
+        return redirect(reverse('each_quotation_job', kwargs={'job_id': job_id}))
         
     return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job})
 
@@ -339,6 +342,7 @@ def deleteAttachment(request, job_id):
 def jobAssigning(request):
         
     employees_to_assign = Employee.objects.filter(designation__designation = "Operator")
+    print(employees_to_assign)
     
     employees_data = [{'id': employee.id, 'name': employee.name} for employee in employees_to_assign]
     
@@ -349,18 +353,28 @@ def jobAssigning(request):
     
     if request.method == 'POST':
         
-        selected_employee_id = request.POST.get('employee_id')
-        job_id = request.POST.get('job_id')
+        try:
+            # Parse the JSON data from the request
+            data = json.loads(request.body.decode('utf-8'))
 
-        # Retrieve the Employee and Job objects
-        selected_employee = get_object_or_404(Employee, id=selected_employee_id)
-        job = get_object_or_404(QuotationJob, id=job_id)
+            selected_employee_id = data.get('employee_id')
+            job_id = data.get('job_id')
 
-        # Create a new JobAssign instance with the associated Employee and Job
-        job_assignment = JobAssign(employee_id=selected_employee, job_id=job)
-        job_assignment.save()
-        
-        # return redirect(reverse('each_quotation_job', kwargs={'job_id': job}))
+            # Retrieve the Employee and Job objects
+            selected_employee = get_object_or_404(Employee, id=selected_employee_id)
+            job = get_object_or_404(QuotationJob, id=job_id)
+
+            # Create a new JobAssign instance with the associated Employee and Job
+            job_assignment = JobAssign(employee_id=selected_employee, job_id=job)
+            job_assignment.save()
+            
+            print(job)
+
+            redirect_url = reverse('each_quotation_job', kwargs={'job_id': job.id})
+            return JsonResponse({'redirect_url': redirect_url})
+
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
             
     return JsonResponse({'error': 'Form is not valid'})
 
