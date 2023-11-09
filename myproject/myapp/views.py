@@ -308,6 +308,7 @@ def viewQuotationJobs(request):
 def eachQuotationJob(request, job_id):
     
     quotation_job = get_object_or_404(QuotationJob, pk=job_id)
+    print(quotation_job.id)
     
     job_form = QuotationJobForm(instance=quotation_job)
     
@@ -383,21 +384,70 @@ def jobAssigning(request):
 @login_required
 def sequentialCode(request):
     
-    sequential_code_form = SequentialCodeForm()
+    quotation_code = SequentialCode.objects.filter(code_of="quotation").first()
+    quotation_job_code = SequentialCode.objects.filter(code_of="quotation_job").first()
+    task_code = SequentialCode.objects.filter(code_of="task").first()
     
-    quotation_codes = SequentialCode.objects.filter(code_of="quotation")
-    for quotation_code in quotation_codes:
-        quotation_code = quotation_code
+    quotation_code_object = get_object_or_404(SequentialCode, pk=quotation_code.id)
+    quotation_job_code_object = get_object_or_404(SequentialCode, pk=quotation_job_code.id)
+    task_code_object = get_object_or_404(SequentialCode, pk=task_code.id)
+    
+    quotation_code_form = QuotationSequentialCodeForm(instance=quotation_code_object)
+    quotationjob_code_form = QuotationJobSequentialCodeForm(instance=quotation_job_code_object)
+    task_code_form = TaskSequentialCodeForm(instance=task_code_object)
+    
+    # Getting data from html via ajax
+    if request.method == 'POST':
+    
+        try:
+            # Parse the JSON data from the request
+            data = json.loads(request.body.decode('utf-8'))
 
-    quotation_job_codes = SequentialCode.objects.filter(code_of="quotation_job")
-    for quotation_job_code in quotation_job_codes:
-        quotation_job_code = quotation_job_code
-        
-    task_codes = SequentialCode.objects.filter(code_of="task")
-    for task_code in task_codes:
-        task_code = task_code
+            quotation_prefix = data.get('quotation_prefix')
+            quotation_size = data.get('quotation_size')
+            quotation_suffix = data.get('quotation_suffix')
+            print(quotation_prefix)
+            
+            # Updating Quotation Sequential Code
+            quotation_code_object.code_prefix = quotation_prefix
+            quotation_code_object.code_size = quotation_size
+            quotation_code_object.code_suffix = quotation_suffix
+            quotation_code_object.save()
+            
+            quotation_job_prefix = data.get('quotation_job_prefix')
+            quotation_job_size = data.get('quotation_job_size')
+            quotation_job_suffix = data.get('quotation_job_suffix')
+            print(quotation_job_prefix)
 
+            # Updating QuotationJob Sequential Code
+            quotation_job_code_object.code_prefix = quotation_job_prefix
+            quotation_job_code_object.code_size = quotation_job_size
+            quotation_job_code_object.code_suffix = quotation_job_suffix
+            quotation_job_code_object.save()
+            
+            task_prefix = data.get('task_prefix')
+            task_size = data.get('task_size')
+            task_suffix = data.get('task_suffix')
+            print(task_prefix)
+            
+            # Updating QuotationJob Sequential Code
+            task_code_object.code_prefix = task_prefix
+            task_code_object.code_size = task_size
+            task_code_object.code_suffix = task_suffix
+            task_code_object.save()
+
+            redirect_url = reverse('sequential_code')
+            return JsonResponse({'redirect_url': redirect_url})
+
+        except json.JSONDecodeError as e:
+            return JsonResponse({'error': 'Invalid JSON data'}, status=400)
     
-    context = {'sequential_code_form': sequential_code_form, 'quotation_code': quotation_code, 'quotation_job_code': quotation_job_code, 'task_code': task_code}
-    
+    context = {
+        'quotation_code_form': quotation_code_form,
+        'quotationjob_code_form': quotationjob_code_form,
+        'task_code_form': task_code_form,
+        'quotation_code': quotation_code,
+        'quotation_job_code': quotation_job_code,
+        'task_code': task_code
+    }
     return render(request, 'sequential_code/sequential_code.html', context)

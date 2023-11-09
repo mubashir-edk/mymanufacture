@@ -174,7 +174,49 @@ class JobAssignForm(forms.ModelForm):
         }
         
         
-class SequentialCodeForm(forms.ModelForm):
+class QuotationSequentialCodeForm(forms.ModelForm):
+    class Meta:
+        model = SequentialCode
+        fields = '__all__'
+        
+        widgets = {
+            'code_prefix': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodePrefix',
+            }),
+            'code_size': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodeSize',
+            }),
+            'code_suffix': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodeSuffix',
+            }),
+        }
+        
+        
+class QuotationJobSequentialCodeForm(forms.ModelForm):
+    class Meta:
+        model = SequentialCode
+        fields = '__all__'
+        
+        widgets = {
+            'code_prefix': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodePrefix',
+            }),
+            'code_size': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodeSize',
+            }),
+            'code_suffix': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formCodeSuffix',
+            }),
+        }
+        
+        
+class TaskSequentialCodeForm(forms.ModelForm):
     class Meta:
         model = SequentialCode
         fields = '__all__'

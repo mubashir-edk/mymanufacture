@@ -1,15 +1,22 @@
 {% extends 'index.html' %}
-{% load static %}
 {% block content %}
 
-<div class="d-flex justify-content-between mb-3">
-    <h3>Sequential Code Settings</h3>
-</div>
 
-<form method="POST" id="sequenceFormOne" action="" enctype="multipart/form-data">
+<form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %}
     
-    <div class="mt-3">
+    <div class="d-flex justify-content-between mb-3">
+
+        <div>
+            <h3>Sequential Code Settings</h3>
+        </div>
+        <div>
+            <input type="submit" class="btn bg-primary text-white" id="sequencecreatebtn" value="Save">
+        </div>
+
+    </div>
+
+    <div class="mt-3" id="sequenceFormOne">
         <span class="modelsHeading">Quotation</span>
         <hr class="modelsHeadingLine">
         <div class="d-flex justify-content-between">
@@ -18,34 +25,25 @@
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodePrefix" class="form-label me-2 mt-1">Prefix*</label>
-                    {{ sequential_code_form.code_prefix }}
+                    {{ quotation_code_form.code_prefix }}
                 </div>
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodeSize" class="form-label me-2 mt-1">Sequence Size*</label>
-                    {{ sequential_code_form.code_size }}
+                    {{ quotation_code_form.code_size }}
                 </div>
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodeSuffix" class="form-label me-2 mt-1">Suffix</label>
-                    {{ sequential_code_form.code_suffix }}
+                    {{ quotation_code_form.code_suffix }}
                 </div>
 
             </div>
 
-            <div>
-                <input type="submit" class="btn bg-primary text-white" id="sequencecreatebtn" value="Save">
-            </div>
-
         </div>
     </div>
-</form>
 
-
-<form method="POST" id="sequenceFormTwo" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <div class="mt-4">
+    <div class="mt-4" id="sequenceFormTwo">
         <span class="modelsHeading">QuotationJob</span>
         <hr class="modelsHeadingLine">
         <div class="d-flex justify-content-between">
@@ -54,34 +52,24 @@
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodePrefix" class="form-label me-2 mt-1">Prefix*</label>
-                    {{ sequential_code_form.code_prefix }}
+                    {{ quotationjob_code_form.code_prefix }}
                 </div>
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodeSize" class="form-label me-2 mt-1">Sequence Size*</label>
-                    {{ sequential_code_form.code_size }}
+                    {{ quotationjob_code_form.code_size }}
                 </div>
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodeSuffix" class="form-label me-2 mt-1">Suffix</label>
-                    {{ sequential_code_form.code_suffix }}
+                    {{ quotationjob_code_form.code_suffix }}
                 </div>
 
             </div>
-
-            <div>
-                <input type="submit" class="btn bg-primary text-white" id="sequencecreatebtn" value="Save">
-            </div>
-
         </div>
     </div>
-</form>
 
-
-<form method="POST" id="sequenceFormThree" action="" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <div class="mt-4">
+    <div class="mt-4" id="sequenceFormThree">
         <span class="modelsHeading">Task</span>
         <hr class="modelsHeadingLine">
         <div class="d-flex justify-content-between">
@@ -90,57 +78,95 @@
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodePrefix" class="form-label me-2 mt-1">Prefix*</label>
-                    {{ sequential_code_form.code_prefix }}
+                    {{ task_code_form.code_prefix }}
                 </div>
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodeSize" class="form-label me-2 mt-1">Sequence Size*</label>
-                    {{ sequential_code_form.code_size }}
+                    {{ task_code_form.code_size }}
                 </div>
 
                 <div class="col d-flex align-items-center">
                     <label for="formCodeSuffix" class="form-label me-2 mt-1">Suffix</label>
-                    {{ sequential_code_form.code_suffix }}
+                    {{ task_code_form.code_suffix }}
                 </div>
 
             </div>
-
-            <div>
-                <input type="submit" class="btn bg-primary text-white" id="sequencecreatebtn" value="Save">
-            </div>
-
         </div>
     </div>
-
+    
 </form>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
+        
+    $(document).ready(function () {
 
-        const quotation_form = document.getElementById("sequenceFormOne");
-        const quotation_prefix = quotation_form.querySelector("#formCodePrefix");
-        quotation_prefix.value = '{{ quotation_code.code_prefix }}';
-        const quotation_code_size = quotation_form.querySelector("#formCodeSize");
-        quotation_code_size.value = '{{ quotation_code.code_size }}';
-        const quotation_suffix = quotation_form.querySelector("#formCodeSuffix");
-        quotation_suffix.value = '{{ quotation_code.code_suffix }}';
+        // Add an event listener for the "Assign" button click
+        $('#sequencecreatebtn').click(function (e) {
+            e.preventDefault();
+            
+            // Get Quotation Code Data
+            const quotation_prefix = $('#sequenceFormOne #formCodePrefix').val();
+            const quotation_size = $('#sequenceFormOne #formCodeSize').val();
+            const quotation_suffix = $('#sequenceFormOne #formCodeSuffix').val();
 
+            // Get QuotationJob Code Data
+            const quotation_job_prefix = $('#sequenceFormTwo #formCodePrefix').val();
+            const quotation_job_size = $('#sequenceFormTwo #formCodeSize').val();
+            const quotation_job_suffix = $('#sequenceFormTwo #formCodeSuffix').val();
+            
+            // Get Quotation Code Data
+            const task_prefix = $('#sequenceFormThree #formCodePrefix').val();
+            const task_size = $('#sequenceFormThree #formCodeSize').val();
+            const task_suffix = $('#sequenceFormThree #formCodeSuffix').val();
 
-        const job_form = document.getElementById("sequenceFormTwo");
-        const job_prefix = job_form.querySelector("#formCodePrefix");
-        job_prefix.value = '{{ quotation_job_code.code_prefix }}';
-        const job_code_size = job_form.querySelector("#formCodeSize");
-        job_code_size.value = '{{ quotation_job_code.code_size }}';
-        const job_suffix = job_form.querySelector("#formCodeSuffix");
-        job_suffix.value = '{{ quotation_job_code.code_suffix }}';
+            // Include the CSRF token in the headers
+            const csrfToken = $('input[name=csrfmiddlewaretoken]').val();
+            const headers = {
+                'X-CSRFToken': csrfToken,
+                "Content-Type": 'application/json',
+            };
 
+            const data =  {
+                quotation_prefix: quotation_prefix,
+                quotation_size: quotation_size,
+                quotation_suffix: quotation_suffix,
+                quotation_job_prefix: quotation_job_prefix,
+                quotation_job_size: quotation_job_size,
+                quotation_job_suffix: quotation_job_suffix,
+                task_prefix: task_prefix,
+                task_size: task_size,
+                task_suffix: task_suffix,
+            }
+            
+            console.log({data})
+    
+            //return
+            // Make an AJAX request to save the assignment
+            $.ajax({
+                url: '{% url 'sequential_code' %}',
+                type: 'POST',
+                data:JSON.stringify(data),
+                headers: headers,
+                success: function (response) {
+                    if (response.redirect_url) {
+                        // Redirect to the specified URL
+                        window.location.href = response.redirect_url;
+                    } else {
+                        // Handle any other response conditions
+                        console.log("Error: " + response.error);
+                    }
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                    console.log("AJAX request failed:", textStatus, errorThrown);
+                }
+            });
+        });
 
-        const task_form = document.getElementById("sequenceFormThree");
-        const task_prefix = task_form.querySelector("#formCodePrefix");
-        task_prefix.value = '{{ task_code.code_prefix }}';
-        const task_code_size = task_form.querySelector("#formCodeSize");
-        task_code_size.value = '{{ task_code.code_size }}';
-        const task_suffix = task_form.querySelector("#formCodeSuffix");
-        task_suffix.value = '{{ task_code.code_suffix }}';
+    });
 
 </script>
 
