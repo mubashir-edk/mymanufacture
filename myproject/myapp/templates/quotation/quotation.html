@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 {% block content %}
+{% load static %}
 
 <form method="POST" action="" enctype="multipart/form-data">
     {% csrf_token %}
@@ -135,6 +136,9 @@
         <button type="button" id="addJobButton" class="btn btn-secondary">Add Job</button>
     </div>
 
+    {% comment %} <script src="{% static 'js/quotation/employee.js' %}"></script> {% endcomment %}
+
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             const addJobButton = document.getElementById("addJobButton");
@@ -160,6 +164,6 @@
             // addJobButton.click();
         });
         
-        </script>
+    </script>
 
 {% endblock content %}

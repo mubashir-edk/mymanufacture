@@ -30,8 +30,15 @@ urlpatterns = [
     
     # JobAssign
     path('job_assigning', views.jobAssigning, name='job_assigning'),
+    path('job_unassign/<uuid:job_task_id>', views.unAssignJob, name='job_unassign'),
     
     # SequentialCode
     path('sequential_code', views.sequentialCode, name='sequential_code'),
+    
+    # Task
+    path('view_tasks', views.viewTasks, name='view_tasks'),
+    
+    # Machine
+    path('machines', views.machineSettings, name='machines'),
     
 ]

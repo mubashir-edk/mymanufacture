@@ -308,15 +308,15 @@ def viewQuotationJobs(request):
 def eachQuotationJob(request, job_id):
     
     quotation_job = get_object_or_404(QuotationJob, pk=job_id)
-    print(quotation_job.id)
     
     job_form = QuotationJobForm(instance=quotation_job)
     
+    job_task = Task.objects.filter(job_id=job_id).first()
+    
+    job_operator = JobAssign.objects.filter(job_id=job_id).first()
     
     if request.method == 'POST':
         job_form = QuotationJobForm(request.POST, request.FILES, instance=quotation_job)
-        
-        print(job_form.errors)
         
         if job_form.is_valid():
             
@@ -324,7 +324,7 @@ def eachQuotationJob(request, job_id):
             
         return redirect(reverse('each_quotation_job', kwargs={'job_id': job_id}))
         
-    return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job})
+    return render(request, 'quotation_job/quotation_job.html', {'job_form': job_form, 'job_id': quotation_job, 'job_task': job_task, 'job_operator': job_operator})
 
 @login_required
 def deleteAttachment(request, job_id):
@@ -343,7 +343,6 @@ def deleteAttachment(request, job_id):
 def jobAssigning(request):
         
     employees_to_assign = Employee.objects.filter(designation__designation = "Operator")
-    print(employees_to_assign)
     
     employees_data = [{'id': employee.id, 'name': employee.name} for employee in employees_to_assign]
     
@@ -355,6 +354,7 @@ def jobAssigning(request):
     if request.method == 'POST':
         
         try:
+
             # Parse the JSON data from the request
             data = json.loads(request.body.decode('utf-8'))
 
@@ -369,7 +369,53 @@ def jobAssigning(request):
             job_assignment = JobAssign(employee_id=selected_employee, job_id=job)
             job_assignment.save()
             
-            print(job)
+            # Generating Task Sequential Code
+            task_codes = SequentialCode.objects.filter(code_of="task")
+            for task_code in task_codes:
+                task_code_prefix = task_code.code_prefix
+                task_code_size = task_code.code_size
+                task_code_suffix = task_code.code_suffix
+                
+                print(f"{task_code} is Already there")
+            
+            task_codes_only = Task.objects.values_list('sequential_code', flat=True)
+            
+            task_loop = True
+            task_sequence_number = 1
+            
+            while task_loop:
+                
+                if not task_code_suffix:
+                    
+                    task_leading_zeros = task_code_size - len(str(task_sequence_number))
+                    
+                    task_code = "0" * task_leading_zeros + str(task_sequence_number)
+                    
+                    task_sequence = task_code_prefix + task_code
+                
+                    if task_sequence in task_codes_only:
+                        task_sequence_number += 1
+                    else:
+                        break
+                    
+                if task_code_suffix:
+                    
+                    task_leading_zeros = task_code_size - len(str(task_sequence_number))
+                    
+                    task_code = "0" * task_leading_zeros + str(task_sequence_number)
+                    
+                    task_sequence = task_code_prefix + task_code + task_code_suffix
+                
+                    if task_sequence in task_codes_only:
+                        task_sequence_number += 1
+                    else:
+                        break
+            
+            # After assigning job create task corresponding to the job with employee
+            print(task_sequence)
+            task_create = Task(job_id=job, operator_id=selected_employee, sequential_code=task_sequence)
+            task_create.save()
+        
 
             redirect_url = reverse('each_quotation_job', kwargs={'job_id': job.id})
             return JsonResponse({'redirect_url': redirect_url})
@@ -378,6 +424,15 @@ def jobAssigning(request):
             return JsonResponse({'error': 'Invalid JSON data'}, status=400)
             
     return JsonResponse({'error': 'Form is not valid'})
+
+@login_required
+def unAssignJob(request, job_task_id):
+    
+    unassign_job_task = Task.objects.get(id=job_task_id)
+    unassign_job_operator = JobAssign.objects.get(job_id=unassign_job_task.job_id)
+    unassign_job_operator.delete()
+    unassign_job_task.delete()
+    return redirect('view_tasks')
 
 
 # SequentialCode Functions --------------------------------------------------------------------------------------------------------------
@@ -406,7 +461,6 @@ def sequentialCode(request):
             quotation_prefix = data.get('quotation_prefix')
             quotation_size = data.get('quotation_size')
             quotation_suffix = data.get('quotation_suffix')
-            print(quotation_prefix)
             
             # Updating Quotation Sequential Code
             quotation_code_object.code_prefix = quotation_prefix
@@ -417,7 +471,6 @@ def sequentialCode(request):
             quotation_job_prefix = data.get('quotation_job_prefix')
             quotation_job_size = data.get('quotation_job_size')
             quotation_job_suffix = data.get('quotation_job_suffix')
-            print(quotation_job_prefix)
 
             # Updating QuotationJob Sequential Code
             quotation_job_code_object.code_prefix = quotation_job_prefix
@@ -428,7 +481,6 @@ def sequentialCode(request):
             task_prefix = data.get('task_prefix')
             task_size = data.get('task_size')
             task_suffix = data.get('task_suffix')
-            print(task_prefix)
             
             # Updating QuotationJob Sequential Code
             task_code_object.code_prefix = task_prefix
@@ -451,3 +503,33 @@ def sequentialCode(request):
         'task_code': task_code
     }
     return render(request, 'sequential_code/sequential_code.html', context)
+
+
+# Task Functions ------------------------------------------------------------------------------------------------------------------
+@login_required
+def viewTasks(request):
+    
+    # Getting Tasks from db
+    tasks = Task.objects.all()
+    tasks_exist = tasks.exists()
+    number_of_tasks = tasks.count()
+
+    return render(request, 'task/view_tasks.html', {'tasks': tasks, 'tasks_exist': tasks_exist, 'number_of_tasks': number_of_tasks})
+
+
+# Machine Functions ---------------------------------------------------------------------------------------------------------------------
+@login_required
+def machineSettings(request):
+    
+    machine_form = MachineForm()
+    
+    if request.method == 'POST':
+        
+        machine_form = MachineForm(request.POST)
+        
+        if machine_form.is_valid():
+            
+            machine_form.save()
+            return redirect('machines')
+        
+    return render(request)

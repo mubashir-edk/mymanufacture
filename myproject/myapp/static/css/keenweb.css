@@ -2,11 +2,11 @@
 /* MAIN NAVBAR */
 
 .main-nav{
-    width: calc(100% - 293px);
+    width: calc(100% - 250px);
     height: 64px;
     position: fixed;
     background: #000;
-    margin-left: 293px;
+    margin-left: 250px;
     transition: ease 0.3s; 
     z-index: 2;
 
@@ -99,7 +99,7 @@
 /* SIDE NAVBAR */
 
 .side-nav{
-    width: 293px;
+    width: 250px;
     height: 100%;
     background: #202B46;
     top: 0;
@@ -209,14 +209,15 @@
 /* SECTION */
 
 section{
-    width: calc(100% -293px);
-    margin-left: 293px;
+    width: calc(100% - 250px);
+    margin-left: 250px;
     padding-top: 62px;
     transition: ease 0.3s;    
 }
 
 #check:checked ~ section{
     width: calc(100% -72px);
+    min-width: 100%;
     margin-left: 72px;
     transition: ease 0.3s;    
 }
@@ -435,4 +436,3 @@ section{
 .scroll-top.show{
     display: block;
 }
-

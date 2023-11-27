@@ -235,3 +235,20 @@ class TaskSequentialCodeForm(forms.ModelForm):
                 'id': 'formCodeSuffix',
             }),
         }
+
+
+class MachineForm(forms.ModelForm):
+    class Meta:
+        model = Machine
+        fields = '__all__'
+        
+        widgets = {
+            'machine_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formMachineName',
+            }),
+            'status': forms.Select(attrs={
+                'class': 'form-select',
+                'id': 'formMachineStatus',
+            }),
+        }

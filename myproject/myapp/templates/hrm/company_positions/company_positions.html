@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 {% block content %}
+{% load static %}
 
 <div class="d-flex justify-content-between">
     <h5> <span class="badge bg-dark">Number of Designations:  {{ number_of_designations }}</span> </h5>
@@ -33,7 +34,7 @@
 
 {% if designations_exists %}
 <div class='table-responsive'>
-    <table class="table table-striped mt-2 align-middle">
+    <table class="table table-striped mt-2 align-middle table-bordered">
         <thead>
         <tr>
             <th scope="col"></th>
@@ -56,19 +57,7 @@
 </div>
 {% endif %}
 
+<script src="{% static 'js/company_positions/company_positions.js' %}"></script>
 
-<script>
-    $(document).ready(function() {
-        // Load content from 'second_url' and insert it into the modal body
-        $(document).on('click', '[data-target="#createModal"]', function(e) {
-            e.preventDefault();
-            var modalBody = $('#createModal .modal-body');
-            
-            $.get("{% url 'create_company_position' %}", function(data) {
-                modalBody.html(data);
-            });
-        });
-    });
-</script>
 
 {% endblock content %}

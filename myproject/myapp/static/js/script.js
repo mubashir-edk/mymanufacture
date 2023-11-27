@@ -30,7 +30,7 @@ function applyIfCondition() {
 }
 
 function applyElseCondition() {
-    sideNav.style.width = "293px";
+    sideNav.style.width = "250px";
     sideNav.style.overflowY = "visible";
     navBrand.style.display = "inline";
     sideNavContent.forEach(content => content.style.display = "inline");

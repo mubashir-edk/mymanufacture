@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{% static 'css/image_profile.css' %}">
     <link rel="stylesheet" href="{% static 'css/sequential_code.css' %}">
     <link rel="stylesheet" href="{% static 'css/keenweb.css' %}">
+    <link rel="stylesheet" href="{% static 'css/task_kanban.css' %}">
 
 </head>
 <body>
@@ -261,6 +262,18 @@
 
                             </div>
 
+                            <p class="mt-4 mb-2 sidenav-subhead">OPERATIONS</p>
+
+                            <!-- TASK -->
+                            <div class="dropdown-sidenav mt-3">
+
+                                <div>
+                                    <i class="bi bi-ui-checks-grid"></i>
+                                    <span class="ms-1" id="sideNavContent"><a href="{% url 'view_tasks' %}">Task</a></span>
+                                </div>
+
+                            </div>
+
                             <p class="mt-4 mb-2 sidenav-subhead">CRM</p>
 
                             <!-- CUSTOMER -->
@@ -370,6 +383,8 @@
                                 <div class="collapse" id="dropdownSettings">
                                     <ul class="mt-2 navbar-nav d-grid" id="dropdownMenu">
                                         <li><a href="{% url 'sequential_code' %}">Sequential Code</a></li>
+                                        {% comment %} <li><a href="{% url 'kanban_view' %}">Kanban View</a></li> {% endcomment %}
+                                        <li><a href="{% url 'machines' %}">Machines</a></li>
                                     </ul>
                                 </div>
 
@@ -451,7 +466,6 @@
             });
         });
     </script>
-
 
 </body>
 </html>

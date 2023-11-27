@@ -1,5 +1,6 @@
 {% extends 'index.html' %}
 {% block content %}
+{% load static %}
 
 <form method="POST" action="" enctype="multipart/form-data" id="jobForm">
     {% csrf_token %}
@@ -7,7 +8,33 @@
     <div class="d-flex justify-content-between">
         <div>
             <a href="{% url 'view_quotation_jobs' %}" class="btn btn-secondary">Back</a>
-            <a href="" id="openModalLink" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobAssignModal">Assign</a>
+
+            {% if job_task and job_operator %}
+                <a href="" id="unAssignModal" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#unAssignTaskModal">UnAssign</a>
+
+                <!-- Modal for confirming UnAssign the Job -->
+                <div class="modal fade" id="unAssignTaskModal" role="dialog" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="unAssignModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="unAssignModalLabel">UnAssign Confirmation</h5>
+                            </div>
+                            <div class="modal-body">
+                                <p>Are you sure you want to UnAssign the job from <b>{{ job_task.operator_id }}</b>?</p>
+                                <input type="hidden" value={{ job_task.id }} id="jobTaskId"/>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <a href="" class="btn btn-danger" id="confirmUnAssign" style="color: black;">UnAssign</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {% else %}
+                <a href="" id="openModalLink" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#jobAssignModal">Assign</a>
+            {% endif %}
+
         </div>
         <div>
             <button type="submit" class="btn btn-primary">Save</button>
@@ -83,86 +110,13 @@
 {% include "quotation_job/job_assign_modal.html" %}
 
 
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-    $(document).ready(function () {
-        $('#openModalLink').click(function (e) {
-            // When the link is clicked, load data via AJAX and populate the modal
-            $.ajax({
-                url: '{% url 'job_assigning' %}',
-                type: 'GET',
-                dataType: 'json', // Expect JSON response
-                success: function (data) {
-
-                    // Handle the success response and populate the modal
-                    // Employees to assign
-                    const employeesToAssign = data.employees_to_assign;
-                    const employeeSelect = $('#formAssignEmployee');
-                                
-                    employeesToAssign.forEach(function (employee) {
-                        employeeSelect.append($('<option>', {
-                            value: employee.id,
-                            text: employee.name
-                        }));
-                    });
-                    
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    // Handle any errors that occur during the AJAX request
-                    console.log("AJAX request failed:", textStatus, errorThrown);
-                }
-            });            
-        });
-
-
-        // Add an event listener for the "Assign" button click
-        $('#jobassignbtn').click(function (e) {
-            {% comment %} e.preventDefault(); {% endcomment %}
-            // Get the selected employee and the job_id
-            const selectedEmployee = $('#formAssignEmployee').val();
-            const job_id = '{{ job_id.id }}';  // Get the current job_id from the page
-
-            // Include the CSRF token in the headers
-            const csrfToken = $('input[name=csrfmiddlewaretoken]').val();
-            const headers = {
-                'X-CSRFToken': csrfToken,
-                "Content-Type": 'application/json',
-            };
-
-            const data =  {
-                employee_id: selectedEmployee,
-                job_id: job_id  // Automatically save the job_id
-            }
-          
-            console.log({data})
-   
-            //return
-            // Make an AJAX request to save the assignment
-            $.ajax({
-                url: '{% url 'job_assigning' %}',
-                type: 'POST',
-                data:JSON.stringify(data),
-                headers: headers,
-                success: function (response) {
-                    if (response.redirect_url) {
-                        // Redirect to the specified URL
-                        window.location.href = response.redirect_url;
-                    } else {
-                        // Handle any other response conditions
-                        console.log("Error: " + response.error);
-                    }
-                },
-                error: function (xhr, textStatus, errorThrown) {
-                    console.log("AJAX request failed:", textStatus, errorThrown);
-                }
-            });
-        });
-
-    });
+    window.ajaxUrl =  '{% url 'job_assigning' %}';
 </script>
+
+<script src="{% static 'js/quotation_job/quotation_job.js' %}"></script>
 
 {% endblock content %}

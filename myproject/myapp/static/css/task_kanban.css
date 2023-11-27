@@ -1,0 +1,26 @@
+/* .task-kanban-board {
+
+} */
+
+.task-kanban-column {
+    height: auto;
+    min-width: 295px;
+    max-width: 295px;
+    margin: 8px;
+    padding: 8px;
+    border-radius: 10px;
+    background: beige;
+    box-shadow: 2px -1px 8px rgb(54, 52, 52);
+}
+
+.task-kanban-column-head {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.task-kanban-column-card {
+    background-color: rgb(255, 255, 255);
+    height: 45px;
+    width: 100%;
+    border-radius: 5px;
+}

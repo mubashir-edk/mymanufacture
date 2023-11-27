@@ -51,7 +51,7 @@ class Quotation(models.Model):
     created_on = models.DateTimeField(default=timezone.now ,null=False, blank=False)
     status = models.CharField(max_length=50, choices=status_choices, default='draft')
     
-    sequential_code = models.CharField(max_length=30, null=True, blank=True, unique=True)
+    sequential_code = models.CharField(max_length=50, null=True, blank=True, unique=True)
     
     def __str__(self) -> str:
         return self.sequential_code
@@ -80,9 +80,9 @@ class QuotationJob(models.Model):
     quantity = models.IntegerField(null=False, blank=False)
     attachment = models.FileField(null=True, blank=True)
     
-    sequential_code = models.CharField(max_length=30, null=True, blank=True, unique=True)
+    sequential_code = models.CharField(max_length=50, null=True, blank=True, unique=True)
     
-    def __str__(self) -> str:
+    def __str__(self):
         return str(self.sequential_code)
     
 class Machine(models.Model):
@@ -102,13 +102,16 @@ class Task(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     job_id = models.ForeignKey(QuotationJob, on_delete=models.CASCADE)
-    machine_id = models.ForeignKey(Machine, on_delete=models.CASCADE)
+    operator_id = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    machine_id = models.ForeignKey(Machine, on_delete=models.CASCADE, null=True, blank=True)
     estimate_duration = models.DurationField(null=True, blank=True)
     completed_in = models.DurationField(null=True, blank=True)
     status = models.CharField(max_length=30, choices=status_choices, default='pending')
     
-    def __str__(self) -> str:
-        return self.job_id
+    sequential_code = models.CharField(max_length=50, null=True, blank=True, unique=True)
+    
+    def __str__(self):
+        return str(self.sequential_code)
     
 class JobAssign(models.Model):
     
@@ -117,7 +120,3 @@ class JobAssign(models.Model):
     
     def __str__(self) -> str:
         return str(self.employee_id)
-    
-
-
-    
