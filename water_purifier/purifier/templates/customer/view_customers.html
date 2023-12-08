@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block head %}
+    <title>View Customer</title>
+    <link href="{% static 'css/customer/view_customers.css' %}" rel="stylesheet" type="text/css">
+{% endblock head %}
+
+{% block content %}
+
+    <div class="d-grid">
+        <div class="d-flex justify-content-between">
+            <span class="customer_heading">Customers</span>
+            <a href="{% url "purifier:create_customer" %}" class="anchor_tag"><button type="button" class="btn btn-primary">Create</button></a>
+        </div>
+
+        <hr class="mt-1">
+
+        <div class="mt-1">
+            {% if customers_exists %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                
+                    <thead class="table-secondary">
+                        <tr>
+                            <th></th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Mobile</th>
+                            <th>Whatsapp</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for customer in customers %}
+
+                            <tr>
+                                <td class="text-center"><a href="{% url "purifier:each_customer" customer.id %}" class="anchor_tag">{{ forloop.counter }}</a></td>
+                                <td>
+                                    <a href="{% url "purifier:each_customer" customer.id %}" class="anchor_tag">{{ customer.customer_code }}</a>
+                                </td>
+                                <td>
+                                    <a href="{% url "purifier:each_customer" customer.id %}" class="anchor_tag">
+                                        {% if customer.profile %}
+                                        <img src="{{customer.profile.url}}" alt="Profile not loading..." style="width: 25px; height: 25px; border-radius: 50%;">
+                                        {% else %}
+                                        <img src="{% static 'images/default.png' %}" alt="Profile not loading..." style="width: 25px; height: 25px; border-radius: 50%;">
+                                        {% endif %}
+                                    </a>
+                                    <a href="{% url "purifier:each_customer" customer.id %}" class="anchor_tag">{{ customer.name }}</a>
+                                </td>
+                                <td><a href="{% url "purifier:each_customer" customer.id %}" class="anchor_tag">{{ customer.mobile }}</a></td>
+                                <td><a href="{% url "purifier:each_customer" customer.id %}" class="anchor_tag">{{ customer.whatsapp_number }}</a></td>
+                            </tr>
+
+                        {% endfor %}
+    
+                    </tbody>
+
+                </table>
+            </div>
+            {% else %}
+            <div class="d-flex justify-content-center">
+                <span>No Customers added. <a href="{% url "purifier:create_customer" %}">Create</a> a new customer.</span>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock content %}

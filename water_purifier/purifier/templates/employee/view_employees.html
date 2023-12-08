@@ -1,0 +1,70 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block head %}
+    <title>View Employees</title>
+    <link href="{% static 'css/employee/view_employees.css' %}" rel="stylesheet" type="text/css">
+{% endblock head %}
+
+{% block content %}
+
+    <div class="d-grid">
+        <div class="d-flex justify-content-between">
+            <span class="employee_heading">Employees</span>
+            <a href="{% url 'purifier:create_employee' %}" class="anchor_tag"><button type="button" class="btn btn-primary">Create</button></a>
+        </div>
+
+        <hr class="mt-1">
+
+        <div class="mt-1">
+            {% if employees_exists %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped">
+                
+                    <thead class="table-secondary">
+                        <tr>
+                            <th></th>
+                            <th>Code</th>
+                            <th>Name</th>
+                            <th>Contant</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for employee in employees %}
+
+                            <tr>
+                                <td class="text-center"><a href="{% url "purifier:each_employee" employee.id %}" class="anchor_tag">{{ forloop.counter }}</a></td>
+                                <td>
+                                    <a href="{% url "purifier:each_employee" employee.id %}" class="anchor_tag">{{ employee.employee_code }}</a>
+                                </td>
+                                <td>
+                                    <a href="{% url "purifier:each_employee" employee.id %}" class="anchor_tag">
+                                        {% if employee.profile %}
+                                        <img src="{{employee.profile.url}}" alt="Profile not loading..." style="width: 25px; height: 25px; border-radius: 50%;">
+                                        {% else %}
+                                        <img src="{% static 'images/default.png' %}" alt="Profile not loading..." style="width: 25px; height: 25px; border-radius: 50%;">
+                                        {% endif %}
+                                    </a>
+                                    <a href="{% url "purifier:each_employee" employee.id %}" class="anchor_tag">{{ employee.name }}</a>
+                                </td>
+                                <td><a href="{% url "purifier:each_employee" employee.id %}" class="anchor_tag">{{ employee.mobile }}</a></td>
+                            </tr>
+
+                        {% endfor %}
+    
+                    </tbody>
+
+                </table>
+            </div>
+            {% else %}
+            <div class="d-flex justify-content-center">
+                <span>No employees added. <a href="{% url 'purifier:create_employee' %}">Create</a> a new employee.</span>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock content %}

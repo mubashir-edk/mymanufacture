@@ -1,0 +1,87 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block head %}
+    <title>{{ customer.name }}</title>
+{% endblock head %}
+
+{% block content %}
+
+    <div>
+
+        <div class="d-flex justify-content-between">
+            <a href="{% url "purifier:view_customers" %}" class="btn btn-secondary">&lt;Back</a>
+
+            <div>
+                <a href="{% url "purifier:update_customer" customer.id %}" class="btn btn-dark">Edit</a>
+                <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteCustomerModal">Delete</a>
+            </div>
+
+            {% comment %} Delete customer confirmation modal {% endcomment %}
+            <div class="modal fade" id="deleteCustomerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteCustomerModalTitle" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteCustomerModalTitle">Delete Customer</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure?<br>You want to delete customer {{ customer.name }}({{ customer.customer_code}})
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="{% url "purifier:delete_customer" customer.id %}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% comment %} modal ends {% endcomment %}
+
+        </div>
+
+        <hr class="mt-1">
+
+        <div class="d-grid">
+
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+
+                    {% if customer.profile %}
+                        <img src="{{ customer.profile.url }}" alt="Profile not loading..." style="width: 150px; height: 150px; border-radius: 50%;">
+                    {% else %}
+                        <img src="{% static 'images/default.png' %}" alt="Image not loading..." style="width: 150px; height: 150px; border-radius: 50%;">
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <div class="row d-lg-flex justify-content-lg-between d-grid justify-content-center">
+
+                <div class="col-lg-6 col-12">
+                    <label for="customerName" class="form-label mt-3">Name</label>
+                    <input type="text" class="form-control" id="customerName" value="{{ customer.name }}" readonly/>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <label for="customerMobile" class="form-label mt-3">Mobile</label>
+                    <input type="text" class="form-control" id="customerMobile" value="{{ customer.mobile }}" readonly/>
+                </div>
+
+            </div>
+
+            <div class="row d-lg-flex justify-content-lg-between d-grid justify-content-center">
+
+                <div class="col-lg-6 col-12">
+                    <label for="customerWhatsppNumber" class="form-label mt-3">Whatsapp</label>
+                    <input type="text" class="form-control" id="customerWhatsappNumber" value="{{ customer.whatsapp_number }}" readonly/>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <label for="customerAddress" class="form-label mt-3">Address</label>
+                    <textarea id="customerAddress" class="form-control" readonly>{{ customer.address }}</textarea>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}

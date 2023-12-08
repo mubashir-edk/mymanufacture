@@ -1,0 +1,94 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block head %}
+    <title>{{ employee.name }}</title>
+{% endblock head %}
+
+{% block content %}
+
+    <div>
+
+        <div class="d-flex justify-content-between">
+            <a href="{% url "purifier:view_employees" %}" class="btn btn-secondary">&lt;Back</a>
+
+            <div>
+                <a href="{% url "purifier:update_employee" employee.id %}" class="btn btn-dark">Edit</a>
+                <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal">Delete</a>
+            </div>
+
+            {% comment %} Delete employee confirmation modal {% endcomment %}
+            <div class="modal fade" id="deleteEmployeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteEmployeeModalTitle" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteEmployeeModalTitle">Delete Employee</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Are you sure?<br>You want to delete employee {{ employee.name }}({{ employee.employee_code}})
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="{% url "purifier:delete_employee" employee.id %}" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% comment %} modal ends {% endcomment %}
+
+        </div>
+
+        <hr class="mt-1">
+
+        <div class="d-grid">
+
+            <div class="row">
+                <div class="col-12 d-flex justify-content-center">
+
+                    {% if employee.profile %}
+                        <img src="{{ employee.profile.url }}" alt="Profile not loading..." style="width: 150px; height: 150px; border-radius: 50%;">
+                    {% else %}
+                        <img src="{% static 'images/default.png' %}" alt="Image not loading..." style="width: 150px; height: 150px; border-radius: 50%;">
+                    {% endif %}
+
+                </div>
+            </div>
+
+            <div class="row d-lg-flex justify-content-lg-between d-grid justify-content-center">
+
+                <div class="col-lg-6 col-12">
+                    <label for="employeeName" class="form-label mt-3">Name</label>
+                    <input type="text" class="form-control" id="employeeName" value="{{ employee.name }}" readonly/>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <label for="employeeMobile" class="form-label mt-3">Mobile</label>
+                    <input type="text" class="form-control" id="employeeMobile" value="{{ employee.mobile }}" readonly/>
+                </div>
+
+            </div>
+
+            <div class="row d-lg-flex justify-content-lg-between d-grid justify-content-center">
+
+                <div class="col-lg-6 col-12">
+                    <label for="employeeState" class="form-label mt-3">State</label>
+                    <input type="text" class="form-control" id="employeeState" value="{{ employee.state }}" readonly/>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <label for="employeeDistrict" class="form-label mt-3">Distirct</label>
+                    <input type="text" class="form-control" id="employeeDistrict" value="{{ employee.district }}" readonly/>
+                </div>
+
+            </div>
+
+            <div class="row justify-content-start">
+                <div class="col-6">
+                    <label for="employeeAddress" class="form-label mt-3">Address</label>
+                    <textarea id="employeeAddress" class="form-control" readonly>{{ employee.address }}</textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}
