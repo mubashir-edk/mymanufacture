@@ -68,10 +68,40 @@ class CategoryForm(forms.ModelForm):
         model = Category
         fields = '__all__'
         
-class Product(forms.ModelForm):
+        widgets = {
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'id': 'formCategoryImage',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formCategoryName',
+            }),
+        }
+        
+class ProductForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+        
+        widgets = {
+            'category': forms.Select(attrs={
+                'class': 'form-select',
+                'id': 'formProductCategory',
+            }),
+            'name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formProductName',
+            }),
+            'image': forms.FileInput(attrs={
+                'class': 'form-control',
+                'id': 'formProductImage',
+            }),
+            'services': forms.CheckboxSelectMultiple(attrs={
+                'class': 'form-checkbox',
+                'id': 'formProductServices',
+            }),
+        }
         
 class ServiceForm(forms.ModelForm):
     class Meta:

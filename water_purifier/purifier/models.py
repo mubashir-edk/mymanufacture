@@ -46,30 +46,30 @@ class Employee(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     profile = models.ImageField(null=True, blank=True, upload_to="employee_profiles/")
-    name = models.CharField(max_length=50, help_text="Employee name")
-    mobile = models.CharField(max_length=20, help_text="Mobile number")
+    name = models.CharField(max_length=50)
+    mobile = models.CharField(max_length=20)
     state = models.CharField(max_length=50, choices=STATE_CHOICES, default='NULL')
     district = models.CharField(max_length=100)
-    address = models.TextField(help_text="Address...")
+    address = models.TextField()
     employee_code = models.CharField(max_length=50, null=True, blank=True, unique=True)
     
     def __str__(self) -> str:
-        return self.name
+        return self.employee_code
 
 class Customer(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     profile = models.ImageField(null=True, blank=True, upload_to="customer_profiles/")
-    name = models.CharField(max_length=50, help_text="Customer name")
-    address = models.TextField(help_text="Address...")
-    mobile = models.CharField(max_length=20, help_text="Mobile number")
-    whatsapp_number = models.CharField(max_length=20, help_text="Whatsapp number")
+    name = models.CharField(max_length=50)
+    address = models.TextField()
+    mobile = models.CharField(max_length=20)
+    whatsapp_number = models.CharField(max_length=20)
     # installed_product
     # location
     customer_code = models.CharField(max_length=50, blank=True, unique=True)
     
     def __str__(self) -> str:
-        return self.name
+        return self.customer_code
     
 class Category(models.Model):
     
@@ -77,10 +77,16 @@ class Category(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to="category_images/")
     name = models.CharField(max_length=50)
     
+    def __str__(self) -> str:
+        return self.name
+    
 class Service(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     name = models.CharField(max_length=180)
+    
+    def __str__(self) -> str:
+        return self.name
     
 class Product(models.Model):
     
@@ -90,9 +96,19 @@ class Product(models.Model):
     image = models.ImageField(null=True, blank=True, upload_to="product_images/")
     services = models.ManyToManyField(Service)
     
-# class Servicer(models.Model):
+    def __str__(self) -> str:
+        return self.name
+    
+class Servicer(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    name= models.ForeignKey(Employee, on_delete=models.CASCADE)
+    
+    def __str__(self) -> str:
+        return self.name.employee_code
 
 # class Test(models.Model):
+    
+    
 
 # class ServiceWork(models.Model):
-

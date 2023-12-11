@@ -207,7 +207,7 @@ def deleteCustomer(request, id):
 
 
 # Services Functions --------------------------------------------------------------------------------------------------------------------------------
-def viewServices(request):
+def viewAndCreateServices(request):
     
     services = Service.objects.all()
     services_exists = services.exists()
@@ -227,13 +227,15 @@ def viewServices(request):
     context = {'services': services, 'services_exists': services_exists, 'service_form': service_form}
     return render(request, 'service/view_services.html', context)
 
-# def createService(request):
+# def updateService(request, id):
     
-#     service_form = ServiceForm()
+#     service = get_object_or_404(Service, pk=id)
+    
+#     service_form = ServiceForm(instance=service)
     
 #     if request.method == 'POST':
         
-#         service_form = ServiceForm(request.POST)
+#         service_form = ServiceForm(request.POST, instance=service)
         
 #         if service_form.is_valid():
             
@@ -241,11 +243,60 @@ def viewServices(request):
             
 #             return redirect('purifier:view_services')
         
-#     context = {'service_form': service_form}
+#     context = {'service_form': service_form,  'service_id': service}
     
-#     return render(request, 'service/service.html', context)
+#     return render(request, 'service/view_services.html', context)
 
 
 
 
 # Product Functions ---------------------------------------------------------------------------------------------------------------------------------
+def createCategory(request):
+    
+    # category_form = CategoryForm()
+    
+    if request.method == 'POST':
+        
+        category_form = CategoryForm(request.POST, request.FILES)
+        
+        if category_form.is_valid():
+            
+            category_form.save()
+            
+        return redirect('purifier:view_products')
+    
+    context = {'category_form': category_form}
+    
+    return render(request, 'product/product.html', context)
+
+def createProduct(request):
+    
+    # product_form = ProductForm()
+    
+    if request.method == 'POST':
+        
+        product_form = ProductForm(request.POST, request.FILES)
+        
+        if product_form.is_valid():
+            
+            product_form.save()
+            
+            return redirect('purifier:view_products')
+    
+    context = {'product_form': product_form}    
+    
+    return render(request, 'product/product.html', context)
+
+def viewProducts(request):
+    
+    category_form = CategoryForm()
+    
+    product_form = ProductForm()
+    
+    products = Product.objects.all()
+    
+    products_exists = products.exists()
+    
+    context = {'category_form': category_form, 'product_form': product_form, 'products': products, 'products_exists': products_exists}
+    
+    return render(request, 'product/product.html', context)

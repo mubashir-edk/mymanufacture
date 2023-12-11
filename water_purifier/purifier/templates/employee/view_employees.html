@@ -19,7 +19,7 @@
         <div class="mt-1">
             {% if employees_exists %}
             <div class="table-responsive">
-                <table class="table table-bordered table-striped">
+                <table id="employeesTable" class="table table-bordered table-striped">
                 
                     <thead class="table-secondary">
                         <tr>
@@ -66,5 +66,7 @@
         </div>
 
     </div>
+
+    {% comment %} <script src="{% static 'js/employee/view_employees.js' %}"></script> {% endcomment %}
 
 {% endblock content %}

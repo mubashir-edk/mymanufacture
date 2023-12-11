@@ -21,6 +21,11 @@ urlpatterns = [
     path('delete_customer/<uuid:id>', views.deleteCustomer, name='delete_customer'),
     
     # Service
-    path('view_services/', views.viewServices, name='view_services'),
-    # path('create_services/', views.createService, name='create_service'),
+    path('view_services/', views.viewAndCreateServices, name='view_services'),
+    # path('update_services/<uuid:id>', views.updateService, name='update_services'),
+    
+    # Product
+    path('view_products/', views.viewProducts, name='view_products'),
+    path('create_category/', views.createCategory, name='create_category'),
+    path('create_product/', views.createProduct, name='create_product'),
 ]
