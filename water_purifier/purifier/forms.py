@@ -114,3 +114,15 @@ class ServiceForm(forms.ModelForm):
                 'id': 'formServiceName',
             }),
         }
+        
+class ServicerForm(forms.ModelForm):
+    class Meta:
+        model = Servicer
+        fields = '__all__'
+        
+        widgets = {
+            'name': forms.Select(attrs={
+                'class': 'form-select',
+                'id': 'formServicerName',
+            }),
+        }

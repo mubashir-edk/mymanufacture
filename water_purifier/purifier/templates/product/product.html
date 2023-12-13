@@ -33,11 +33,11 @@
                         
                         <div class="col-12 d-flex justify-content-center">
 
-                            <img id="image-preview-category" src="" alt="Image Preview" style="width: 150px; height: 150px; display: none;">
+                            <img id="image-preview-category" src="" alt="Image Preview" class="mt-2" style="width: 150px; height: 150px; display: none;">
                               
-                            <img src="{% static 'images/empty_img.jpg' %}" id="categoryDefaultImage" alt="Image not loading..." style="width: 150px; height: 150px;">  
+                            <img src="{% static 'images/empty_img.jpg' %}" id="categoryDefaultImage" alt="Image not loading..." class="mt-2" style="width: 150px; height: 150px;">  
                                 
-                            <label for="formCategoryImage" class="form-label">
+                            <label for="formCategoryImage" class="form-label ms-2">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </label>
                             {{ category_form.image }}
@@ -70,11 +70,11 @@
 
                         <div class="col-12 d-flex justify-content-center">
 
-                            <img id="image-preview-product" src="" alt="Image Preview" style="width: 150px; height: 150px; display: none;">
+                            <img id="image-preview-product" src="" alt="Image Preview" class="mt-2" style="width: 150px; height: 150px; display: none;">
 
-                            <img src="{% static 'images/empty_img.jpg' %}" id="productDefaultImage" alt="Image not loading..." style="width: 150px; height: 150px;">  
+                            <img src="{% static 'images/empty_img.jpg' %}" id="productDefaultImage" alt="Image not loading..." class="mt-2" style="width: 150px; height: 150px;">  
                                 
-                            <label for="formProductImage" class="form-label">
+                            <label for="formProductImage" class="form-label ms-2">
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </label>
                             {{ product_form.image }}
@@ -101,21 +101,22 @@
         </form>
     </div>
 
-    <hr class="mt-1">
+    <hr class="mt-1 mb-2">
 
-    <div class="d-flex align-items-center justify-content-end" id="viewsDiv">
-        <label for="viewSelect" class="form-label">View:</label>
-        <select id="viewSelect" class="form-select ms-2" onchange="updateView()">
-            <option value="cardview" Selected>Card</option>
-            <option value="tableview">Table</option>
-        </select>
-
-        <div id="viewone"></div>
-        <div id="viewtwo"></div>
-    </div>
-
-    <div class="mt-1">
+    <div class="">
         {% if products_exists %}
+
+        <div class="d-flex align-items-center justify-content-end mb-3" id="viewsDiv">
+            <label for="viewSelect" class="form-label">View:</label>
+            <select id="viewSelect" class="form-select ms-2" onchange="updateView()">
+                <option value="cardview" Selected>Card</option>
+                <option value="tableview">Table</option>
+            </select>
+    
+            <div id="viewone"></div>
+            <div id="viewtwo"></div>
+        </div>
+
         <div class="table-responsive" id="productsTableView">
             <table class="table table-bordered table-striped" id="productsTable">
             
@@ -163,7 +164,7 @@
 
         <div id="productsCardView" class="mb-3">
 
-            <div class="row row-cols-5 g-4">
+            <div class="row row-cols-6 g-4">
 
                 {% for product in products %}
                     <div class="col">

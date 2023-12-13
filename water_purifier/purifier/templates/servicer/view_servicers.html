@@ -1,0 +1,95 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block head %}
+    <title>View Servicers</title>
+    {% comment %} <link href="{% static 'css/service/view_services.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
+{% endblock head %}
+
+{% block content %}
+
+<div class="d-grid">
+    <div class="d-flex justify-content-between">
+        <span class="servicer_heading">Servicers</span>
+        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServicerModal">Create</a>
+    </div>
+
+    {% comment %} Create Service modal {% endcomment %}
+    <form action="{% url "purifier:create_servicer" %}" method="post">
+        {% csrf_token %}
+        <div class="modal fade" id="createServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createServicerModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createServicerModalTitle">Add Servicer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="formServicerName" class="form-label mt-3">Servicer Name</label>
+                        {{ servicer_form.name }}
+
+                        <div id="servicerDetails">
+                            <label for="formServicerCode" class="form-label mt-3">Employee Code</label>
+                            <input type="text" class="form-control" id="employeeCode" Readonly/>
+
+                            <label for="formServicerContact" class="form-label mt-3">Mobile</label>
+                            <input type="text" class="form-control" id="employeeContact" Readonly/>
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> {% endcomment %}
+                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
+                        {% comment %} <a href="{% url "purifier:delete_employee" employee.id %}" class="btn btn-danger">Delete</a> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr class="mt-1">
+
+    <div class="mt-1">
+        {% if servicers_exists %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+            
+                <thead class="table-secondary">
+                    <tr>
+                        <th></th>
+                        <th>Servicer</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for servicer in servicers %}
+
+                        <tr>
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td class="d-flex justify-content-between">{{ servicer.name }}<i class="bi bi-pencil-square"></i></td>
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+        {% else %}
+        <div class="d-flex justify-content-center">
+            <span>No services added. <a href="" data-bs-toggle="modal" data-bs-target="#createServicerModal">Create</a> a new service.</span>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+
+<script>
+    window.ajaxUrl =  '{% url 'purifier:create_servicer' %}';
+</script>
+
+<script src="{% static 'js/servicer/view_servicers.js' %}"></script>
+
+{% endblock content %}

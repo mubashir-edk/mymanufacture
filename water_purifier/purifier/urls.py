@@ -28,4 +28,10 @@ urlpatterns = [
     path('view_products/', views.viewProducts, name='view_products'),
     path('create_category/', views.createCategory, name='create_category'),
     path('create_product/', views.createProduct, name='create_product'),
+    
+    # Servicer
+    path('view_servicers/', views.viewServicers, name='view_servicers'),
+    path('create_servicer/', views.createServicer, name='create_servicer'),
+    path('fetch_servicer/<uuid:selected_employee>', views.fetchServicer, name='fetch_servicer'),
+    
 ]

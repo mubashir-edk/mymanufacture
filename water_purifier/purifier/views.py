@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from .models import *
 from .forms import *
 from django.urls import reverse
@@ -206,7 +207,7 @@ def deleteCustomer(request, id):
     return redirect('purifier:view_customers')
 
 
-# Services Functions --------------------------------------------------------------------------------------------------------------------------------
+# Service Functions --------------------------------------------------------------------------------------------------------------------------------
 def viewAndCreateServices(request):
     
     services = Service.objects.all()
@@ -271,8 +272,6 @@ def createCategory(request):
 
 def createProduct(request):
     
-    # product_form = ProductForm()
-    
     if request.method == 'POST':
         
         product_form = ProductForm(request.POST, request.FILES)
@@ -281,11 +280,9 @@ def createProduct(request):
             
             product_form.save()
             
-            return redirect('purifier:view_products')
+            return redirect('purifier:view_products')   
     
-    context = {'product_form': product_form}    
-    
-    return render(request, 'product/product.html', context)
+    return render(request, 'product/product.html')
 
 def viewProducts(request):
     
@@ -300,3 +297,53 @@ def viewProducts(request):
     context = {'category_form': category_form, 'product_form': product_form, 'products': products, 'products_exists': products_exists}
     
     return render(request, 'product/product.html', context)
+
+
+# Servicer Functions --------------------------------------------------------------------------------------------------------------------------------
+def viewServicers(request):
+    
+    servicers = Servicer.objects.all()
+    
+    servicers_exists = servicers.exists()
+    
+    servicer_form = ServicerForm()
+    
+    context = {'servicers': servicers, 'servicers_exists': servicers_exists, 'servicer_form': servicer_form}
+    
+    return render(request, 'servicer/view_servicers.html', context)
+
+def createServicer(request):
+    
+    if request.method == 'POST':
+        
+        servicer_form = ServicerForm(request.POST)
+        
+        if servicer_form.is_valid():
+            
+            servicer_form.save()
+            
+            return redirect('purifier:view_servicers')
+        
+    return render(request, 'servicer/view_servicers.html')
+
+def fetchServicer(request, selected_employee):
+    
+    print("Fetching")
+    
+    if request.method == 'GET':
+    
+        try:
+            employee = Employee.objects.get(pk=selected_employee)
+            data = {'employee': {
+                'employee_code': employee.employee_code,
+                'mobile': employee.mobile,
+                # Add other fields as needed
+            }}
+            print(employee)
+            return JsonResponse(data)
+        except Employee.DoesNotExist:
+            return JsonResponse({'error': 'Employee not found'}, status=404)
+    
+    
+    
+    
