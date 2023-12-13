@@ -10,10 +10,12 @@
 
 <div class="d-grid">
     <div class="d-flex justify-content-between">
-        <span class="product_heading">Products</span>
+            <span class="product_heading">Products</span>
         <div>
-        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Create Category</a>
-        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">Create Product</a>
+
+            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Create Category</a>
+            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">Create Product</a>
+
         </div>
     </div>
 
@@ -33,7 +35,7 @@
 
                             <img id="image-preview-category" src="" alt="Image Preview" style="width: 150px; height: 150px; display: none;">
                               
-                            <img src="{% static 'images/default.png' %}" id="categoryDefaultImage" alt="Image not loading..." style="width: 150px; height: 150px;">  
+                            <img src="{% static 'images/empty_img.jpg' %}" id="categoryDefaultImage" alt="Image not loading..." style="width: 150px; height: 150px;">  
                                 
                             <label for="formCategoryImage" class="form-label">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -70,7 +72,7 @@
 
                             <img id="image-preview-product" src="" alt="Image Preview" style="width: 150px; height: 150px; display: none;">
 
-                            <img src="{% static 'images/default.png' %}" id="productDefaultImage" alt="Image not loading..." style="width: 150px; height: 150px;">  
+                            <img src="{% static 'images/empty_img.jpg' %}" id="productDefaultImage" alt="Image not loading..." style="width: 150px; height: 150px;">  
                                 
                             <label for="formProductImage" class="form-label">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -101,10 +103,21 @@
 
     <hr class="mt-1">
 
+    <div class="d-flex align-items-center justify-content-end" id="viewsDiv">
+        <label for="viewSelect" class="form-label">View:</label>
+        <select id="viewSelect" class="form-select ms-2" onchange="updateView()">
+            <option value="cardview" Selected>Card</option>
+            <option value="tableview">Table</option>
+        </select>
+
+        <div id="viewone"></div>
+        <div id="viewtwo"></div>
+    </div>
+
     <div class="mt-1">
         {% if products_exists %}
         <div class="table-responsive" id="productsTableView">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered table-striped" id="productsTable">
             
                 <thead class="table-secondary">
                     <tr>
@@ -126,7 +139,7 @@
                                     {% if product.image %}
                                     <img src="{{product.image.url}}" alt="Profile not loading..." style="width: 25px; height: 25px;">
                                     {% else %}
-                                    <img src="{% static 'images/default.png' %}" alt="Profile not loading..." style="width: 25px; height: 25px;">
+                                    <img src="{% static 'images/empty_img.jpg' %}" alt="Profile not loading..." style="width: 25px; height: 25px;">
                                     {% endif %}
                                 </a>
                                 <a href="" class="anchor_tag ms-1">{{ product.name }}</a>
@@ -135,9 +148,6 @@
                             <td>
                                 {% for service in product.services.all %}
                                     <a href="" class="anchor_tag">{{ service.name }} &nbsp;</a>
-                                    {% comment %} {% if not forloop.last %}
-                                        <p>No service added.</p>
-                                    {% endif %} {% endcomment %}
                                 {% endfor %}
                             </td>
                         </tr>
@@ -151,9 +161,9 @@
 
 
 
-        <div id="productsCardView">
+        <div id="productsCardView" class="mb-3">
 
-            <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="row row-cols-5 g-4">
 
                 {% for product in products %}
                     <div class="col">
@@ -162,13 +172,12 @@
                             {% if product.image %}
                                 <img src="{{product.image.url}}" alt="Profile not loading..." class="card-img-top">
                             {% else %}
-                                <img src="{% static 'images/default.png' %}" alt="Profile not loading..." class="card-img-top">
+                                <img src="{% static 'images/empty_img.jpg' %}" alt="Profile not loading..." class="card-img-top">
                             {% endif %}
 
-                            {% comment %} <img src="..." class="card-img-top" alt="..."> {% endcomment %}
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
-                                <p class="card-text">Category: {{ product.category }}</p>
+                                <h6 class="card-text">Category: {{ product.category }}</h6>
                             </div>
                         </div>
                     </div>
@@ -190,6 +199,9 @@
 
 </div>
 
+
+
+
 <script src="{% static 'js/product/product.js' %}"></script>
 
-{% endblock content %}
+{% endblock content %}  

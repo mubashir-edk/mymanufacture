@@ -11,3 +11,17 @@
     font-size: 25px;
     font-weight: 500;
 }
+
+#viewsDiv .form-label {
+    font-weight: 500;
+}
+
+#viewSelect {
+    width: 100px;
+}
+
+/* card */
+
+.card-img-top {
+    height: 200px;
+}

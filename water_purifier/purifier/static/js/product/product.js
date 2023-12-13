@@ -1,3 +1,9 @@
+console.log("before");
+
+window.onload = function () {
+    updateView();
+};
+
 const imageInputProduct = document.getElementById('formProductImage');
 const imageInputCategory = document.getElementById('formCategoryImage');
 const imagePreviewProduct = document.getElementById('image-preview-product');
@@ -8,6 +14,9 @@ const existingImageCategory = document.getElementById('categoryDefaultImage');
 
 imageInputCategory.style.display = 'none';
 imageInputProduct.style.display = 'none';
+
+console.log("before");
+
 
 imageInputProduct.addEventListener('change', function () {
     const file = imageInputProduct.files[0];
@@ -28,6 +37,9 @@ imageInputProduct.addEventListener('change', function () {
     }
 });
 
+console.log("before");
+
+
 imageInputCategory.addEventListener('change', function () {
     const file = imageInputCategory.files[0];
     if (file) {
@@ -46,3 +58,35 @@ imageInputCategory.addEventListener('change', function () {
         existingImageCategory.style.display = 'block'; // Show the existing/default image
     }
 });
+
+console.log("before");
+
+
+
+
+// view update
+function updateView() {
+    var select = document.getElementById("viewSelect");
+    var viewCard = document.getElementById("productsCardView");
+    var viewTable = document.getElementById("productsTableView");
+
+    if (select.value === "cardview") {
+        viewCard.style.display = "block";
+        viewTable.style.display = "none";
+    } else if (select.value === "tableview") {
+        viewCard.style.display = "none";
+        viewTable.style.display = "block";
+    }
+}
+
+console.log("before");
+
+
+$(document).ready(function() {
+    $('#productsTable').DataTable();
+    console.log("Product")
+});
+
+console.log("after");
+
+
