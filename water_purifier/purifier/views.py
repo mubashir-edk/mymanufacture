@@ -343,6 +343,20 @@ def fetchServicer(request, selected_employee):
             return JsonResponse(data)
         except Employee.DoesNotExist:
             return JsonResponse({'error': 'Employee not found'}, status=404)
+        
+
+# Service Work Functions ----------------------------------------------------------------------------------------------------------------------------
+def viewServiceWorks(request):
+    
+    service_works = ServiceWork.objects.all()
+    
+    service_works_exists = service_works_exists.exists()
+    
+    service_work_form = ServiceWorkForm()
+    
+    context = {'service_works': service_works, 'service_works_exists': service_works_exists, 'service_work_form': service_work_form}
+    
+    return render(request, 'servicework/view_serviceworks.html', context)
     
     
     

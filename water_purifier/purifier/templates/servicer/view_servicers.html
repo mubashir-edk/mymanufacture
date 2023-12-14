@@ -3,7 +3,7 @@
 
 {% block head %}
     <title>View Servicers</title>
-    {% comment %} <link href="{% static 'css/service/view_services.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
+    <link href="{% static 'css/servicer/view_servicers.css' %}" rel="stylesheet" type="text/css">
 {% endblock head %}
 
 {% block content %}
@@ -57,7 +57,10 @@
                 <thead class="table-secondary">
                     <tr>
                         <th></th>
+                        <th>Employee Code</th>
                         <th>Servicer</th>
+                        <th>Contact</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -67,7 +70,10 @@
 
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
-                            <td class="d-flex justify-content-between">{{ servicer.name }}<i class="bi bi-pencil-square"></i></td>
+                            <td class="">{{ servicer.name.employee_code }}</td>
+                            <td class="">{{ servicer.name.name }}</td>
+                            <td class="">{{ servicer.name.mobile }}</td>
+                            <td class="d-flex justify-content-center"><i class="bi bi-pencil-square"></i></td>
                         </tr>
 
                     {% endfor %}

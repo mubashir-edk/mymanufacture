@@ -34,4 +34,7 @@ urlpatterns = [
     path('create_servicer/', views.createServicer, name='create_servicer'),
     path('fetch_servicer/<uuid:selected_employee>', views.fetchServicer, name='fetch_servicer'),
     
+    # Service Work
+    path('view_serviceworks/', views.viewServiceWorks, name='view_serviceworks'),
+    
 ]

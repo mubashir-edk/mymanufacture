@@ -126,3 +126,36 @@ class ServicerForm(forms.ModelForm):
                 'id': 'formServicerName',
             }),
         }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].queryset = Employee.objects.all()
+        self.fields['name'].label_from_instance = lambda obj: f"{obj.name}"
+        
+class ServiceWorkForm(forms.ModelForm):
+    class Meta:
+        model = ServiceWork
+        fields = '__all__'
+        
+        widgets = {
+            'customer_code': forms.Select(attrs={
+                'class': 'form-select',    
+                'id': 'formServiceWorkCustomer',    
+            }),
+            'service_name': forms.Select(attrs={
+                'class': 'form-select',    
+                'id': 'formServiceWorkService',    
+            }),
+            'comment_section': forms.Textarea(attrs={
+                'class': 'form-control',    
+                'id': 'formServiceWorkComment',    
+            }),
+            'service_date': forms.DateInput(attrs={
+                'class': 'form-control',     
+                'id': 'formServiceWorkDate',    
+            }),
+            'remark_section': forms.Textarea(attrs={
+                'class': 'form-control',    
+                'id': 'formServiceWorkRemark',    
+            }),
+        }

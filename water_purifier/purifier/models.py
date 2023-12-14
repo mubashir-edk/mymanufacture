@@ -107,8 +107,27 @@ class Servicer(models.Model):
     def __str__(self) -> str:
         return self.name.employee_code
 
-# class Test(models.Model):
+class Test(models.Model):
     
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    test_name = models.CharField(max_length=150)
+    ph_value = models.CharField(max_length=30)
+    tds_value = models.CharField(max_length=30)
+    iron_value = models.CharField(max_length=30)
+    hardness_value = models.CharField(max_length=30)
+    turbuet_value = models.CharField(max_length=30)
     
+    def __str__(self) -> str:
+        return self.test_name
 
-# class ServiceWork(models.Model):
+class ServiceWork(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    customer_code = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    service_name = models.ForeignKey(Service, models.SET_NULL, null=True)
+    comment_section = models.TextField()
+    service_date = models.DateField()
+    remark_section = models.TextField()
+    
+    def __str__(self) -> str:
+        return self.customer_code

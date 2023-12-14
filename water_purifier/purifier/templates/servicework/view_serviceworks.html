@@ -1,0 +1,93 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block head %}
+    <title>View ServiceWorks</title>
+    {% comment %} <link href="{% static 'css/service/view_services.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
+{% endblock head %}
+
+{% block content %}
+
+<div class="d-grid">
+    <div class="d-flex justify-content-between">
+        <span class="servicework_heading">Service Works</span>
+        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServiceWorkModal">Create</a>
+    </div>
+
+    {% comment %} Create Service modal {% endcomment %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="modal fade" id="createServiceWorkModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createServiceWorkModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="createServiceWorkModalTitle">Add Service for Customer</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <label for="formServiceWorkCustomer" class="form-label mt-3">Customer</label>
+                        {{ service_work_form.customer_code }}
+
+                        <label for="formServiceWorkService" class="form-label mt-3">Service</label>
+                        {{ service_work_form.service_name }}
+
+                        <label for="formServiceWorkDate" class="form-label mt-3">Scheduled On</label>
+                        {{ service_work_form.service_date }}
+
+                        <label for="formServiceWorkComment" class="form-label mt-3">Comments</label>
+                        {{ service_work_form.comment_section }}
+
+                        <label for="formServiceWorkRemark" class="form-label mt-3">Remarks</label>
+                        {{ service_work_form.remarks_section }}
+
+                    </div>
+                    <div class="modal-footer">
+                        {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> {% endcomment %}
+                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Create</button>
+                        {% comment %} <a href="{% url "purifier:delete_employee" employee.id %}" class="btn btn-danger">Delete</a> {% endcomment %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <hr class="mt-1">
+
+    <div class="mt-1">
+        {% if services_exists %}
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+            
+                <thead class="table-secondary">
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for service in services %}
+
+                        <tr>
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td class="d-flex justify-content-between">{{ service.name }}<i class="bi bi-pencil-square"></i></td>
+                        </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+        {% else %}
+        <div class="d-flex justify-content-center">
+            <span>No service works added. <a href="" data-bs-toggle="modal" data-bs-target="#createServiceWorkModal">Create</a> a new service work.</span>
+        </div>
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock content %}
