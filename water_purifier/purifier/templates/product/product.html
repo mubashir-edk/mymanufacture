@@ -11,10 +11,19 @@
 <div class="d-grid">
     <div class="d-flex justify-content-between">
             <span class="product_heading">Products</span>
-        <div>
+        <div class="d-flex">
 
-            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Create Category</a>
-            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createProductModal">Create Product</a>
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownCategory" data-bs-toggle="dropdown" aria-expanded="false">
+                    Category
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownCategory">
+                  <li><a href="" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Create Category</a></li>
+                  <li><a href="{% url "purifier:views_categories" %}" class="dropdown-item">View Category</a></li>
+                </ul>
+            </div>
+            
+            <a href="" class="btn btn-primary ms-1" data-bs-toggle="modal" data-bs-target="#createProductModal">Create Product</a>
 
         </div>
     </div>
@@ -164,7 +173,7 @@
 
         <div id="productsCardView" class="mb-3">
 
-            <div class="row row-cols-6 g-4">
+            <div class="row row-cols-6 g-4 product_card">
 
                 {% for product in products %}
                     <div class="col">

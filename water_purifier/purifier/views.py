@@ -77,6 +77,8 @@ def eachEmployee(request, id):
     
     employee = get_object_or_404(Employee, pk=id)
     
+    print(employee.id)
+    
     context = {'employee': employee}
     
     return render(request, 'employee/each_employee.html', context)
@@ -151,8 +153,13 @@ def createCustomer(request):
             
         if customer_form.is_valid():
             
+            print(request.POST.get('installed_product'))
+            print(request.POST.getlist('installed_product'))
+            # print(request.POST)
+            
             customer = customer_form.save(commit=False)
             customer.customer_code = generated_customer_code
+
             customer.save()
             
             return redirect('purifier:view_customers')
@@ -254,8 +261,6 @@ def viewAndCreateServices(request):
 # Product Functions ---------------------------------------------------------------------------------------------------------------------------------
 def createCategory(request):
     
-    # category_form = CategoryForm()
-    
     if request.method == 'POST':
         
         category_form = CategoryForm(request.POST, request.FILES)
@@ -269,6 +274,18 @@ def createCategory(request):
     context = {'category_form': category_form}
     
     return render(request, 'product/product.html', context)
+
+def viewCategories(request):
+    
+    categories = Category.objects.all()
+    
+    categories_exists = categories.exists()
+    
+    category_form = CategoryForm()
+    
+    context = {'categories': categories, 'categories_exists': categories_exists, 'category_form': category_form}
+    
+    return render(request, 'product/category.html', context)
 
 def createProduct(request):
     
@@ -350,14 +367,51 @@ def viewServiceWorks(request):
     
     service_works = ServiceWork.objects.all()
     
-    service_works_exists = service_works_exists.exists()
+    service_works_exists = service_works.exists()
     
     service_work_form = ServiceWorkForm()
     
     context = {'service_works': service_works, 'service_works_exists': service_works_exists, 'service_work_form': service_work_form}
     
     return render(request, 'servicework/view_serviceworks.html', context)
+
+def createServiceWork(request):
     
+    if request.method == 'POST':
+        
+        service_work_form = ServiceWorkForm(request.POST)
+        
+        if service_work_form.is_valid():
+            
+            service_work_form.save()
+            
+            return redirect('purifier:view_serviceworks')
     
+# Test or Quality check Functions -------------------------------------------------------------------------------------------------------------------
+def viewTests(request):
     
+    tests = Test.objects.all()
     
+    tests_exists = tests.exists()
+    
+    context = {'tests': tests, 'tests_exists': tests_exists}
+    
+    return render(request, 'test/view_tests.html', context)
+
+def createTest(request):
+    
+    test_form = TestForm()
+    
+    if request.method == 'POST':
+        
+        test_form = TestForm(request.POST)
+        
+        if test_form.is_valid():
+            
+            test_form.save()
+            
+            return redirect('purifier:view_tests')
+        
+    context = {'test_form': test_form}
+        
+    return render(request, 'test/test.html', context)

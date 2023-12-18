@@ -3,7 +3,7 @@
 
 {% block head %}
     <title>View ServiceWorks</title>
-    {% comment %} <link href="{% static 'css/service/view_services.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
+    <link href="{% static 'css/servicework/view_serviceworks.css' %}" rel="stylesheet" type="text/css">
 {% endblock head %}
 
 {% block content %}
@@ -15,10 +15,10 @@
     </div>
 
     {% comment %} Create Service modal {% endcomment %}
-    <form action="" method="post">
+    <form action="{% url "purifier:create_servicework" %}" method="post">
         {% csrf_token %}
         <div class="modal fade" id="createServiceWorkModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createServiceWorkModalTitle" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createServiceWorkModalTitle">Add Service for Customer</h5>
@@ -32,14 +32,14 @@
                         <label for="formServiceWorkService" class="form-label mt-3">Service</label>
                         {{ service_work_form.service_name }}
 
-                        <label for="formServiceWorkDate" class="form-label mt-3">Scheduled On</label>
+                        <label for="formServiceWorkDate" class="form-label mt-3">Service Date</label>
                         {{ service_work_form.service_date }}
 
                         <label for="formServiceWorkComment" class="form-label mt-3">Comments</label>
                         {{ service_work_form.comment_section }}
 
                         <label for="formServiceWorkRemark" class="form-label mt-3">Remarks</label>
-                        {{ service_work_form.remarks_section }}
+                        {{ service_work_form.remark_section }}
 
                     </div>
                     <div class="modal-footer">
@@ -55,24 +55,32 @@
     <hr class="mt-1">
 
     <div class="mt-1">
-        {% if services_exists %}
+        {% if service_works_exists %}
         <div class="table-responsive">
             <table class="table table-bordered table-striped">
             
                 <thead class="table-secondary">
                     <tr>
                         <th></th>
-                        <th>Name</th>
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>Service Date</th>
+                        <th>Comment</th>
+                        <th>Remark</th>
                     </tr>
                 </thead>
 
                 <tbody>
 
-                    {% for service in services %}
+                    {% for service_work in service_works %}
 
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
-                            <td class="d-flex justify-content-between">{{ service.name }}<i class="bi bi-pencil-square"></i></td>
+                            <td>{{ service_work.customer_code }}</td>
+                            <td>{{ service_work.service_name }}</td>
+                            <td>{{ service_work.service_date }}</td>
+                            <td>{{ service_work.comment_section }}</td>
+                            <td>{{ service_work.remark_section }}</td>
                         </tr>
 
                     {% endfor %}

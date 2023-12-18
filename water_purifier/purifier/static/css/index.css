@@ -4,15 +4,17 @@
     top: 0;
     left: 0;
     right: 0;
-    background-color: #217b7e;
+    background: linear-gradient(to right, #2ecc71, #3498db);
     height: 45px;
     width: 100%;
-    z-index: 2;
+    box-shadow: 0px .01cm 15px;
+    z-index: 3;
 }
 
-.navbar-brand {
-    font-size: 18px;
+.navbar-light .navbar-brand {
+    font-size: 24px;
     font-weight: 700;
+    color: #ffffff;
 }
 
 .navbar_profile .profile_img {
@@ -25,10 +27,12 @@
 /* Side Navbar */
 .sidenav {
     position: fixed;
-    background-color: #046169;
+    background: linear-gradient(to right, #2ecc71, #3498db);
     margin-top: 45px;
     height: 100%;
     width: 212px;
+    box-shadow: .1px .01cm 15px;
+    z-index: 2;
 }
 
 .sidenav_content {
@@ -44,14 +48,14 @@
     margin-top: 5px;
     font-size: 18px;
     font-weight: bold;
-    color: white;
+    color: #ffffff;
 }
 
 .content_link:hover {
     cursor: pointer;
     border-radius: 8px;
-    background-color: #ffffff;
-    color: #000000;
+    background: linear-gradient(to right, #ff8c00, #2ecc71);
+    color: #ffffff;
 }
 
 .content_link i{
@@ -60,7 +64,7 @@
 
 .content_link li{
     position: relative;
-    left: 42px;
+    left: 32px;
 }
 
 

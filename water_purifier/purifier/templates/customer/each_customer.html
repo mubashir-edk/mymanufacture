@@ -81,6 +81,19 @@
 
             </div>
 
+            <div class="row d-lg-flex justify-content-lg-between d-grid justify-content-center">
+
+                <div class="col-lg-6 col-12">
+                    <label for="customerInstalledProduct" class="form-label mt-3">Installed Products</label>
+
+                    {% for product in customer.installed_product.all  %}
+                        <input type="text" class="form-control" id="customerInstalledProduct" value="{{ product.name }}" readonly/>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 

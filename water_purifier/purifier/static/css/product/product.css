@@ -22,10 +22,10 @@
 
 /* card */
 
-.card {
+.product_card .card {
     width: 195px; 
 }
 
-.card-img-top {
+.product_card .card-img-top {
     height: 148px;
 }

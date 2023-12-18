@@ -1,0 +1,28 @@
+.anchor_tag {
+    text-decoration: none;
+    color: black;
+}
+
+.anchor_tag:hover {
+    color: black;
+}
+
+.category_heading {
+    font-size: 25px;
+    font-weight: 500;
+}
+
+/* card */
+
+.category_card .card {
+    width: 194px;
+    height: 200px;
+}
+
+.category_card img {
+    height: 135px;
+}
+
+.category_card .card_title {
+    text-overflow: ellipsis;
+}

@@ -61,6 +61,10 @@ class CustomerForm(forms.ModelForm):
                 'class': 'form-control', 
                 'id': 'formcustomerWhatsappNumber', 
             }),
+            'installed_product': forms.CheckboxSelectMultiple(attrs={
+                'class': 'form-checkbox', 
+                'id': 'formcustomerInstalledProduct', 
+            }),
         }
         
 class CategoryForm(forms.ModelForm):
@@ -137,6 +141,7 @@ class ServiceWorkForm(forms.ModelForm):
         model = ServiceWork
         fields = '__all__'
         
+        
         widgets = {
             'customer_code': forms.Select(attrs={
                 'class': 'form-select',    
@@ -148,7 +153,8 @@ class ServiceWorkForm(forms.ModelForm):
             }),
             'comment_section': forms.Textarea(attrs={
                 'class': 'form-control',    
-                'id': 'formServiceWorkComment',    
+                'id': 'formServiceWorkComment',
+                'rows': '3',  
             }),
             'service_date': forms.DateInput(attrs={
                 'class': 'form-control',     
@@ -156,6 +162,40 @@ class ServiceWorkForm(forms.ModelForm):
             }),
             'remark_section': forms.Textarea(attrs={
                 'class': 'form-control',    
-                'id': 'formServiceWorkRemark',    
+                'id': 'formServiceWorkRemark',
+                'rows': '3',    
+            }),
+        }
+        
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = Test
+        fields = '__all__'
+        
+        
+        widgets = {
+            'test_name': forms.TextInput(attrs={
+                'class': 'form-control',    
+                'id': 'formTestName',    
+            }),
+            'ph_value': forms.TextInput(attrs={
+                'class': 'form-control',    
+                'id': 'formPhValue',    
+            }),
+            'tds_value': forms.TextInput(attrs={
+                'class': 'form-control',    
+                'id': 'formTdsValue',
+            }),
+            'iron_value': forms.TextInput(attrs={
+                'class': 'form-control',     
+                'id': 'formIronValue',    
+            }),
+            'hardness_value': forms.TextInput(attrs={
+                'class': 'form-control',    
+                'id': 'formHardnessValue',    
+            }),
+            'turbuet_value': forms.TextInput(attrs={
+                'class': 'form-control',    
+                'id': 'formTurbuetValue', 
             }),
         }

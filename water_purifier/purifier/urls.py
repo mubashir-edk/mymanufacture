@@ -1,4 +1,4 @@
-from django.urls import path, include
+from django.urls import path
 from . import views
 
 app_name = 'purifier'
@@ -25,8 +25,9 @@ urlpatterns = [
     # path('update_services/<uuid:id>', views.updateService, name='update_services'),
     
     # Product
-    path('view_products/', views.viewProducts, name='view_products'),
+    path('view_categories/', views.viewCategories, name='views_categories'),
     path('create_category/', views.createCategory, name='create_category'),
+    path('view_products/', views.viewProducts, name='view_products'),
     path('create_product/', views.createProduct, name='create_product'),
     
     # Servicer
@@ -36,5 +37,10 @@ urlpatterns = [
     
     # Service Work
     path('view_serviceworks/', views.viewServiceWorks, name='view_serviceworks'),
+    path('create_servicework/', views.createServiceWork, name='create_servicework'),
+    
+    # Test
+    path('view_tests/', views.viewTests, name='view_tests'),
+    path('create_test/', views.createTest, name='create_test'),
     
 ]

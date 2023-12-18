@@ -1,6 +1,6 @@
 from django.db import models
+# from django.contrib.gis.db import models as point_field
 import uuid
-from phonenumber_field.modelfields import PhoneNumberField
 
 # Create your models here.
 class Employee(models.Model):
@@ -55,21 +55,6 @@ class Employee(models.Model):
     
     def __str__(self) -> str:
         return self.employee_code
-
-class Customer(models.Model):
-    
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    profile = models.ImageField(null=True, blank=True, upload_to="customer_profiles/")
-    name = models.CharField(max_length=50)
-    address = models.TextField()
-    mobile = models.CharField(max_length=20)
-    whatsapp_number = models.CharField(max_length=20)
-    # installed_product
-    # location
-    customer_code = models.CharField(max_length=50, blank=True, unique=True)
-    
-    def __str__(self) -> str:
-        return self.customer_code
     
 class Category(models.Model):
     
@@ -91,13 +76,28 @@ class Service(models.Model):
 class Product(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=100)
     image = models.ImageField(null=True, blank=True, upload_to="product_images/")
     services = models.ManyToManyField(Service)
     
     def __str__(self) -> str:
         return self.name
+
+class Customer(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    profile = models.ImageField(null=True, blank=True, upload_to="customer_profiles/")
+    name = models.CharField(max_length=50)
+    address = models.TextField()
+    mobile = models.CharField(max_length=20)
+    whatsapp_number = models.CharField(max_length=20)
+    installed_product = models.ManyToManyField(Product, null=True, blank=True)
+    # location = point_field.PointField()
+    customer_code = models.CharField(max_length=50, blank=True, unique=True)
+    
+    def __str__(self) -> str:
+        return self.customer_code
     
 class Servicer(models.Model):
     
@@ -130,4 +130,4 @@ class ServiceWork(models.Model):
     remark_section = models.TextField()
     
     def __str__(self) -> str:
-        return self.customer_code
+        return self.customer_code.customer_code

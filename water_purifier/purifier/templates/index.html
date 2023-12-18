@@ -16,9 +16,8 @@
         <!-- Bootstrap Icons CSS from CDN -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
-                <!-- JQUERY CDN -->
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js" ></script>
-
+        <!-- JQUERY CDN -->
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         <!-- DataTables CSS CDN -->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
@@ -37,7 +36,7 @@
 
             <nav class="navbar navbar-expand-lg navbar-light">
                 <div class="container-fluid">
-                    <a class="navbar-brand text-white" href="/">Water Purifier</a>
+                    <a class="navbar-brand" href="/">Water Purifier</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -107,6 +106,18 @@
                             <li class="">Servicer</li>
                         </div>
                     </a>
+                    <a href="{% url "purifier:view_serviceworks" %}">
+                        <div class="content_link d-flex justify-content-start align-items-center p-1">
+                            <i class="fa-solid fa-screwdriver-wrench"></i>
+                            <li class="">Service Works</li>
+                        </div>
+                    </a>
+                    <a href="{% url "purifier:view_tests" %}">
+                        <div class="content_link d-flex justify-content-start align-items-center p-1">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                            <li class="">Tests</li>
+                        </div>
+                    </a>
                     <a href="#">
                         <div class="content_link d-flex justify-content-start align-items-center p-1">
                             <i class="fa-solid fa-chart-line"></i>
@@ -122,9 +133,6 @@
         <div class="main_content" id="mainContent">
             {% block content %}{% endblock content %}
         </div>
-     
-
-        {% comment %} <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.js" integrity="sha512-+k1pnlgt4F1H8L7t3z95o3/KO+o78INEcXTbnoJQ/F2VqDVhWoaiVml/OEHv9HsVgxUaVW+IbiZPUJQfF/YxZw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> {% endcomment %}
 
         <!-- Bootstrap5 JS CDN -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
@@ -132,12 +140,6 @@
 
         <!-- DataTables JS CDN -->
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
-
-        <script>
-    
-            
-            </script>
-    
 
     </body>
 </html>
