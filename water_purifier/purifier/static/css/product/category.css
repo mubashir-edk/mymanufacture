@@ -26,3 +26,15 @@
 .category_card .card_title {
     text-overflow: ellipsis;
 }
+
+.category_card .category_edit {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+.category_card .category_delete {
+    position: absolute;
+    top: 30px;
+    right: 5px;
+}

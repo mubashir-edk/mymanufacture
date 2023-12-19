@@ -52,7 +52,7 @@ class CustomerForm(forms.ModelForm):
                 'class': 'form-control', 
                 'id': 'formCustomerMobile',
             }),
-            'Address': forms.Textarea(attrs={
+            'address': forms.Textarea(attrs={
                 'class': 'form-control', 
                 'id': 'formCustomerAddress', 
                 'rows': '4',

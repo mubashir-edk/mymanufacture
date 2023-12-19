@@ -25,8 +25,10 @@ urlpatterns = [
     # path('update_services/<uuid:id>', views.updateService, name='update_services'),
     
     # Product
-    path('view_categories/', views.viewCategories, name='views_categories'),
+    path('view_categories/', views.viewCategories, name='view_categories'),
     path('create_category/', views.createCategory, name='create_category'),
+    path('update_category/<uuid:id>', views.updateCategory, name='update_category'),
+    path('delete_category/<uuid:id>', views.deleteCategory, name='delete_category'),
     path('view_products/', views.viewProducts, name='view_products'),
     path('create_product/', views.createProduct, name='create_product'),
     

@@ -92,7 +92,7 @@ class Customer(models.Model):
     address = models.TextField()
     mobile = models.CharField(max_length=20)
     whatsapp_number = models.CharField(max_length=20)
-    installed_product = models.ManyToManyField(Product, null=True, blank=True)
+    installed_product = models.ManyToManyField(Product, blank=True, null=True)
     # location = point_field.PointField()
     customer_code = models.CharField(max_length=50, blank=True, unique=True)
     

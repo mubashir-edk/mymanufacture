@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from .models import *
 from .forms import *
 from django.urls import reverse
@@ -259,22 +259,6 @@ def viewAndCreateServices(request):
 
 
 # Product Functions ---------------------------------------------------------------------------------------------------------------------------------
-def createCategory(request):
-    
-    if request.method == 'POST':
-        
-        category_form = CategoryForm(request.POST, request.FILES)
-        
-        if category_form.is_valid():
-            
-            category_form.save()
-            
-        return redirect('purifier:view_products')
-    
-    context = {'category_form': category_form}
-    
-    return render(request, 'product/product.html', context)
-
 def viewCategories(request):
     
     categories = Category.objects.all()
@@ -286,6 +270,61 @@ def viewCategories(request):
     context = {'categories': categories, 'categories_exists': categories_exists, 'category_form': category_form}
     
     return render(request, 'product/category.html', context)
+
+def createCategory(request):
+    
+    if request.method == 'POST':
+        
+        category_form = CategoryForm(request.POST, request.FILES)
+        
+        if category_form.is_valid():
+            
+            category_form.save()
+            
+        return redirect('purifier:view_categories')
+
+def updateCategory(request, id):
+    
+    category = get_object_or_404(Category, pk=id)
+    
+    category_form = CategoryForm(instance=category)
+    
+    if request.method == 'GET':
+        
+        print(category)
+        
+        if category.image:
+            category_data = {
+            'image': category.image.url,
+            'name': category.name,
+            }
+        else:
+            category_data = {
+            'name': category.name,
+            }
+            
+
+        return JsonResponse({'category': category_data})
+    
+    if request.method == 'POST':
+        
+        category_form = CategoryForm(request.POST, request.FILES, instance=category)
+        
+        if category_form.is_valid():
+            
+            category_form.save()
+            
+            return redirect('purifier:view_categories')
+        
+    context = {'category': category, 'category_form': category_form}
+        
+    return render(request, 'product/category_update_modal.html',context)
+
+def deleteCategory(request, id):
+    
+    category = get_object_or_404(Category, pk=id)
+    category.delete()
+    return redirect('purifier:view_categories')
 
 def createProduct(request):
     

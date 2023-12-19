@@ -11,7 +11,12 @@
 <div class="d-grid">
     <div class="d-flex justify-content-between">
         <span class="category_heading">Product Category</span>
-        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Create Category</a>
+        
+        <div>
+            <a href="{% url "purifier:view_products" %}" class="btn btn-secondary">View Products</a>
+            <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createCategoryModal">Create Category</a>
+        </div>
+
     </div>
 
     {% comment %} Create Category modal {% endcomment %}
@@ -67,6 +72,10 @@
                                 <img src="{% static 'images/empty_img.jpg' %}" alt="Profile not loading..." class="img-card-top">
                             {% endif %}
 
+                            <a href="{% url "purifier:update_category" category.id %}" class="anchor_tag update-category-btn" data-bs-id="{{category.id}}" data-bs-toggle="modal" data-bs-target="#updateCategoryModal"><i class="fa-solid fa-pen-to-square category_edit"></i></a>
+
+                            <a href="{% url "purifier:delete_category" category.id %}" class="anchor_tag delete-category-btn"><i class="fa-solid fa-trash category_delete"></i></a>
+
                             <div class="card-body ps-1 pe-2">
                                 <h5 class="card-title text-center overflow-hidden text-nowrap text-truncate">{{ category.name }}</h5>
                             </div>
@@ -75,6 +84,43 @@
                     </div>
                 {% endfor %}
                 
+            </div>
+
+            {% comment %} Update Category modal {% endcomment %}
+            <div class="modal fade" id="updateCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateCategoryModalTitle" aria-hidden="true">
+                <form id="updateCategoryForm" method="post" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="updateCategoryModalTitle">Update Category</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                
+                                <div class="col-12 d-flex justify-content-center">
+
+                                    <img id="image-preview-category" src="" alt="Image Preview" class="mt-2" style="width: 150px; height: 150px; display: none;">
+                                    
+                                    <img src="{% static 'images/empty_img.jpg' %}" id="categoryDefaultImage" alt="Image not loading..." class="mt-2" style="width: 150px; height: 150px;">  
+                                        
+                                    <label for="formCategoryImage" class="form-label ms-2">
+                                        <i class="fa-solid fa-pen-to-square"></i>
+                                    </label>
+                                    {{ category_form.image }}
+
+                                </div>
+
+                                <label for="formServiceName" class="form-label mt-3">Product Name</label>
+                                {{ category_form.name }}
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" id="categoryUpdateButton" class="btn btn-secondary" data-bs-dismiss="modal">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
             </div>
 
 
