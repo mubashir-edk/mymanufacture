@@ -214,50 +214,6 @@ def deleteCustomer(request, id):
     return redirect('purifier:view_customers')
 
 
-# Service Functions --------------------------------------------------------------------------------------------------------------------------------
-def viewAndCreateServices(request):
-    
-    services = Service.objects.all()
-    services_exists = services.exists()
-    
-    service_form = ServiceForm()
-    
-    if request.method == 'POST':
-        
-        service_form = ServiceForm(request.POST)
-        
-        if service_form.is_valid():
-            
-            service_form.save()
-            
-            return redirect('purifier:view_services')
-    
-    context = {'services': services, 'services_exists': services_exists, 'service_form': service_form}
-    return render(request, 'service/view_services.html', context)
-
-# def updateService(request, id):
-    
-#     service = get_object_or_404(Service, pk=id)
-    
-#     service_form = ServiceForm(instance=service)
-    
-#     if request.method == 'POST':
-        
-#         service_form = ServiceForm(request.POST, instance=service)
-        
-#         if service_form.is_valid():
-            
-#             service_form.save()
-            
-#             return redirect('purifier:view_services')
-        
-#     context = {'service_form': service_form,  'service_id': service}
-    
-#     return render(request, 'service/view_services.html', context)
-
-
-
-
 # Product Functions ---------------------------------------------------------------------------------------------------------------------------------
 def viewCategories(request):
     
@@ -353,6 +309,54 @@ def viewProducts(request):
     context = {'category_form': category_form, 'product_form': product_form, 'products': products, 'products_exists': products_exists}
     
     return render(request, 'product/product.html', context)
+
+
+# Service Functions --------------------------------------------------------------------------------------------------------------------------------
+def viewAndCreateServices(request):
+    
+    services = Service.objects.all()
+    services_exists = services.exists()
+    
+    service_form = ServiceForm()
+    
+    if request.method == 'POST':
+        
+        service_form = ServiceForm(request.POST)
+        
+        if service_form.is_valid():
+            
+            service_form.save()
+            
+            return redirect('purifier:view_services')
+    
+    context = {'services': services, 'services_exists': services_exists, 'service_form': service_form}
+    return render(request, 'service/view_services.html', context)
+
+def deleteService(request, id):
+    
+    service = get_object_or_404(Service, pk=id)
+    service.delete()
+    return redirect('purifier:view_services')
+
+# def updateService(request, id):
+    
+#     service = get_object_or_404(Service, pk=id)
+    
+#     service_form = ServiceForm(instance=service)
+    
+#     if request.method == 'POST':
+        
+#         service_form = ServiceForm(request.POST, instance=service)
+        
+#         if service_form.is_valid():
+            
+#             service_form.save()
+            
+#             return redirect('purifier:view_services')
+        
+#     context = {'service_form': service_form,  'service_id': service}
+    
+#     return render(request, 'service/view_services.html', context)
 
 
 # Servicer Functions --------------------------------------------------------------------------------------------------------------------------------

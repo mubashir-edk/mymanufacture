@@ -29,9 +29,7 @@
                         {{ service_form.name }}
                     </div>
                     <div class="modal-footer">
-                        {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> {% endcomment %}
                         <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Create</button>
-                        {% comment %} <a href="{% url "purifier:delete_employee" employee.id %}" class="btn btn-danger">Delete</a> {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -58,7 +56,9 @@
 
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
-                            <td class="d-flex justify-content-between">{{ service.name }}<i class="bi bi-pencil-square"></i></td>
+                            <td class="d-flex justify-content-between">{{ service.name }}
+                                <a href="" class="anchor_tag delete-service-btn" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" data-bs-id="{{service.id}}"><i class="bi bi-trash"></i></a>
+                            </td>
                         </tr>
 
                     {% endfor %}
@@ -67,6 +67,24 @@
 
             </table>
         </div>
+
+        <div class="modal fade" id="deleteServiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteServiceModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteServiceModalTitle">Delete Service Service</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Are you sure, to delete this service?
+                    </div>
+                    <div class="modal-footer">
+                        <a href="" id="deleteServiceButton" class="btn btn-danger" data-bs-dismiss="modal">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         {% else %}
         <div class="d-flex justify-content-center">
             <span>No services added. <a href="" data-bs-toggle="modal" data-bs-target="#createServiceModal">Create</a> a new service.</span>
@@ -75,5 +93,7 @@
     </div>
 
 </div>
+
+<script src="{% static 'js/service/view_services.js' %}"></script>
 
 {% endblock content %}

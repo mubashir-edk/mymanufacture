@@ -20,10 +20,6 @@ urlpatterns = [
     path('update_customer/<uuid:id>', views.updateCustomer, name='update_customer'),
     path('delete_customer/<uuid:id>', views.deleteCustomer, name='delete_customer'),
     
-    # Service
-    path('view_services/', views.viewAndCreateServices, name='view_services'),
-    # path('update_services/<uuid:id>', views.updateService, name='update_services'),
-    
     # Product
     path('view_categories/', views.viewCategories, name='view_categories'),
     path('create_category/', views.createCategory, name='create_category'),
@@ -31,6 +27,10 @@ urlpatterns = [
     path('delete_category/<uuid:id>', views.deleteCategory, name='delete_category'),
     path('view_products/', views.viewProducts, name='view_products'),
     path('create_product/', views.createProduct, name='create_product'),
+    
+    # Service
+    path('view_services/', views.viewAndCreateServices, name='view_services'),
+    path('delete_service/<uuid:id>', views.deleteService, name='delete_service'),
     
     # Servicer
     path('view_servicers/', views.viewServicers, name='view_servicers'),

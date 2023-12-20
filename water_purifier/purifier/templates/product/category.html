@@ -33,9 +33,9 @@
                         
                         <div class="col-12 d-flex justify-content-center">
 
-                            <img id="image-preview-category" src="" alt="Image Preview" class="mt-2" style="width: 150px; height: 150px; display: none;">
+                            <img id="image-preview-category-create" src="" alt="Image Preview" class="mt-2" style="width: 150px; height: 150px; display: none;">
                               
-                            <img src="{% static 'images/empty_img.jpg' %}" id="categoryDefaultImage" alt="Image not loading..." class="mt-2" style="width: 150px; height: 150px;">  
+                            <img src="{% static 'images/empty_img.jpg' %}" id="categoryDefaultImage-create" alt="Image not loading..." class="mt-2" style="width: 150px; height: 150px;">  
                                 
                             <label for="formCategoryImage" class="form-label ms-2">
                                 <i class="fa-solid fa-pen-to-square"></i>
@@ -44,7 +44,7 @@
     
                         </div>
 
-                        <label for="formServiceName" class="form-label mt-3">Product Name</label>
+                        <label for="formCategoryName" class="form-label mt-3">Product Name</label>
                         {{ category_form.name }}
 
                     </div>
@@ -72,9 +72,9 @@
                                 <img src="{% static 'images/empty_img.jpg' %}" alt="Profile not loading..." class="img-card-top">
                             {% endif %}
 
-                            <a href="{% url "purifier:update_category" category.id %}" class="anchor_tag update-category-btn" data-bs-id="{{category.id}}" data-bs-toggle="modal" data-bs-target="#updateCategoryModal"><i class="fa-solid fa-pen-to-square category_edit"></i></a>
+                            <a href="{% url "purifier:update_category" category.id %}" class="anchor_tag update-category-btn" data-bs-id="{{category.id}}" data-bs-toggle="modal" data-bs-target="#updateCategoryModal"><i class="bi bi-pencil-square category_edit"></i></a>
 
-                            <a href="{% url "purifier:delete_category" category.id %}" class="anchor_tag delete-category-btn"><i class="fa-solid fa-trash category_delete"></i></a>
+                            <a href="{% url "purifier:delete_category" category.id %}" class="anchor_tag delete-category-btn"><i class="bi bi-trash category_delete"></i></a>
 
                             <div class="card-body ps-1 pe-2">
                                 <h5 class="card-title text-center overflow-hidden text-nowrap text-truncate">{{ category.name }}</h5>
@@ -100,9 +100,9 @@
                                 
                                 <div class="col-12 d-flex justify-content-center">
 
-                                    <img id="image-preview-category" src="" alt="Image Preview" class="mt-2" style="width: 150px; height: 150px; display: none;">
+                                    <img id="image-preview-category-update" src="" alt="Image Preview" class="mt-2" style="width: 150px; height: 150px; display: none;">
                                     
-                                    <img src="{% static 'images/empty_img.jpg' %}" id="categoryDefaultImage" alt="Image not loading..." class="mt-2" style="width: 150px; height: 150px;">  
+                                    <img src="{% static 'images/empty_img.jpg' %}" id="categoryDefaultImage-update" alt="Image not loading..." class="mt-2" style="width: 150px; height: 150px;">  
                                         
                                     <label for="formCategoryImage" class="form-label ms-2">
                                         <i class="fa-solid fa-pen-to-square"></i>
@@ -111,7 +111,7 @@
 
                                 </div>
 
-                                <label for="formServiceName" class="form-label mt-3">Product Name</label>
+                                <label for="formCategoryName" class="form-label mt-3">Product Name</label>
                                 {{ category_form.name }}
 
                             </div>
@@ -137,4 +137,4 @@
 
 <script src="{% static 'js/product/category.js' %}"></script>
 
-{% endblock content %}  
+{% endblock content %}

@@ -23,6 +23,7 @@ imageInputCategory.addEventListener('change', function () {
     }
 });
 
+
 var updateCategoryLinks = document.querySelectorAll('.update-category-btn');
 
     updateCategoryLinks.forEach(function(link) {
