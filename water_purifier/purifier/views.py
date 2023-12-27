@@ -334,7 +334,9 @@ def viewAndCreateServices(request):
 
 def deleteService(request, id):
     
+    print(id)
     service = get_object_or_404(Service, pk=id)
+    print(service)
     service.delete()
     return redirect('purifier:view_services')
 
@@ -413,6 +415,38 @@ def viewServiceWorks(request):
     service_works_exists = service_works.exists()
     
     service_work_form = ServiceWorkForm()
+    
+    
+    if request.method == 'GET':
+        
+        selected_customer = request.GET.get('selectedCustomer')
+        
+        print(selected_customer)
+        
+        if selected_customer:
+    
+            try:
+                
+                selected_customer = request.GET.get('selectedCustomer')
+                    
+                customer = get_object_or_404(Customer, pk=selected_customer)
+                installed_products = customer.installed_product.all()
+
+                products = Product.objects.filter(id__in=installed_products)
+                
+                products_data = [{'id': product.id, 'name': product.name} for product in products]
+                
+                print(products)
+                print('----------------------------------------------')
+                print(products_data)
+                
+                data = {
+                    'products': products_data,
+                }
+                return JsonResponse(data)
+            except Customer.DoesNotExist:
+                return JsonResponse({'error': 'Employee not found'}, status=404)
+        
     
     context = {'service_works': service_works, 'service_works_exists': service_works_exists, 'service_work_form': service_work_form}
     

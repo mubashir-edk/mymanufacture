@@ -89,6 +89,10 @@ class ProductForm(forms.ModelForm):
         fields = '__all__'
         
         widgets = {
+            'product_serial': forms.TextInput(attrs={
+                'class': 'form-control',
+                'id': 'formProductSerial',
+            }),
             'category': forms.Select(attrs={
                 'class': 'form-select',
                 'id': 'formProductCategory',
@@ -147,6 +151,10 @@ class ServiceWorkForm(forms.ModelForm):
                 'class': 'form-select',    
                 'id': 'formServiceWorkCustomer',    
             }),
+            'product': forms.Select(attrs={
+                'class': 'form-select',    
+                'id': 'formServiceWorkProduct',    
+            }),
             'service_name': forms.Select(attrs={
                 'class': 'form-select',    
                 'id': 'formServiceWorkService',    
@@ -157,6 +165,7 @@ class ServiceWorkForm(forms.ModelForm):
                 'rows': '3',  
             }),
             'service_date': forms.DateInput(attrs={
+                'type': 'date',
                 'class': 'form-control',     
                 'id': 'formServiceWorkDate',    
             }),

@@ -51,7 +51,7 @@ class Employee(models.Model):
     state = models.CharField(max_length=50, choices=STATE_CHOICES, default='NULL')
     district = models.CharField(max_length=100)
     address = models.TextField()
-    employee_code = models.CharField(max_length=50, null=True, blank=True, unique=True)
+    employee_code = models.CharField(max_length=50, blank=True, unique=True)
     
     def __str__(self) -> str:
         return self.employee_code
@@ -76,10 +76,11 @@ class Service(models.Model):
 class Product(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    product_serial = models.CharField(max_length=100, blank=True, unique=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, blank=True, null=True)
     name = models.CharField(max_length=100)
     image = models.ImageField(null=True, blank=True, upload_to="product_images/")
-    services = models.ManyToManyField(Service)
+    services = models.ManyToManyField(Service, null=True, blank=True)
     
     def __str__(self) -> str:
         return self.name
@@ -110,6 +111,7 @@ class Servicer(models.Model):
 class Test(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    customer_code = models.ForeignKey(Customer, on_delete=models.CASCADE)
     test_name = models.CharField(max_length=150)
     ph_value = models.CharField(max_length=30)
     tds_value = models.CharField(max_length=30)
@@ -123,11 +125,13 @@ class Test(models.Model):
 class ServiceWork(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    service_work_code = models.CharField(max_length=50, blank=True, unique=True)
     customer_code = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
     service_name = models.ForeignKey(Service, models.SET_NULL, null=True)
-    comment_section = models.TextField()
+    comment_section = models.TextField(null=True, blank=True)
     service_date = models.DateField()
-    remark_section = models.TextField()
+    remark_section = models.TextField(null=True, blank=True)
     
     def __str__(self) -> str:
         return self.customer_code.customer_code

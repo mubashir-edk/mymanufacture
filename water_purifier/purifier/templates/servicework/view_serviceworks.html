@@ -29,6 +29,9 @@
                         <label for="formServiceWorkCustomer" class="form-label mt-3">Customer</label>
                         {{ service_work_form.customer_code }}
 
+                        <label for="formServiceWorkProduct" class="form-label mt-3">Product</label>
+                        {{ service_work_form.product }}
+
                         <label for="formServiceWorkService" class="form-label mt-3">Service</label>
                         {{ service_work_form.service_name }}
 
@@ -43,9 +46,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> {% endcomment %}
                         <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Create</button>
-                        {% comment %} <a href="{% url "purifier:delete_employee" employee.id %}" class="btn btn-danger">Delete</a> {% endcomment %}
                     </div>
                 </div>
             </div>
@@ -77,6 +78,7 @@
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td>{{ service_work.customer_code }}</td>
+                            <td>{{ service_work.product }}</td>
                             <td>{{ service_work.service_name }}</td>
                             <td>{{ service_work.service_date }}</td>
                             <td>{{ service_work.comment_section }}</td>
@@ -97,5 +99,7 @@
     </div>
 
 </div>
+
+<script src="{% static 'js/servicework/view_serviceworks.js' %}"></script>
 
 {% endblock content %}
