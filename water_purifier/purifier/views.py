@@ -421,13 +421,15 @@ def viewServiceWorks(request):
         
         selected_customer = request.GET.get('selectedCustomer')
         
+        selected_product = request.GET.get('selectedProduct')
+        
         print(selected_customer)
         
         if selected_customer:
     
             try:
                 
-                selected_customer = request.GET.get('selectedCustomer')
+                # selected_customer = request.GET.get('selectedCustomer')
                     
                 customer = get_object_or_404(Customer, pk=selected_customer)
                 installed_products = customer.installed_product.all()
@@ -445,7 +447,34 @@ def viewServiceWorks(request):
                 }
                 return JsonResponse(data)
             except Customer.DoesNotExist:
-                return JsonResponse({'error': 'Employee not found'}, status=404)
+                return JsonResponse({'error': 'Customer not found'}, status=404)
+            
+            
+        if selected_product:
+            
+            try:
+                
+                # selected_product = request.GET.get('selected
+                
+                product = get_object_or_404(Product, pk=selected_product)
+                product_services = product.services.all()
+                
+                services = Service.objects.filter(id__in=product_services)
+                
+                services_data = [{'id': service.id, 'name': service.name} for service in services]
+                
+                print(services)
+                print('----------------------------------------------')
+                print(services_data)
+                
+                data = {
+                    'services': services_data,
+                }
+                
+                return JsonResponse(data)
+            except Product.DoesNotExist:
+                return JsonResponse({'error': 'Product not found'}, status=404)
+                
         
     
     context = {'service_works': service_works, 'service_works_exists': service_works_exists, 'service_work_form': service_work_form}
@@ -458,9 +487,40 @@ def createServiceWork(request):
         
         service_work_form = ServiceWorkForm(request.POST)
         
+        # Generating Service Work Code
+        servicework_codes_only = ServiceWork.objects.values_list('service_work_code', flat=True)
+        
+        max_servicework_code = ''
+        
+        if servicework_codes_only.exists():
+            max_servicework_code = max(servicework_codes_only)
+            print(max_servicework_code)
+            
+        print(servicework_codes_only)
+        
+        servicework_code_loop = True
+        servicework_code_number = 1
+        
+        while servicework_code_loop:
+
+            servicework_code_leading_zeros = 5 - len(str(servicework_code_number))
+            
+            servicework_code = "0" * servicework_code_leading_zeros + str(servicework_code_number)
+            
+            generated_servicework_code = "SR_" + servicework_code
+        
+            if generated_servicework_code in servicework_codes_only or generated_servicework_code < max_servicework_code:
+                servicework_code_number += 1
+            else:
+                break
+        
         if service_work_form.is_valid():
             
-            service_work_form.save()
+            servicework = service_work_form.save(commit=False)
+            
+            servicework.service_work_code = generated_servicework_code
+            
+            servicework.save()
             
             return redirect('purifier:view_serviceworks')
     

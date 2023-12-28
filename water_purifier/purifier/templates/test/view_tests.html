@@ -24,6 +24,7 @@
                 <thead class="table-secondary">
                     <tr>
                         <th></th>
+                        <th>Customer</th>
                         <th>Test Name</th>
                         <th>PH</th>
                         <th>TDS</th>
@@ -39,6 +40,7 @@
 
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
+                            <td>{{ test.customer_code }}</td>
                             <td>{{ test.test_name }}</td>
                             <td>{{ test.ph_value }}</td>
                             <td>{{ test.tds_value }}</td>

@@ -187,6 +187,10 @@ class TestForm(forms.ModelForm):
                 'class': 'form-control',    
                 'id': 'formTestName',    
             }),
+            'customer_code': forms.Select(attrs={
+                'class': 'form-select',    
+                'id': 'formTestCustomerCode',     
+            }),
             'ph_value': forms.TextInput(attrs={
                 'class': 'form-control',    
                 'id': 'formPhValue',    

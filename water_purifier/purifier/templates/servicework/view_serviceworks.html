@@ -63,7 +63,9 @@
                 <thead class="table-secondary">
                     <tr>
                         <th></th>
+                        <th>Code</th>
                         <th>Customer</th>
+                        <th>Product</th>
                         <th>Service</th>
                         <th>Service Date</th>
                         <th>Comment</th>
@@ -77,6 +79,7 @@
 
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
+                            <td>{{ service_work.service_work_code }}</td>
                             <td>{{ service_work.customer_code }}</td>
                             <td>{{ service_work.product }}</td>
                             <td>{{ service_work.service_name }}</td>

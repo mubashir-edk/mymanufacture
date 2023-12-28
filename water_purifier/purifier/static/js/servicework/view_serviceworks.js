@@ -8,10 +8,14 @@ $(document).ready(function () {
 
     $("#formServiceWorkCustomer").change(function () {
 
+        productSelect.innerHTML = '';
+
         var selectedCustomer = $('#formServiceWorkCustomer').val();
 
         console.log(selectedCustomer);
 
+    if (selectedCustomer !== '') {
+        
         $(productSelect).show();
 
         $.ajax({
@@ -30,7 +34,7 @@ $(document).ready(function () {
 
                 var option = document.createElement('option');
                     option.value = '';
-                    option.text = '';
+                    option.text = '---------';
                     option.selected;
                     productSelect.add(option);
 
@@ -48,5 +52,72 @@ $(document).ready(function () {
             }
         });
 
+    } else {
+        // If selectedCustomer is empty, hide the productSelect
+        $(productSelect).hide();
+    }
+
     });
+
+
+
+    var serviceSelect = document.getElementById('formServiceWorkService');
+    serviceSelect.innerHTML = '';
+
+    $(serviceSelect).hide();
+
+    $("#formServiceWorkProduct").change(function () {
+
+        serviceSelect.innerHTML = '';
+
+        var selectedProduct = $('#formServiceWorkProduct').val();
+
+        console.log(selectedProduct);
+
+    if (selectedProduct !== '') {
+        
+        $(serviceSelect).show();
+
+        $.ajax({
+            url: `/view_serviceworks/`,
+            type: "GET",
+            dataType: "json",
+            data: {
+                'selectedProduct': selectedProduct,
+            },
+            success: function (data) {
+
+                
+                // const products = data.products;
+
+                console.log(data.products);
+
+                var option = document.createElement('option');
+                    option.value = '';
+                    option.text = '---------';
+                    option.selected;
+                    serviceSelect.add(option);
+
+                data.services.forEach(function (service) {
+                    var option = document.createElement('option');
+                    option.value = service.id;
+                    option.text = service.name;
+                    serviceSelect.add(option);
+                });
+
+
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+
+    } else {
+        // If selectedCustomer is empty, hide the productSelect
+        $(serviceSelect).hide();
+    }
+
+    });
+
+
 });
