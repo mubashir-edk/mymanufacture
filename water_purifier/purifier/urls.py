@@ -40,9 +40,13 @@ urlpatterns = [
     # Service Work
     path('view_serviceworks/', views.viewServiceWorks, name='view_serviceworks'),
     path('create_servicework/', views.createServiceWork, name='create_servicework'),
+    path('each_service_work/<uuid:id>', views.eachServiceWork, name='each_service_work'),
     
     # Test
     path('view_tests/', views.viewTests, name='view_tests'),
     path('create_test/', views.createTest, name='create_test'),
+    
+    # ServiceWork Assign
+    path('view_assigns/', views.viewAssigning, name='view_assigns'),
     
 ]

@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'purifier',
+    
+    # 'location_field.apps.DefaultConfig',
 ]
 
 MIDDLEWARE = [

@@ -153,14 +153,13 @@ def createCustomer(request):
             
         if customer_form.is_valid():
             
-            print(request.POST.get('installed_product'))
-            print(request.POST.getlist('installed_product'))
-            # print(request.POST)
-            
             customer = customer_form.save(commit=False)
             customer.customer_code = generated_customer_code
 
             customer.save()
+            
+            installed_products = request.POST.getlist('installed_product')
+            customer.installed_product.set(installed_products)
             
             return redirect('purifier:view_customers')
         
@@ -200,6 +199,9 @@ def updateCustomer(request , id):
             customer_save = customer_form.save(commit=False)
             customer_save.customer_code = customer_code_stored
             customer_save.save() 
+            
+            installed_products = request.POST.getlist('installed_product')
+            customer.installed_product.set(installed_products)
             
             return redirect(reverse('purifier:each_customer', kwargs={'id': customer.id}))
         
@@ -523,6 +525,31 @@ def createServiceWork(request):
             servicework.save()
             
             return redirect('purifier:view_serviceworks')
+        
+def eachServiceWork(request, id):
+    
+    service_work = get_object_or_404(ServiceWork, pk=id)
+    
+    service_work_form = ServiceWorkForm(instance=service_work)
+    
+    service_work_code_stored = service_work.service_work_code
+    
+    if request.method == 'POST':
+        
+        service_work_form = ServiceWorkForm(request.POST, instance=service_work)
+        
+        if service_work_form.is_valid():
+            
+            service_work_save = service_work_form.save(commit=False)
+            service_work_save.service_work_code = service_work_code_stored
+            service_work_save.save()
+            
+            return redirect(reverse('purifier:each_service_work', kwargs={'id': service_work.id}))
+    
+    context = {'service_work': service_work, 'service_work_form': service_work_form}
+    
+    return render(request, 'servicework/each_servicework.html', context)
+    
     
 # Test or Quality check Functions -------------------------------------------------------------------------------------------------------------------
 def viewTests(request):
@@ -552,3 +579,17 @@ def createTest(request):
     context = {'test_form': test_form}
         
     return render(request, 'test/test.html', context)
+
+
+# Service Assign Functions --------------------------------------------------------------------------------------------------------------------------
+def viewAssigning(request):
+    
+    servicework_assign_form = ServiceWorkAssignForm()
+    
+    serviceworks_toassign = ServiceAssign.objects.all()
+    
+    serviceworks_toassign_exists = serviceworks_toassign.exists()
+    
+    context = {'servicework_assign_form': servicework_assign_form, 'serviceworks_toassign': serviceworks_toassign, 'serviceworks_toassign_exists':serviceworks_toassign_exists}
+    
+    return render(request, 'service_assigning/view_assigning.html', context) 

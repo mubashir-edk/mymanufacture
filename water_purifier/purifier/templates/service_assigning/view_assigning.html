@@ -1,0 +1,92 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block head %}
+    <title>View Assigns</title>
+    {% comment %} <link href="{% static 'css/employee/view_employees.css' %}" rel="stylesheet" type="text/css"> {% endcomment %}
+{% endblock head %}
+
+{% block content %}
+
+    <div class="d-grid">
+        <div class="d-flex justify-content-between">
+            <span class="assign_heading">Work Assigns</span>
+            <a href="" class="anchor_tag"><button type="button" class="btn btn-primary">Create</button></a>
+        </div>
+
+        <hr class="mt-1">
+
+        <div class="mt-1">
+            {% if serviceworks_toassign_exists %}
+            <div class="table-responsive">
+                <table id="employeesTable" class="table table-bordered table-striped">
+                
+                    <thead class="table-secondary">
+                        <tr>
+                            <th></th>
+                            <th>Service Work</th>
+                            <th>Servicer</th>
+                            <th>Assign a Servicer</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for servicework_toassign in serviceworks_toassign %}
+
+                            <tr>
+                                <td class="text-center"><a href="" class="anchor_tag">{{ forloop.counter }}</a></td>
+                                <td><a href="" class="">{{ servicework_toassign.service }}</a></td>
+                                <td><a href="" class="">{{ servicework_toassign.servicer }}</a></td>
+
+                                {% if servicework_toassign.servicer %}
+                                    <td><a href="" class="btn btn-danger">UnAssign</a></td>
+                                {% else %}
+                                    <td><a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#assignServicerModal">Assign</a></td>
+                                {% endif %}
+                            </tr>
+
+                            {% comment %} Assign Servicer modal {% endcomment %}
+                            <div class="modal fade" id="assignServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="assignServicerModalTitle" aria-hidden="true">
+                                <form method="post" action="" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="assignServicerModalTitle">Assign {{ servicework_toassign }} to Servicer</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <label for="formCategoryName" class="form-label mt-3">Select Servicer</label>
+                                                {{ servicework_assign_form.servicer }}
+
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Assign</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        {% endfor %}
+    
+                    </tbody>
+
+                </table>
+
+                
+            </div>
+            {% else %}
+            <div class="d-flex justify-content-center">
+                <span>No service works yet.</span>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    {% comment %} <script src="{% static 'js/employee/view_employees.js' %}"></script> {% endcomment %}
+
+{% endblock content %}

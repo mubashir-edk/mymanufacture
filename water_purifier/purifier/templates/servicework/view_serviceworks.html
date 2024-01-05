@@ -29,10 +29,10 @@
                         <label for="formServiceWorkCustomer" class="form-label mt-3">Customer</label>
                         {{ service_work_form.customer_code }}
 
-                        <label for="formServiceWorkProduct" class="form-label mt-3">Product</label>
+                        <label for="formServiceWorkProduct" id="serviceWorkProductLabel" class="form-label mt-3">Product</label>
                         {{ service_work_form.product }}
 
-                        <label for="formServiceWorkService" class="form-label mt-3">Service</label>
+                        <label for="formServiceWorkService" id="serviceWorkServiceLabel" class="form-label mt-3">Service</label>
                         {{ service_work_form.service_name }}
 
                         <label for="formServiceWorkDate" class="form-label mt-3">Service Date</label>
@@ -78,14 +78,14 @@
                     {% for service_work in service_works %}
 
                         <tr>
-                            <td class="text-center">{{ forloop.counter }}</td>
-                            <td>{{ service_work.service_work_code }}</td>
-                            <td>{{ service_work.customer_code }}</td>
-                            <td>{{ service_work.product }}</td>
-                            <td>{{ service_work.service_name }}</td>
-                            <td>{{ service_work.service_date }}</td>
-                            <td>{{ service_work.comment_section }}</td>
-                            <td>{{ service_work.remark_section }}</td>
+                            <td class="text-center"><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ forloop.counter }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.service_work_code }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.customer_code }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.product }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.service_name }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.service_date }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.comment_section }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.remark_section }}</a></td>
                         </tr>
 
                     {% endfor %}

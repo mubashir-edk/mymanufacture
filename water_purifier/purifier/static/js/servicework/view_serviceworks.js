@@ -2,8 +2,10 @@ $(document).ready(function () {
 
 
     var productSelect = document.getElementById('formServiceWorkProduct');
+    var productSelectLabel = document.getElementById('serviceWorkProductLabel');
     productSelect.innerHTML = '';
 
+    $(productSelectLabel).hide();
     $(productSelect).hide();
 
     $("#formServiceWorkCustomer").change(function () {
@@ -16,6 +18,7 @@ $(document).ready(function () {
 
     if (selectedCustomer !== '') {
         
+        $(productSelectLabel).show();
         $(productSelect).show();
 
         $.ajax({
@@ -54,6 +57,7 @@ $(document).ready(function () {
 
     } else {
         // If selectedCustomer is empty, hide the productSelect
+        $(productSelectLabel).hide();
         $(productSelect).hide();
     }
 
@@ -62,8 +66,10 @@ $(document).ready(function () {
 
 
     var serviceSelect = document.getElementById('formServiceWorkService');
+    var serviceSelectLabel = document.getElementById('serviceWorkServiceLabel');
     serviceSelect.innerHTML = '';
 
+    $(serviceSelectLabel).hide();
     $(serviceSelect).hide();
 
     $("#formServiceWorkProduct").change(function () {
@@ -76,6 +82,7 @@ $(document).ready(function () {
 
     if (selectedProduct !== '') {
         
+        $(serviceSelectLabel).show();
         $(serviceSelect).show();
 
         $.ajax({
@@ -114,6 +121,7 @@ $(document).ready(function () {
 
     } else {
         // If selectedCustomer is empty, hide the productSelect
+        $(serviceSelectLabel).hide();
         $(serviceSelect).hide();
     }
 

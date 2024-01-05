@@ -1,55 +1,16 @@
 from django.db import models
-# from django.contrib.gis.db import models as point_field
 import uuid
+# from location_field.models.spatial import LocationField
+# from location_field.widgets import GoogleMapsWidget
+# from geoposition.fields import GeopositionField
 
 # Create your models here.
 class Employee(models.Model):
-    
-    STATE_CHOICES = (
-    ('NULL', 'Select State'),
-    ('AP', 'Andhra Pradesh'),
-    ('AR', 'Arunachal Pradesh'),
-    ('AS', 'Assam'),
-    ('BR', 'Bihar'),
-    ('CG', 'Chhattisgarh'),
-    ('GA', 'Goa'),
-    ('GJ', 'Gujarat'),
-    ('HR', 'Haryana'),
-    ('HP', 'Himachal Pradesh'),
-    ('JH', 'Jharkhand'),
-    ('KA', 'Karnataka'),
-    ('KL', 'Kerala'),
-    ('MP', 'Madhya Pradesh'),
-    ('MH', 'Maharashtra'),
-    ('MN', 'Manipur'),
-    ('ML', 'Meghalaya'),
-    ('MZ', 'Mizoram'),
-    ('NL', 'Nagaland'),
-    ('OD', 'Odisha'),
-    ('PB', 'Punjab'),
-    ('RJ', 'Rajasthan'),
-    ('SK', 'Sikkim'),
-    ('TN', 'Tamil Nadu'),
-    ('TS', 'Telangana'),
-    ('TR', 'Tripura'),
-    ('UK', 'Uttarakhand'),
-    ('UP', 'Uttar Pradesh'),
-    ('WB', 'West Bengal'),
-    ('AN', 'Andaman and Nicobar Islands'),
-    ('CH', 'Chandigarh'),
-    ('DN', 'Dadra and Nagar Haveli and Daman and Diu'),
-    ('DL', 'Delhi'),
-    ('JK', 'Jammu and Kashmir'),
-    ('LA', 'Ladakh'),
-    ('LD', 'Lakshadweep'),
-    ('PY', 'Puducherry'),)
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     profile = models.ImageField(null=True, blank=True, upload_to="employee_profiles/")
     name = models.CharField(max_length=50)
     mobile = models.CharField(max_length=20)
-    state = models.CharField(max_length=50, choices=STATE_CHOICES, default='NULL')
-    district = models.CharField(max_length=100)
     address = models.TextField()
     employee_code = models.CharField(max_length=50, blank=True, unique=True)
     
@@ -93,9 +54,9 @@ class Customer(models.Model):
     address = models.TextField()
     mobile = models.CharField(max_length=20)
     whatsapp_number = models.CharField(max_length=20)
-    installed_product = models.ManyToManyField(Product, blank=True, null=True)
-    # location = point_field.PointField()
+    installed_product = models.ManyToManyField(Product)
     customer_code = models.CharField(max_length=50, blank=True, unique=True)
+    # location = LocationField(based_fields=[name], zoom=7, blank=True)
     
     def __str__(self) -> str:
         return self.customer_code
@@ -134,4 +95,16 @@ class ServiceWork(models.Model):
     remark_section = models.TextField(null=True, blank=True)
     
     def __str__(self) -> str:
-        return self.customer_code.customer_code
+        return self.service_work_code
+    
+class ServiceAssign(models.Model):
+    
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
+    service = models.ForeignKey(ServiceWork, on_delete=models.CASCADE)
+    servicer = models.ForeignKey(Servicer, on_delete=models.CASCADE, null=True, blank=True)
+    notification = models.CharField(max_length=500)
+    
+    def __str__(self):
+        return str(self.service)
+    
+    

@@ -87,7 +87,7 @@
                     <label for="customerInstalledProduct" class="form-label mt-3">Installed Products</label>
 
                     {% for product in customer.installed_product.all  %}
-                        <input type="text" class="form-control" id="customerInstalledProduct" value="{{ product.name }}" readonly/>
+                        <input type="text" class="form-control mb-1" id="customerInstalledProduct" value="{{ product.name }} (serial: {{ product.product_serial }})" readonly/>
                     {% endfor %}
 
                 </div>

@@ -59,11 +59,11 @@ class CustomerForm(forms.ModelForm):
             }),
             'whatsapp_number': forms.TextInput(attrs={
                 'class': 'form-control', 
-                'id': 'formcustomerWhatsappNumber', 
+                'id': 'formCustomerWhatsappNumber', 
             }),
             'installed_product': forms.CheckboxSelectMultiple(attrs={
                 'class': 'form-checkbox', 
-                'id': 'formcustomerInstalledProduct', 
+                'id': 'formCustomerInstalledProduct', 
             }),
         }
         
@@ -210,5 +210,25 @@ class TestForm(forms.ModelForm):
             'turbuet_value': forms.TextInput(attrs={
                 'class': 'form-control',    
                 'id': 'formTurbuetValue', 
+            }),
+        }
+        
+class ServiceWorkAssignForm(forms.ModelForm):
+    class Meta:
+        model = ServiceAssign
+        fields = '__all__'
+        
+        widgets = {
+            'service': forms.Select(attrs={
+                'class': 'form-select',    
+                'id': 'formAssignService',    
+            }),
+            'servicer': forms.Select(attrs={
+                'class': 'form-select',    
+                'id': 'formAssignServicer',     
+            }),
+            'notification': forms.TextInput(attrs={
+                'class': 'form-control',    
+                'id': 'formAssignNotification',    
             }),
         }

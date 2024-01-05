@@ -1,0 +1,40 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block head %}
+    <title>{{service_work.service_work_code}}</title>
+{% endblock head %}
+
+{% block content %}
+
+        <label for="formServiceWorkCustomer" class="form-label mt-3">Customer</label>
+        {{ service_work_form.customer_code }}
+
+        <label for="formServiceWorkProduct" id="serviceWorkProductLabel" class="form-label mt-3">Product</label>
+        {{ service_work_form.product }}
+
+        <label for="formServiceWorkService" id="serviceWorkServiceLabel" class="form-label mt-3">Service</label>
+        {{ service_work_form.service_name }}
+
+        <label for="formServiceWorkDate" class="form-label mt-3">Service Date</label>
+        {{ service_work_form.service_date }}
+
+        <label for="formServiceWorkComment" class="form-label mt-3">Comments</label>
+        {{ service_work_form.comment_section }}
+
+        <label for="formServiceWorkRemark" class="form-label mt-3">Remarks</label>
+        {{ service_work_form.remark_section }}
+
+
+
+
+
+
+
+
+
+<script src="{% static 'js/servicework/each_servicework.js' %}"></script>
+
+
+
+{% endblock content %}
