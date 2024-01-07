@@ -12,13 +12,13 @@ imageInput.addEventListener('change', function () {
         reader.onload = function (e) {
             imagePreview.src = e.target.result;
             imagePreview.style.display = 'block';
-            existingImage.style.display = 'none'; // Hide the existing/default image
+            existingImage.style.display = 'none';
         };
 
         reader.readAsDataURL(file);
     } else {
         imagePreview.src = '';
         imagePreview.style.display = 'none';
-        existingImage.style.display = 'block'; // Show the existing/default image
+        existingImage.style.display = 'block';
     }
 });

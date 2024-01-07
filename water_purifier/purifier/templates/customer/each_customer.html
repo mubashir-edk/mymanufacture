@@ -3,6 +3,7 @@
 
 {% block head %}
     <title>{{ customer.name }}</title>
+    <link href="{% static 'css/customer/each_customer.css' %}" rel="stylesheet" type="text/css">
 {% endblock head %}
 
 {% block content %}
@@ -76,19 +77,66 @@
                 </div>
                 <div class="col-lg-6 col-12">
                     <label for="customerAddress" class="form-label mt-3">Address</label>
-                    <textarea id="customerAddress" class="form-control" readonly>{{ customer.address }}</textarea>
+                    <input type="text" class="form-control" id="customerAddress" value="{{ customer.address }}" readonly/>
                 </div>
 
             </div>
 
-            <div class="row d-lg-flex justify-content-lg-between d-grid justify-content-center">
+            <div class="row justify-content-lg-between d-grid justify-content-center">
 
-                <div class="col-lg-6 col-12">
+                <div class="col-12">
+
                     <label for="customerInstalledProduct" class="form-label mt-3">Installed Products</label>
 
-                    {% for product in customer.installed_product.all  %}
-                        <input type="text" class="form-control mb-1" id="customerInstalledProduct" value="{{ product.name }} (serial: {{ product.product_serial }})" readonly/>
-                    {% endfor %}
+                    {% if customer.installed_product.all %}
+                        <div class="row row-cols-md-2 row-cols-lg-3 row-cols-sm-1">
+
+                            {% for product in customer.installed_product.all  %}
+  
+                                <div class="col">
+                                    <a class="anchor_tag product-details" data-bs-product="{{product.id}}" data-bs-toggle="modal" data-bs-target="#productDetailsModal">
+                                        <div class="custom-card">
+
+                                            {% if product.image %}
+                                                <img src="{{product.image.url}}" class="custom-card-img" alt="Profile not loading...">
+                                                {% else %}
+                                                <img src="{% static 'images/empty_img.jpg' %}" class="custom-card-img" alt="Profile not loading...">
+                                            {% endif %}
+
+                                            <div class="custom-card-body">
+
+                                                <p class="custom-card-title">{{product.name}}</p>
+
+                                                <p class="custom-card-text">(Serial_No: {{ product.product_serial }})</p>
+
+                                            </div>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            {% endfor %}
+
+                            {% comment %} Product Details modal {% endcomment %}
+                            <div class="modal fade" id="productDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="productDetailsModalTitle" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="productDetailsModalTitle"></h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% comment %} modal ends {% endcomment %}
+                        </div>
+                    {% else %}
+
+                        <span>(No installed products.)</span>
+
+                    {% endif %}
 
                 </div>
 
@@ -96,5 +144,7 @@
 
         </div>
     </div>
+
+<script src="{% static 'js/customer/each_customer.js' %}"></script>
 
 {% endblock content %}

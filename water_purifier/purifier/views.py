@@ -179,8 +179,74 @@ def viewCustomers(request):
 def eachCustomer(request , id):
     
     customer = get_object_or_404(Customer, pk=id)
+    
+    if request.method == 'GET':
+        
+        product_id = request.GET.get('product_id')
+        
+        if product_id:
+            try:
+                product = Product.objects.get(pk=product_id)
+                
+                if product.image:
+                    data = {'product': {
+                        'image': product.image,
+                        'name': product.name,
+                        'product_serial': product.product_serial,
+                        'category': product.category,
+                        'services': product.services.all(),
+                        # Add other fields as needed
+                    }}
+                else:
+                    data = {'product': {
+                        'name': product.name,
+                        'product_serial': product.product_serial,
+                        'category': product.category,
+                        'services': product.services.all(),
+                        # Add other fields as needed
+                    }}
+
+                return JsonResponse(data)
+            except Product.DoesNotExist:
+                return JsonResponse({'error': 'Product not found'}, status=404)
+        
+    
     context = {'customer': customer}
     return render(request, 'customer/each_customer.html', context)
+
+def fetchCustomerProducts(request):
+
+    print("jbnasibfdskfbkjb")
+    if request.method == 'GET':
+        
+        product_id = request.GET.get('product_id')
+        
+        try:
+            product = Product.objects.get(pk=product_id)
+            
+            if product.image:
+                data = {'product': {
+                    'image': product.image,
+                    'name': product.name,
+                    'product_serial': product.product_serial,
+                    'category': product.category,
+                    'services': product.services.all(),
+                    # Add other fields as needed
+                }}
+            else:
+                data = {'product': {
+                    'name': product.name,
+                    'product_serial': product.product_serial,
+                    'category': product.category,
+                    'services': product.services.all(),
+                    # Add other fields as needed
+                }}
+
+            return JsonResponse(data)
+        except Product.DoesNotExist:
+            return JsonResponse({'error': 'Product not found'}, status=404)
+
+    
 
 def updateCustomer(request , id):
     

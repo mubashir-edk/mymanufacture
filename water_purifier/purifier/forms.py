@@ -106,7 +106,7 @@ class ProductForm(forms.ModelForm):
                 'id': 'formProductImage',
             }),
             'services': forms.CheckboxSelectMultiple(attrs={
-                'class': 'form-checkbox',
+                'class': 'form-checkbox bg-info',
                 'id': 'formProductServices',
             }),
         }

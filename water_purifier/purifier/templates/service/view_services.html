@@ -57,7 +57,11 @@
                         <tr>
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td class="d-flex justify-content-between">{{ service.name }}
-                                <a href="" class="anchor_tag delete-service-btn" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" data-bs-id="{{service.id}}"><i class="bi bi-trash"></i></a>
+
+                                {% comment %} <div class="bin-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"> {% endcomment %}
+                                    <a href="" class="anchor_tag delete-service-btn" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" data-bs-id="{{service.id}}"><i data-bs-toggle="tooltip" data-bs-placeholder="left" title="Delete" class="bi bi-trash"></i></a>
+                                {% comment %} </div> {% endcomment %}
+
                             </td>
                         </tr>
 

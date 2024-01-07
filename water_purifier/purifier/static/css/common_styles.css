@@ -5,9 +5,14 @@
 
 .anchor_tag:hover {
     color: black;
+    cursor: pointer;
 }
 
-.customer_heading {
+.page_heading {
     font-size: 25px;
+    font-weight: 500;
+}
+
+.form-label {
     font-weight: 500;
 }
