@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    <title>{{ employee.name }}</title>
+    <title>{{ employee.employee_code }}</title>
 {% endblock head %}
 
 {% block content %}
@@ -67,19 +67,6 @@
                 </div>
 
             </div>
-
-            {% comment %} <div class="row d-lg-flex justify-content-lg-between d-grid justify-content-center">
-
-                <div class="col-lg-6 col-12">
-                    <label for="employeeState" class="form-label mt-3">State</label>
-                    <input type="text" class="form-control" id="employeeState" value="{{ employee.state }}" readonly/>
-                </div>
-                <div class="col-lg-6 col-12">
-                    <label for="employeeDistrict" class="form-label mt-3">Distirct</label>
-                    <input type="text" class="form-control" id="employeeDistrict" value="{{ employee.district }}" readonly/>
-                </div>
-
-            </div> {% endcomment %}
 
             <div class="row justify-content-start">
                 <div class="col-6">

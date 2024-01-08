@@ -17,9 +17,6 @@ def createEmployee(request):
     employee_form = EmployeeForm()
     
     if request.method == 'POST':
-        
-        print("Inside POST Submission")
-        print(request.POST)
 
         employee_form = EmployeeForm(request.POST, request.FILES)
         
@@ -30,9 +27,6 @@ def createEmployee(request):
         
         if employee_codes_only.exists():
             max_employee_code = max(employee_codes_only)
-            print(max_employee_code)
-            
-        print(employee_codes_only)
         
         employee_code_loop = True
         employee_code_number = 1
@@ -52,8 +46,6 @@ def createEmployee(request):
         
         if employee_form.is_valid():
             
-            print("Inside validating")
-            
             employee = employee_form.save(commit=False)
             employee.employee_code = generated_employee_code
             employee.save()
@@ -66,7 +58,6 @@ def createEmployee(request):
 def viewEmployees(request):
     
     employees = Employee.objects.all()
-    print(employees)
     employees_exists = employees.exists()
     
     context = {'employees': employees, 'employees_exists': employees_exists}
@@ -76,8 +67,6 @@ def viewEmployees(request):
 def eachEmployee(request, id):
     
     employee = get_object_or_404(Employee, pk=id)
-    
-    print(employee.id)
     
     context = {'employee': employee}
     
@@ -131,9 +120,6 @@ def createCustomer(request):
         
         if customer_codes_only.exists():
             max_customer_code = max(customer_codes_only)
-            print(max_customer_code)
-            
-        print(customer_codes_only)
         
         customer_code_loop = True
         customer_code_number = 1
@@ -180,73 +166,9 @@ def eachCustomer(request , id):
     
     customer = get_object_or_404(Customer, pk=id)
     
-    if request.method == 'GET':
-        
-        product_id = request.GET.get('product_id')
-        
-        if product_id:
-            try:
-                product = Product.objects.get(pk=product_id)
-                
-                if product.image:
-                    data = {'product': {
-                        'image': product.image,
-                        'name': product.name,
-                        'product_serial': product.product_serial,
-                        'category': product.category,
-                        'services': product.services.all(),
-                        # Add other fields as needed
-                    }}
-                else:
-                    data = {'product': {
-                        'name': product.name,
-                        'product_serial': product.product_serial,
-                        'category': product.category,
-                        'services': product.services.all(),
-                        # Add other fields as needed
-                    }}
-
-                return JsonResponse(data)
-            except Product.DoesNotExist:
-                return JsonResponse({'error': 'Product not found'}, status=404)
-        
-    
     context = {'customer': customer}
-    return render(request, 'customer/each_customer.html', context)
-
-def fetchCustomerProducts(request):
-
-    print("jbnasibfdskfbkjb")
-    if request.method == 'GET':
-        
-        product_id = request.GET.get('product_id')
-        
-        try:
-            product = Product.objects.get(pk=product_id)
-            
-            if product.image:
-                data = {'product': {
-                    'image': product.image,
-                    'name': product.name,
-                    'product_serial': product.product_serial,
-                    'category': product.category,
-                    'services': product.services.all(),
-                    # Add other fields as needed
-                }}
-            else:
-                data = {'product': {
-                    'name': product.name,
-                    'product_serial': product.product_serial,
-                    'category': product.category,
-                    'services': product.services.all(),
-                    # Add other fields as needed
-                }}
-
-            return JsonResponse(data)
-        except Product.DoesNotExist:
-            return JsonResponse({'error': 'Product not found'}, status=404)
-
     
+    return render(request, 'customer/each_customer.html', context)
 
 def updateCustomer(request , id):
     
@@ -403,10 +325,20 @@ def viewAndCreateServices(request):
 def deleteService(request, id):
     
     print(id)
+    
     service = get_object_or_404(Service, pk=id)
-    print(service)
+    
     service.delete()
+    
     return redirect('purifier:view_services')
+
+# def deleteService(request, id):
+    
+#     print(id)
+#     service = get_object_or_404(Service, pk=id)
+#     print(service)
+#     service.delete()
+#     return redirect('purifier:view_services')
 
 # def updateService(request, id):
     
@@ -590,6 +522,10 @@ def createServiceWork(request):
             
             servicework.save()
             
+            servicework_toassign = ServiceAssign(service=servicework, notification=f'{servicework.service_date} is the service date for the customer {servicework.customer_code}')
+            
+            servicework_toassign.save()
+            
             return redirect('purifier:view_serviceworks')
         
 def eachServiceWork(request, id):
@@ -659,3 +595,43 @@ def viewAssigning(request):
     context = {'servicework_assign_form': servicework_assign_form, 'serviceworks_toassign': serviceworks_toassign, 'serviceworks_toassign_exists':serviceworks_toassign_exists}
     
     return render(request, 'service_assigning/view_assigning.html', context) 
+
+def assignServicer(request, id):
+    
+    print(id)
+    
+    servicework = get_object_or_404(ServiceAssign, pk=id)
+    
+    assigned_servicework = servicework.service
+    assigned_servicework_notification = servicework.notification
+    
+    if request.method == 'POST':
+        
+        print('in instance')
+        
+        servicework_assign_form = ServiceWorkAssignForm(request.POST, instance=servicework)
+        
+        if servicework_assign_form.is_valid():
+            
+            print('in validation')
+            
+            save_form = servicework_assign_form.save(commit=False)
+            
+            save_form.service = assigned_servicework
+            save_form.notification = assigned_servicework_notification
+            
+            save_form.save()
+            
+            return redirect('purifier:view_assigns')
+        
+    return redirect('purifier:view_assigns')
+
+def unAssignServicer(request, id):
+    
+    service_assigned = get_object_or_404(ServiceAssign, pk=id)
+    
+    service_assigned.servicer = None
+    
+    service_assigned.save()
+    
+    return redirect('purifier:view_assigns')

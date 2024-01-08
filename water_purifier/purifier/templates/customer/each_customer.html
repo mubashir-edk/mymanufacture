@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block head %}
-    <title>{{ customer.name }}</title>
+    <title>{{ customer.customer_code }}</title>
     <link href="{% static 'css/customer/each_customer.css' %}" rel="stylesheet" type="text/css">
 {% endblock head %}
 
@@ -82,19 +82,19 @@
 
             </div>
 
-            <div class="row justify-content-lg-between d-grid justify-content-center">
+            <div class="row">
 
                 <div class="col-12">
 
                     <label for="customerInstalledProduct" class="form-label mt-3">Installed Products</label>
 
                     {% if customer.installed_product.all %}
-                        <div class="row row-cols-md-2 row-cols-lg-3 row-cols-sm-1">
+                        <div class="row row-cols-3">
 
                             {% for product in customer.installed_product.all  %}
   
                                 <div class="col">
-                                    <a class="anchor_tag product-details" data-bs-product="{{product.id}}" data-bs-toggle="modal" data-bs-target="#productDetailsModal">
+                                    
                                         <div class="custom-card">
 
                                             {% if product.image %}
@@ -111,27 +111,66 @@
 
                                             </div>
                                         </div>
-                                    </a>
                                 </div>
 
                             {% endfor %}
 
+                        </div>
+
+                        <div class="mb-3">
+                            <a class="product-details" data-bs-product="{{product.id}}" data-bs-toggle="modal" data-bs-target="#productDetailsModal">See all product details</a>
+
                             {% comment %} Product Details modal {% endcomment %}
                             <div class="modal fade" id="productDetailsModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="productDetailsModalTitle" aria-hidden="true">
-                                <div class="modal-dialog">
+                                <div class="modal-dialog modal-dialog-centered modal-xl">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="productDetailsModalTitle"></h5>
+                                            <h5 class="modal-title" id="productDetailsModalTitle">Product Details</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            
+
+                                            <div class="table-responsive">
+
+                                                <table class="table table-bordered">
+
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Product_Serial</th>
+                                                            <th>Product</th>
+                                                            <th>Category</th>
+                                                            <th>Services</th>
+                                                        </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                        {% for product in customer.installed_product.all %}
+
+                                                            <tr>
+                                                                <td class="text-center">{{forloop.counter}}</td>
+                                                                <td>{{product.product_serial}}</td>
+                                                                <td>{{product.name}}</td>
+                                                                <td>{{product.category}}</td>
+                                                                
+                                                                <td>{% for service in product.services.all  %}
+                                                                    {{service}},
+                                                                {% endfor %}</td>
+                                                            </tr>
+
+                                                        {% endfor %}
+                                                    </tbody>
+
+                                                </table>
+
+                                            </div>                                                 
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             {% comment %} modal ends {% endcomment %}
-                        </div>
+                        </div>                                
                     {% else %}
 
                         <span>(No installed products.)</span>
@@ -144,7 +183,5 @@
 
         </div>
     </div>
-
-<script src="{% static 'js/customer/each_customer.js' %}"></script>
 
 {% endblock content %}

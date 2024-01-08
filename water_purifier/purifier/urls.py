@@ -17,7 +17,6 @@ urlpatterns = [
     path('view_customers/', views.viewCustomers, name='view_customers'),
     path('create_customer/', views.createCustomer, name='create_customer'),
     path('each_customer/<uuid:id>', views.eachCustomer, name='each_customer'),
-    path('fetch_customer_products/', views.fetchCustomerProducts, name='fetch_customer_products'),
     path('update_customer/<uuid:id>', views.updateCustomer, name='update_customer'),
     path('delete_customer/<uuid:id>', views.deleteCustomer, name='delete_customer'),
     
@@ -49,5 +48,7 @@ urlpatterns = [
     
     # ServiceWork Assign
     path('view_assigns/', views.viewAssigning, name='view_assigns'),
+    path('assign_servicer/<uuid:id>', views.assignServicer, name='assign_servicer'),
+    path('unassign_servicer/<uuid:id>', views.unAssignServicer, name='unassign_servicer'),
     
 ]
