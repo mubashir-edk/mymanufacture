@@ -3,14 +3,13 @@
 
 {% block head %}
     <title>View Servicers</title>
-    <link href="{% static 'css/servicer/view_servicers.css' %}" rel="stylesheet" type="text/css">
 {% endblock head %}
 
 {% block content %}
 
 <div class="d-grid">
     <div class="d-flex justify-content-between">
-        <span class="servicer_heading">Servicers</span>
+        <span class="page_heading">Servicers</span>
         <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServicerModal">Create</a>
     </div>
 
@@ -38,14 +37,13 @@
 
                     </div>
                     <div class="modal-footer">
-                        {% comment %} <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> {% endcomment %}
                         <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
-                        {% comment %} <a href="{% url "purifier:delete_employee" employee.id %}" class="btn btn-danger">Delete</a> {% endcomment %}
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    {% comment %} End modal {% endcomment %}
 
     <hr class="mt-1">
 
@@ -73,7 +71,7 @@
                             <td class="">{{ servicer.name.employee_code }}</td>
                             <td class="">{{ servicer.name.name }}</td>
                             <td class="">{{ servicer.name.mobile }}</td>
-                            <td class="d-flex justify-content-center"><i class="bi bi-pencil-square"></i></td>
+                            <td class="d-flex justify-content-center"><a href="{% url "purifier:delete_servicer" servicer.id %}"><i class="bi bi-trash"></i></a></td>
                         </tr>
 
                     {% endfor %}

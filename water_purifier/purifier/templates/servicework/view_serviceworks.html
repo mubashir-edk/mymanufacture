@@ -3,14 +3,13 @@
 
 {% block head %}
     <title>View ServiceWorks</title>
-    <link href="{% static 'css/servicework/view_serviceworks.css' %}" rel="stylesheet" type="text/css">
 {% endblock head %}
 
 {% block content %}
 
 <div class="d-grid">
     <div class="d-flex justify-content-between">
-        <span class="servicework_heading">Service Works</span>
+        <span class="page_heading">Service Works</span>
         <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServiceWorkModal">Create</a>
     </div>
 
@@ -70,6 +69,7 @@
                         <th>Service Date</th>
                         <th>Comment</th>
                         <th>Remark</th>
+                        <th></th>
                     </tr>
                 </thead>
 
@@ -78,14 +78,25 @@
                     {% for service_work in service_works %}
 
                         <tr>
-                            <td class="text-center"><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ forloop.counter }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.service_work_code }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.customer_code }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.product }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.service_name }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.service_date }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.comment_section }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}'>{{ service_work.remark_section }}</a></td>
+                            <td class="text-center">{{ forloop.counter }}</td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.service_work_code }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.customer_code }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.product }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.service_name }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.service_date }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.comment_section }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.remark_section }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">
+
+                                {% if service_work.status == 'pending' %}
+                                    <span class="badge rounded-pill bg-secondary">{{ service_work.get_status_display }}</span>
+                                {% elif service_work.status == 'working' %}
+                                    <span class="badge rounded-pill bg-warning">{{ service_work.get_status_display }}</span>
+                                {% else %}
+                                    <span class="badge rounded-pill bg-success">{{ service_work.get_status_display }}</span>
+                                {% endif %}
+
+                            </a></td>
                         </tr>
 
                     {% endfor %}

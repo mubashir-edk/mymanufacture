@@ -1,6 +1,5 @@
 $(document).ready(function () {
 
-
     var productSelect = document.getElementById('formServiceWorkProduct');
     var productSelectLabel = document.getElementById('serviceWorkProductLabel');
     productSelect.innerHTML = '';
@@ -30,9 +29,6 @@ $(document).ready(function () {
             },
             success: function (data) {
 
-                
-                // const products = data.products;
-
                 console.log(data.products);
 
                 var option = document.createElement('option');
@@ -56,13 +52,11 @@ $(document).ready(function () {
         });
 
     } else {
-        // If selectedCustomer is empty, hide the productSelect
         $(productSelectLabel).hide();
         $(productSelect).hide();
     }
 
     });
-
 
 
     var serviceSelect = document.getElementById('formServiceWorkService');
@@ -94,11 +88,6 @@ $(document).ready(function () {
             },
             success: function (data) {
 
-                
-                // const products = data.products;
-
-                console.log(data.products);
-
                 var option = document.createElement('option');
                     option.value = '';
                     option.text = '---------';
@@ -120,12 +109,10 @@ $(document).ready(function () {
         });
 
     } else {
-        // If selectedCustomer is empty, hide the productSelect
         $(serviceSelectLabel).hide();
         $(serviceSelect).hide();
     }
 
     });
-
 
 });

@@ -85,6 +85,12 @@ class Test(models.Model):
 
 class ServiceWork(models.Model):
     
+    STATUS_CHOICES = (
+        ('pending', 'Pending'),
+        ('working', 'Working'),
+        ('completed', 'Completed'),
+    )
+    
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     service_work_code = models.CharField(max_length=50, blank=True, unique=True)
     customer_code = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -93,6 +99,7 @@ class ServiceWork(models.Model):
     comment_section = models.TextField(null=True, blank=True)
     service_date = models.DateField()
     remark_section = models.TextField(null=True, blank=True)
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='pending')
     
     def __str__(self) -> str:
         return self.service_work_code
@@ -101,7 +108,7 @@ class ServiceAssign(models.Model):
     
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, unique=True, editable=False)
     service = models.ForeignKey(ServiceWork, on_delete=models.CASCADE, blank=True)
-    servicer = models.ForeignKey(Servicer, on_delete=models.CASCADE, null=True, blank=True)
+    servicer = models.ForeignKey(Servicer, on_delete=models.SET_NULL, null=True, blank=True)
     notification = models.CharField(max_length=500, blank=True)
     
     def __str__(self):

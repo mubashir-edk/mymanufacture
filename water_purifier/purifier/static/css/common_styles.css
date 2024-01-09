@@ -16,3 +16,7 @@
 .form-label {
     font-weight: 500;
 }
+
+.bi-trash {
+    color: #ff0000;
+}

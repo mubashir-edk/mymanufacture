@@ -36,11 +36,13 @@ urlpatterns = [
     path('view_servicers/', views.viewServicers, name='view_servicers'),
     path('create_servicer/', views.createServicer, name='create_servicer'),
     path('fetch_servicer/<uuid:selected_employee>', views.fetchServicer, name='fetch_servicer'),
+    path('delete_servicer/<uuid:id>', views.deleteServicer, name='delete_servicer'),
     
     # Service Work
     path('view_serviceworks/', views.viewServiceWorks, name='view_serviceworks'),
     path('create_servicework/', views.createServiceWork, name='create_servicework'),
     path('each_service_work/<uuid:id>', views.eachServiceWork, name='each_service_work'),
+    path('delete_service_work/<uuid:id>', views.deleteServiceWork, name='delete_service_work'),
     
     # Test
     path('view_tests/', views.viewTests, name='view_tests'),

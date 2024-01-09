@@ -406,6 +406,12 @@ def fetchServicer(request, selected_employee):
         except Employee.DoesNotExist:
             return JsonResponse({'error': 'Employee not found'}, status=404)
         
+def deleteServicer(request, id):
+    
+    servicer = get_object_or_404(Servicer, pk=id)
+    servicer.delete()
+    return redirect('purifier:view_servicers')
+        
 
 # Service Work Functions ----------------------------------------------------------------------------------------------------------------------------
 def viewServiceWorks(request):
@@ -423,13 +429,9 @@ def viewServiceWorks(request):
         
         selected_product = request.GET.get('selectedProduct')
         
-        print(selected_customer)
-        
         if selected_customer:
     
             try:
-                
-                # selected_customer = request.GET.get('selectedCustomer')
                     
                 customer = get_object_or_404(Customer, pk=selected_customer)
                 installed_products = customer.installed_product.all()
@@ -437,10 +439,6 @@ def viewServiceWorks(request):
                 products = Product.objects.filter(id__in=installed_products)
                 
                 products_data = [{'id': product.id, 'name': product.name} for product in products]
-                
-                print(products)
-                print('----------------------------------------------')
-                print(products_data)
                 
                 data = {
                     'products': products_data,
@@ -454,18 +452,12 @@ def viewServiceWorks(request):
             
             try:
                 
-                # selected_product = request.GET.get('selected
-                
                 product = get_object_or_404(Product, pk=selected_product)
                 product_services = product.services.all()
                 
                 services = Service.objects.filter(id__in=product_services)
                 
                 services_data = [{'id': service.id, 'name': service.name} for service in services]
-                
-                print(services)
-                print('----------------------------------------------')
-                print(services_data)
                 
                 data = {
                     'services': services_data,
@@ -474,8 +466,6 @@ def viewServiceWorks(request):
                 return JsonResponse(data)
             except Product.DoesNotExist:
                 return JsonResponse({'error': 'Product not found'}, status=404)
-                
-        
     
     context = {'service_works': service_works, 'service_works_exists': service_works_exists, 'service_work_form': service_work_form}
     
@@ -494,9 +484,6 @@ def createServiceWork(request):
         
         if servicework_codes_only.exists():
             max_servicework_code = max(servicework_codes_only)
-            print(max_servicework_code)
-            
-        print(servicework_codes_only)
         
         servicework_code_loop = True
         servicework_code_number = 1
@@ -551,6 +538,12 @@ def eachServiceWork(request, id):
     context = {'service_work': service_work, 'service_work_form': service_work_form}
     
     return render(request, 'servicework/each_servicework.html', context)
+
+def deleteServiceWork(request, id):
+    
+    servicework = get_object_or_404(ServiceWork, pk=id)
+    servicework.delete()
+    return redirect('purifier:view_serviceworks')
     
     
 # Test or Quality check Functions -------------------------------------------------------------------------------------------------------------------

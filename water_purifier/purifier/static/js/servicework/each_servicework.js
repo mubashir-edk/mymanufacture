@@ -1,16 +1,61 @@
 $(document).ready(function () {
 
+    var formSelects = document.getElementById("serviceworkUpdateForm").getElementsByTagName("select");
+    var formInputs = document.getElementById("serviceworkUpdateForm").getElementsByTagName("input");
+    var formTextareas = document.getElementById("serviceworkUpdateForm").getElementsByTagName("textarea");
+
+    for (var i = 0; i < formSelects.length; i++) {
+        formSelects[i].setAttribute("disabled", "true");
+    }
+
+    for (var i = 0; i < formInputs.length; i++) {
+        formInputs[i].setAttribute("readonly", "true");
+    }
+
+    for (var i = 0; i < formTextareas.length; i++) {
+        formTextareas[i].setAttribute("readonly", "true");
+    }
+
+    $("#serviceworkSaveBtn").hide();
+
+
+
+
+
+    $("#serviceworkEditBtn").click(function (event) {
+        event.preventDefault();
+
+        $("#serviceworkEditBtn").hide();
+        $("#serviceworkDeleteBtn").hide();
+        $("#serviceworkSaveBtn").show();
+
+        for (var i = 0; i < formSelects.length; i++) {
+            formSelects[i].removeAttribute("disabled");
+        }
+    
+        for (var i = 0; i < formInputs.length; i++) {
+            formInputs[i].removeAttribute("readonly");
+        }
+    
+        for (var i = 0; i < formTextareas.length; i++) {
+            formTextareas[i].removeAttribute("readonly");
+        }
+
+    });
+
+
+
+
+
     var selectedCustomer = $('#formServiceWorkCustomer').val();
 
     console.log(selectedCustomer);
 
     var productSelect = document.getElementById('formServiceWorkProduct');
     var productSelectLabel = document.getElementById('serviceWorkProductLabel');
-    // productSelect.innerHTML = '';
 
     var serviceSelect = document.getElementById('formServiceWorkService');
     var serviceSelectLabel = document.getElementById('serviceWorkServiceLabel');
-    // serviceSelect.innerHTML = '';
 
     $(serviceSelectLabel).show();
     $(serviceSelect).show();
@@ -42,10 +87,7 @@ $(document).ready(function () {
                     'selectedCustomer': selectedCustomer,
                 },
                 success: function (data) {
-
-                    
-                    // const products = data.products;
-
+                
                     console.log(data.products);
 
                     var option = document.createElement('option');
@@ -69,7 +111,6 @@ $(document).ready(function () {
             });
 
         } else {
-            // If selectedCustomer is empty, hide the productSelect
             $(productSelectLabel).hide();
             $(productSelect).hide();
 
@@ -89,50 +130,46 @@ $(document).ready(function () {
 
         console.log(selectedProduct);
 
-    if (selectedProduct !== '') {
-        
-        $(serviceSelectLabel).show();
-        $(serviceSelect).show();
+        if (selectedProduct !== '') {
+            
+            $(serviceSelectLabel).show();
+            $(serviceSelect).show();
 
-        $.ajax({
-            url: `/view_serviceworks/`,
-            type: "GET",
-            dataType: "json",
-            data: {
-                'selectedProduct': selectedProduct,
-            },
-            success: function (data) {
+            $.ajax({
+                url: `/view_serviceworks/`,
+                type: "GET",
+                dataType: "json",
+                data: {
+                    'selectedProduct': selectedProduct,
+                },
+                success: function (data) {
 
-                
-                // const products = data.products;
+                    console.log(data.products);
 
-                console.log(data.products);
-
-                var option = document.createElement('option');
-                    option.value = '';
-                    option.text = '---------';
-                    option.selected = true;
-                    serviceSelect.add(option);
-
-                data.services.forEach(function (service) {
                     var option = document.createElement('option');
-                    option.value = service.id;
-                    option.text = service.name;
-                    serviceSelect.add(option);
-                });
+                        option.value = '';
+                        option.text = '---------';
+                        option.selected = true;
+                        serviceSelect.add(option);
+
+                    data.services.forEach(function (service) {
+                        var option = document.createElement('option');
+                        option.value = service.id;
+                        option.text = service.name;
+                        serviceSelect.add(option);
+                    });
 
 
-            },
-            error: function (error) {
-                console.error(error);
-            }
-        });
+                },
+                error: function (error) {
+                    console.error(error);
+                }
+            });
 
-    } else {
-        // If selectedCustomer is empty, hide the productSelect
-        $(serviceSelectLabel).hide();
-        $(serviceSelect).hide();
-    }
+        } else {
+            $(serviceSelectLabel).hide();
+            $(serviceSelect).hide();
+        }
     }
 
 

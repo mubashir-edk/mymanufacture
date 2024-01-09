@@ -143,7 +143,8 @@ class ServicerForm(forms.ModelForm):
 class ServiceWorkForm(forms.ModelForm):
     class Meta:
         model = ServiceWork
-        fields = '__all__'
+        # fields = '__all__'
+        exclude = ('status',)
         
         
         widgets = {

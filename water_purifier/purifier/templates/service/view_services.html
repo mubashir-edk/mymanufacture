@@ -57,29 +57,10 @@
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td class="d-flex justify-content-between">{{ service.name }}
 
-                                {% comment %} <div class="bin-icon" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Delete"> {% endcomment %}
-                                    <a href="" class="anchor_tag delete-service-btn" data-bs-toggle="modal" data-bs-target="#deleteServiceModal" data-bs-id="{{service.id}}"><i data-bs-toggle="tooltip" data-bs-placeholder="left" title="Delete" class="bi bi-trash"></i></a>
-                                {% comment %} </div> {% endcomment %}
+                                <a href="{% url "purifier:delete_service" service.id %}" class="anchor_tag delete-service-btn" ><i class="bi bi-trash"></i></a>
 
                             </td>
                         </tr>
-
-                        <div class="modal fade" id="deleteServiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteServiceModalTitle" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="deleteServiceModalTitle">Delete Service Service</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Are you sure, to delete this service?
-                                        <a href="{% url "purifier:delete_service" service.id %}" id="deleteServiceButton" class="btn btn-danger" data-bs-dismiss="modal">Delete</a>
-                                    </div>
-                                    <div class="modal-footer">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                     {% endfor %}
 
