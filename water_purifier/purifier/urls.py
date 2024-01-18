@@ -53,4 +53,7 @@ urlpatterns = [
     path('assign_servicer/<uuid:id>', views.assignServicer, name='assign_servicer'),
     path('unassign_servicer/<uuid:id>', views.unAssignServicer, name='unassign_servicer'),
     
+    # Report
+    path('view_reports/', views.viewReport, name='view_reports'),
+    
 ]

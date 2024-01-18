@@ -585,7 +585,11 @@ def viewAssigning(request):
     
     serviceworks_toassign_exists = serviceworks_toassign.exists()
     
-    context = {'servicework_assign_form': servicework_assign_form, 'serviceworks_toassign': serviceworks_toassign, 'serviceworks_toassign_exists':serviceworks_toassign_exists}
+    servicers = Servicer.objects.all() 
+    
+    servicers_exists = servicers.exists()
+    
+    context = {'servicework_assign_form': servicework_assign_form, 'serviceworks_toassign': serviceworks_toassign, 'serviceworks_toassign_exists':serviceworks_toassign_exists, 'servicers_exists': servicers_exists}
     
     return render(request, 'service_assigning/view_assigning.html', context) 
 
@@ -628,3 +632,25 @@ def unAssignServicer(request, id):
     service_assigned.save()
     
     return redirect('purifier:view_assigns')
+
+
+# Report Functions ----------------------------------------------------------------------------------------------------------------------------------
+def viewReport(request):
+    
+    servicework_completed = ServiceWork.objects.filter(status='completed')
+    servicework_completed_exists = servicework_completed.exists()
+    print(servicework_completed)
+    
+    servicework_upcoming = ServiceWork.objects.filter(status='pending')
+    servicework_upcoming_exists = servicework_upcoming.exists()
+    print(servicework_upcoming)
+    
+    completed_count = servicework_completed.count()
+    upcoming_count = servicework_upcoming.count()
+    
+    print(completed_count)
+    print(upcoming_count)
+    
+    context = {'servicework_completed': servicework_completed, 'servicework_completed_exists': servicework_completed_exists, 'servicework_upcoming': servicework_upcoming, 'servicework_upcoming_exists': servicework_upcoming_exists, 'completed_count': completed_count, 'upcoming_count': upcoming_count}
+    
+    return render(request, 'report/report.html', context)

@@ -9,7 +9,7 @@
 
     <div class="d-grid">
         <div class="d-flex justify-content-between">
-            <span class="assign_heading">Work Assigns</span>
+            <span class="page_heading">Work Assigns</span>
             <a href="" class="anchor_tag"><button type="button" class="btn btn-primary">Create</button></a>
         </div>
 
@@ -35,13 +35,17 @@
 
                             <tr>
                                 <td class="text-center"><a href="" class="anchor_tag">{{ forloop.counter }}</a></td>
-                                <td><a href="" class="">{{ servicework_toassign.service }}</a></td>
-                                <td><a href="" class="">{{ servicework_toassign.servicer }}</a></td>
+                                <td><a href="" class="anchor_tag">{{ servicework_toassign.service }}</a></td>
+                                <td><a href="" class="anchor_tag">{{ servicework_toassign.servicer }}</a></td>
 
                                 {% if servicework_toassign.servicer %}
                                     <td><a href="{% url "purifier:unassign_servicer" servicework_toassign.id %}" class="btn btn-danger">UnAssign</a></td>
                                 {% else %}
-                                    <td><a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#assignServicerModal">Assign</a></td>
+                                    {% if servicers_exists %}
+                                        <td><a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#assignServicerModal">Assign</a></td>
+                                    {% else %}
+                                        <td><a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#noAvailableServicerModal">Assign</a></td>
+                                    {% endif %}
                                 {% endif %}
                             </tr>
 
@@ -63,6 +67,26 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Assign</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            {% comment %} No Servicer Available Message modal {% endcomment %}
+                            <div class="modal fade" id="noAvailableServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="noAvailableServicerModalTitle" aria-hidden="true">
+                                <form method="post" action="{% url "purifier:assign_servicer" servicework_toassign.id %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="noAvailableServicerModalTitle">No servicers to assign.</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+
+                                                <p class="modal-text">To add servicers, <a href="{% url "purifier:view_servicers" %}">click here</a></p>
+
                                             </div>
                                         </div>
                                     </div>

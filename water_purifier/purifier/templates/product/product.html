@@ -10,7 +10,7 @@
 
 <div class="d-grid">
     <div class="d-flex justify-content-between">
-            <span class="product_heading">Products</span>
+            <span class="page_heading">Products</span>
         <div class="d-flex">
 
             <div class="dropdown">
@@ -160,7 +160,7 @@
                             <td><a href="" class="anchor_tag">{{ product.category }}</a></td>
                             <td>
                                 {% for service in product.services.all %}
-                                    <a href="" class="anchor_tag">{{ service.name }} &nbsp;</a>
+                                    <a href="" class="anchor_tag">{{ service.name }},</a>
                                 {% endfor %}
                             </td>
                         </tr>
@@ -190,7 +190,7 @@
 
                             <div class="card-body">
                                 <h5 class="card-title">{{ product.name }}</h5>
-                                <h6 class="card-text">Category: {{ product.category }}</h6>
+                                {% comment %} <h6 class="card-text">Category: {{ product.category }}</h6> {% endcomment %}
                             </div>
                         </div>
                     </div>

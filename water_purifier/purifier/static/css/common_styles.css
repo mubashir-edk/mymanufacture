@@ -20,3 +20,8 @@
 .bi-trash {
     color: #ff0000;
 }
+
+/* dataTable */
+.dataTables_filter {
+    margin-bottom: 5px;
+}
