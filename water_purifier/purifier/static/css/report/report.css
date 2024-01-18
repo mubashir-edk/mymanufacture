@@ -1,0 +1,36 @@
+
+/* .report-graph-count {
+    height: 300px;
+    width: 300px;
+} */
+
+canvas{
+    aspect-ratio: auto;
+    height: 360px;
+    width: 360px;
+}
+
+.report-upcoming, .report-completed {
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 2px 3px 5px 1px;
+}
+
+/* .report-tables {
+    background-color: brown;
+} */
+
+.report-upcoming-label, .report-completed-label {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+#searchInputCompleted {
+    border-radius: 10px;
+    color: aqua;
+}
+
+#table {
+    border-radius: 10px;
+}

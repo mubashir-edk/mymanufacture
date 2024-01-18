@@ -2,7 +2,9 @@
 {% load static %}
 
 {% block head %}
-    <title>View Assigns</title>
+    <title>Reports</title>
+    <link href="{% static 'css/report/report.css' %}" rel="stylesheet" type="text/css">
+
 {% endblock head %}
 
 {% block content %}
@@ -10,83 +12,101 @@
     <div class="d-grid">
         <div class="d-flex justify-content-between">
             <span class="page_heading">Reports</span>
-            <a href="" class="anchor_tag"><button type="button" class="btn btn-primary">Create</button></a>
+            {% comment %} <a href="" class="anchor_tag"><button type="button" class="btn btn-primary">Create</button></a> {% endcomment %}
         </div>
 
         <hr class="mt-1">
 
-        <div class="d-flex justify-content-center" style="height: 250px; width: 250px;">
-            <canvas id="myChart"></canvas>
+        <div class="report-graph-count d-flex justify-content-center">
+
+            <div class="col-6 d-flex justify-content-center">
+                <canvas id="myChart" height="250" width="350"></canvas>
+            </div>
+
+            <div class="col-6">
+                <p>Counts</p>
+            </div> 
+
         </div>
 
 
-        <div class="mt-1">
+        <div class="report-tables mt-3 mb-5 d-flex justify-content-between gy-3">
 
-            {% if servicework_upcoming_exists %}
-                <div class="table-responsive">
-                    <label>Upcoming</label>
-                    <table id="serviceCompletedTable" class="table table-bordered table-striped align-middle">
-                    
-                        <thead class="table-secondary">
-                            <tr>
-                                <th></th>
-                                <th>Service Work</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            {% for upcoming in servicework_upcoming %}
-
+            <div class="report-upcoming col-12 col-md me-md-2 p-3">
+                {% if servicework_upcoming_exists %}
+                <div class="d-flex justify-content-between">
+                    <label class="report-upcoming-label">Upcoming Services</label>
+                    {% comment %} <input type="text" id="searchInput" placeholder="Search"> {% endcomment %}
+                </div>
+                    <div class="table-responsive">
+                        <table id="serviceNotDoneTable" class="table align-middle">
+                        
+                            <thead class="table-success">
                                 <tr>
-                                    <td class="text-center"><a href="" class="anchor_tag">{{ forloop.counter }}</a></td>
-                                    <td><a href="" class="anchor_tag">{{ upcoming }}</a></td>
+                                    {% comment %} <th></th> {% endcomment %}
+                                    <th>Service Work</th>
                                 </tr>
+                            </thead>
 
-                            {% endfor %}
-        
-                        </tbody>
+                            <tbody>
 
-                    </table>
+                                {% for upcoming in servicework_upcoming %}
+
+                                    <tr>
+                                        {% comment %} <td class="text-center"><a href="" class="anchor_tag">{{ forloop.counter }}</a></td> {% endcomment %}
+                                        <td><a href="" class="anchor_tag">{{ upcoming }}</a></td>
+                                    </tr>
+
+                                {% endfor %}
+            
+                            </tbody>
+
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="d-flex justify-content-center">
+                        <span>No upcoming service works.</span>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="report-completed col-12 col-md ms-md-2 p-3">
+                {% if servicework_completed_exists %}
+                <div class="d-flex justify-content-between">
+                    <label class="report-completed-label">Completed Services</label>
+                    <input type="text" id="searchInputCompleted" placeholder="Search">
                 </div>
-            {% else %}
-                <div class="d-flex justify-content-center">
-                    <span>No upcoming service works.</span>
-                </div>
-            {% endif %}
-
-            {% if servicework_completed_exists %}
-                <div class="table-responsive">
-                    <label>Completed</label>
-                    <table id="serviceNotDoneTable" class="table table-bordered table-striped align-middle">
-                    
-                        <thead class="table-secondary">
-                            <tr>
-                                <th></th>
-                                <th>Service Work</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            {% for completed in servicework_completed %}
-
+                    <div class="table-responsive">
+                        <table id="serviceCompletedTable" class="table align-middle">
+                            <thead class="table-success">
                                 <tr>
-                                    <td class="text-center"><a href="" class="anchor_tag">{{ forloop.counter }}</a></td>
-                                    <td><a href="" class="anchor_tag">{{ completed }}</a></td>
+                                    {% comment %} <th></th> {% endcomment %}
+                                    <th>Service Work</th>
                                 </tr>
+                            </thead>
 
-                            {% endfor %}
-        
-                        </tbody>
+                            <tbody>
 
-                    </table>
-                </div>
-            {% else %}
-                <div class="d-flex justify-content-center">
-                    <span>No completed service works.</span>
-                </div>
-            {% endif %}
+                                {% for completed in servicework_completed %}
+
+                                    <tr>
+                                        {% comment %} <td class="text-center"><a href="" class="anchor_tag">{{ forloop.counter }}</a></td> {% endcomment %}
+                                        <td><a href="" class="anchor_tag">{{ completed }}</a></td>
+                                    </tr>
+
+                                {% endfor %}
+            
+                            </tbody>
+
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="d-flex justify-content-center">
+                        <span>No completed service works.</span>
+                    </div>
+                {% endif %}
+            </div>
+
         </div>
 
     </div>
@@ -107,14 +127,14 @@
                         label: 'Service Work Counts',
                         data: [completedCount, upcomingCount],
                         backgroundColor: [
-                            '#4BAAC0',
-                            '#FF6384',
+                            '#008080',
+                            '#b2d8d8',
                         ],
-                        borderColor: [
-                            '#4BAAC0',
-                            '#FF6384',
-                        ],
-                        borderWidth: 1
+                        {% comment %} borderColor: [
+                            '#008080',
+                            '#b2d8d8',
+                        ], {% endcomment %}
+                        borderWidth: 2,
                     }]
                 },
                 options: {
@@ -136,7 +156,32 @@
                 }
             });
         });
-        
+
+
+
+        // search filter
+        document.getElementById('searchInputCompleted').addEventListener('input', function() {
+            var searchTerm = this.value.toLowerCase();
+            var tableRows = document.getElementById('serviceCompletedTable').getElementsByTagName('tr');
+          
+            for (var i = 1; i < tableRows.length; i++) {
+                var rowData = tableRows[i].getElementsByTagName('td');
+                var found = false;
+            
+                for (var j = 0; j < rowData.length; j++) {
+                    if (rowData[j].textContent.toLowerCase().indexOf(searchTerm) > -1) {
+                    found = true;
+                    break;
+                    }
+                }
+            
+                if (found) {
+                    tableRows[i].style.display = '';
+                } else {
+                    tableRows[i].style.display = 'none';
+                }
+            }
+        });
         
     </script>
     
