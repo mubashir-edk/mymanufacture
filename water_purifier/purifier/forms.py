@@ -134,6 +134,11 @@ class ServicerForm(forms.ModelForm):
                 'id': 'formServicerName',
             }),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Customize queryset of 'name' field
+        self.fields['name'].queryset = self.fields['name'].queryset.exclude(servicer__isnull=False)
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

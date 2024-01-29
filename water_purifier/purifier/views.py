@@ -388,6 +388,28 @@ def createServicer(request):
         
     return render(request, 'servicer/view_servicers.html')
 
+def fetchEmployeeFiltered(request):
+    
+    if request.method == 'GET':
+        
+        try:
+            servicers = Servicer.objects.all()
+            
+            employees = Employee.objects.exclude(id__in=servicers.values('name_id'))
+            
+            employees_exists = employees.exists()
+            
+            employees_data = [{'id': employee.id, 'name': employee.name} for employee in employees]
+            
+            data = {
+                'employees': employees_data,
+                'employees_exists': employees_exists,
+            }
+            return JsonResponse(data)
+        except Employee.DoesNotExist:
+            return JsonResponse({'error': 'Employee not found'}, status=404)
+            
+
 def fetchServicer(request, selected_employee):
     
     print("Fetching")

@@ -1,12 +1,62 @@
 $(document).ready(function () {
 
+    // filtering servicers not existing
+    var employeeSelector = $('#formServicerName');
+    var serviceNameLabel = $('#serviceNameLabel');
+
+    // employeeSelector.focus(function () {
+    $('#createServicerModal').on('show.bs.modal', function () {
+        employeeSelector.empty();
+
+        $.ajax({
+            url: `/fetch_employee_filtered/`,
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+
+                console.log(data.employees);
+                console.log(data);
+
+                if (data.employees_exists) {
+
+                    // Add default option
+                    employeeSelector.append($('<option>', {
+                        value: '',
+                        text: '---------',
+                        selected: true
+                    }));
+
+                    // Add employees to the dropdown
+                    data.employees.forEach(function (employee) {
+                        employeeSelector.append($('<option>', {
+                            value: employee.id,
+                            text: employee.name
+                        }));
+                    });
+
+                } else {
+
+                    employeeSelector.hide()
+                    serviceNameLabel.hide()
+
+                }
+
+
+            },
+            error: function (error) {
+                console.error(error);
+            }
+        });
+
+    });
+
+
+    // fetching employee data
     var employeeDetails = $("#servicerDetails");
     var employeeCode = $("#employeeCode");
     var employeeContact = $("#employeeContact");
 
     employeeDetails.hide();
-
-    
 
     $("#formServicerName").change(function () {
 
@@ -29,4 +79,36 @@ $(document).ready(function () {
         });
 
     });
+
+
+    // delete link
+    var deleteServicerLinks = document.querySelectorAll('.delete-servicer-btn');
+
+    deleteServicerLinks.forEach(function(link) {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var servicer_id = link.getAttribute('data-bs-servicerId');
+            var servicer_code = link.getAttribute('data-bs-servicerCode');
+            console.log(servicer_id);
+            console.log(servicer_code);
+
+            // Set the href attribute of the "Delete" link
+            var confirmDeleteLink = document.getElementById('confirmServicerDelete');
+            var deleteModalBody = document.getElementById('deleteServicerModalBody');
+            deleteUrl = `/delete_servicer/${servicer_id}`;
+
+            confirmDeleteLink.href = deleteUrl;
+            deleteModalBody.innerHTML = 'you want to delete <b>' + servicer_code + '</b> from servicer.';
+        });
+    });
+
+
+    // modal close reload
+    $('.btn-close').click(function() {
+        // Reload the page when the close button is clicked
+        location.reload();
+    });
+
+
 });

@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Subquery
 import uuid
 # from location_field.models.spatial import LocationField
 # from location_field.widgets import GoogleMapsWidget
@@ -68,6 +69,9 @@ class Servicer(models.Model):
     
     def __str__(self) -> str:
         return self.name.employee_code
+    
+    queryset = Employee.objects.exclude(id=name.name)
+    print(queryset)
 
 class Test(models.Model):
     

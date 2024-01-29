@@ -35,6 +35,7 @@ urlpatterns = [
     # Servicer
     path('view_servicers/', views.viewServicers, name='view_servicers'),
     path('create_servicer/', views.createServicer, name='create_servicer'),
+    path('fetch_employee_filtered/', views.fetchEmployeeFiltered, name='fetch_employee_filtered'),
     path('fetch_servicer/<uuid:selected_employee>', views.fetchServicer, name='fetch_servicer'),
     path('delete_servicer/<uuid:id>', views.deleteServicer, name='delete_servicer'),
     

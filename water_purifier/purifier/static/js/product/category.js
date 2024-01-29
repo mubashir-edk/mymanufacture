@@ -36,7 +36,6 @@ var updateCategoryLinks = document.querySelectorAll('.update-category-btn');
             console.log(id);
 
             // Set the href attribute of the "Delete" link
-            var confirmDeleteLink = document.getElementById('confirmDelete');
             updateUrl = `/update_category/${id}`;
         });
     });

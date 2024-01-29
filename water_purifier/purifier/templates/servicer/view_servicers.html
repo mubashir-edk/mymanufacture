@@ -24,7 +24,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <label for="formServicerName" class="form-label mt-3">Servicer Name</label>
+                        <label for="formServicerName" id="serviceNameLabel" class="form-label mt-3">Servicer Name</label>
                         {{ servicer_form.name }}
 
                         <div id="servicerDetails">
@@ -71,10 +71,29 @@
                             <td class="">{{ servicer.name.employee_code }}</td>
                             <td class="">{{ servicer.name.name }}</td>
                             <td class="">{{ servicer.name.mobile }}</td>
-                            <td class="d-flex justify-content-center"><a href="{% url "purifier:delete_servicer" servicer.id %}"><i class="bi bi-trash"></i></a></td>
+                            <td class="d-flex justify-content-center"><a href="" class="delete-servicer-btn" data-bs-servicerId="{{servicer.id}}" data-bs-servicerCode="{{servicer.name.employee_code}}" data-bs-toggle="modal" data-bs-target="#deleteServicerModal"><i class="bi bi-trash"></i></a></td>
                         </tr>
 
                     {% endfor %}
+
+                    {% comment %} Delete Service modal {% endcomment %}
+                    <div class="modal fade" id="deleteServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteServicerModalTitle" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteServicerModalTitle">Are you sure?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="deleteServicerModalBody">
+                                    You want to delete <b>{{ service.name }}</b> from services list.
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="" id="confirmServicerDelete" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% comment %} modal ends {% endcomment %}
 
                 </tbody>
 

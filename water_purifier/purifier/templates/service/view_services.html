@@ -57,12 +57,32 @@
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td class="d-flex justify-content-between">{{ service.name }}
 
-                                <a href="{% url "purifier:delete_service" service.id %}" class="anchor_tag delete-service-btn" ><i class="bi bi-trash"></i></a>
+                                <a href="" class="anchor_tag delete-service-btn" data-bs-serviceId="{{service.id}}" data-bs-serviceName="{{service.name}}" data-bs-toggle="modal" data-bs-target="#deleteServiceModal"><i class="bi bi-trash"></i></a>
 
                             </td>
+
                         </tr>
 
                     {% endfor %}
+
+                    {% comment %} Delete Service modal {% endcomment %}
+                    <div class="modal fade" id="deleteServiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteServiceModalTitle" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="deleteServiceModalTitle">Are you sure?</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" id="deleteServiceModalBody">
+                                    You want to delete <b>{{ service.name }}</b> from services list.
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="" id="confirmServiceDelete" class="btn btn-danger">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% comment %} modal ends {% endcomment %}
 
                 </tbody>
 
@@ -77,5 +97,7 @@
     </div>
 
 </div>
+
+<script src="{% static 'js/service/view_services.js' %}"></script>
 
 {% endblock content %}
