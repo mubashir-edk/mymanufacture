@@ -4,6 +4,7 @@ from .models import *
 from .forms import *
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
+from django.utils import timezone
 
 # Create your views here.
 
@@ -324,42 +325,9 @@ def viewAndCreateServices(request):
 
 def deleteService(request, id):
     
-    print(id)
-    
     service = get_object_or_404(Service, pk=id)
-    
     service.delete()
-    
     return redirect('purifier:view_services')
-
-# def deleteService(request, id):
-    
-#     print(id)
-#     service = get_object_or_404(Service, pk=id)
-#     print(service)
-#     service.delete()
-#     return redirect('purifier:view_services')
-
-# def updateService(request, id):
-    
-#     service = get_object_or_404(Service, pk=id)
-    
-#     service_form = ServiceForm(instance=service)
-    
-#     if request.method == 'POST':
-        
-#         service_form = ServiceForm(request.POST, instance=service)
-        
-#         if service_form.is_valid():
-            
-#             service_form.save()
-            
-#             return redirect('purifier:view_services')
-        
-#     context = {'service_form': service_form,  'service_id': service}
-    
-#     return render(request, 'service/view_services.html', context)
-
 
 # Servicer Functions --------------------------------------------------------------------------------------------------------------------------------
 def viewServicers(request):
@@ -408,7 +376,6 @@ def fetchEmployeeFiltered(request):
             return JsonResponse(data)
         except Employee.DoesNotExist:
             return JsonResponse({'error': 'Employee not found'}, status=404)
-            
 
 def fetchServicer(request, selected_employee):
     
@@ -497,6 +464,8 @@ def createServiceWork(request):
     
     if request.method == 'POST':
         
+        
+        
         service_work_form = ServiceWorkForm(request.POST)
         
         # Generating Service Work Code
@@ -524,18 +493,23 @@ def createServiceWork(request):
                 break
         
         if service_work_form.is_valid():
+            print("coming in")
             
             servicework = service_work_form.save(commit=False)
             
             servicework.service_work_code = generated_servicework_code
             
+            service_work_form.save_m2m()
             servicework.save()
+            
             
             servicework_toassign = ServiceAssign(service=servicework, notification=f'{servicework.service_date} is the service date for the customer {servicework.customer_code}')
             
             servicework_toassign.save()
             
             return redirect('purifier:view_serviceworks')
+    
+    return redirect('purifier:view_serviceworks')
         
 def eachServiceWork(request, id):
     
@@ -560,6 +534,37 @@ def eachServiceWork(request, id):
     context = {'service_work': service_work, 'service_work_form': service_work_form}
     
     return render(request, 'servicework/each_servicework.html', context)
+
+def serviceWorkChangeStatus(request, id):
+    
+    servicework = get_object_or_404(ServiceWork, pk=id)
+    print(servicework)
+    
+    current_work_status = servicework.status
+    
+    print(current_work_status)
+    
+    if current_work_status == 'pending':
+        
+        servicework.status = 'working'
+        
+        print(servicework.status)
+            
+    elif current_work_status == 'working':
+        
+        servicework.status = 'completed'
+    
+    elif current_work_status == 'completed':
+        
+        servicework.status = 'pending'
+        
+    else:
+        
+        print(f"Unknown status: {current_work_status}")
+        
+    servicework.save()
+        
+    return redirect(reverse('purifier:each_service_work', kwargs={'id': servicework.id}))
 
 def deleteServiceWork(request, id):
     
@@ -670,9 +675,18 @@ def viewReport(request):
     completed_count = servicework_completed.count()
     upcoming_count = servicework_upcoming.count()
     
+    customers_count =Customer.objects.all().count()
+    employees_count = Employee.objects.all().count()
+    products_count = Product.objects.all().count()
+    
+    today_date = timezone.now().date()
+    
+    today_servicework_count = ServiceWork.objects.filter(service_date=today_date).count()
+    
+    
     print(completed_count)
     print(upcoming_count)
     
-    context = {'servicework_completed': servicework_completed, 'servicework_completed_exists': servicework_completed_exists, 'servicework_upcoming': servicework_upcoming, 'servicework_upcoming_exists': servicework_upcoming_exists, 'completed_count': completed_count, 'upcoming_count': upcoming_count}
+    context = {'servicework_completed': servicework_completed, 'servicework_completed_exists': servicework_completed_exists, 'servicework_upcoming': servicework_upcoming, 'servicework_upcoming_exists': servicework_upcoming_exists, 'completed_count': completed_count, 'upcoming_count': upcoming_count, 'customers_count': customers_count, 'employees_count': employees_count, 'products_count': products_count, 'today_servicework_count': today_servicework_count}
     
     return render(request, 'report/report.html', context)

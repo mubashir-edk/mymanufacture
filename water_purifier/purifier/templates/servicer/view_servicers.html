@@ -50,9 +50,9 @@
     <div class="mt-1">
         {% if servicers_exists %}
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered">
             
-                <thead class="table-secondary">
+                <thead class="table-success">
                     <tr>
                         <th></th>
                         <th>Employee Code</th>
@@ -76,13 +76,13 @@
 
                     {% endfor %}
 
-                    {% comment %} Delete Service modal {% endcomment %}
+                    {% comment %} Delete Servicer modal {% endcomment %}
                     <div class="modal fade" id="deleteServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteServicerModalTitle" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="deleteServicerModalTitle">Are you sure?</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" id="deleteServicerModalBody">
                                     You want to delete <b>{{ service.name }}</b> from services list.

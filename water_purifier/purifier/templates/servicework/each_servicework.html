@@ -13,10 +13,38 @@
             <a href="{% url "purifier:view_serviceworks" %}" class="btn btn-secondary">&lt;Back</a>
 
             <div>
+
+                {% if service_work.status == 'pending' %}
+                    <a href="{% url "purifier:servicework_change_status" service_work.id %}" id="serviceworkChangeStatus" class="btn btn-warning">Working</a>
+                {% elif service_work.status == 'working' %}
+                    <a href="{% url "purifier:servicework_change_status" service_work.id %}" id="serviceworkChangeStatus" class="btn btn-success">Work Done</a>
+                {% else %}
+                    <a href="{% url "purifier:servicework_change_status" service_work.id %}" id="serviceworkChangeStatus" class="btn btn-secondary">Sent to Pending</a>
+                {% endif %}
+
                 <a href="" id="serviceworkEditBtn" class="btn btn-dark">Edit</a>
-                <a href="{% url "purifier:delete_service_work" service_work.id %}" id="serviceworkDeleteBtn" class="btn btn-danger">Delete</a>
+                <a href="" id="serviceworkDeleteBtn" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteServiceWorkModal">Delete</a>
                 <a href="{% url "purifier:each_service_work" service_work.id %}" id="serviceworkSaveBtn" class="btn btn-primary">Save</a>
             </div>
+
+            {% comment %} Delete ServiceWork modal {% endcomment %}
+            <div class="modal fade" id="deleteServiceWorkModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteServiceWorkModalTitle" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteServiceWorkModalTitle">Are you sure?</h5>
+                            <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="deleteServicerModalBody">
+                            You want to delete <b>{{ service_work }}</b>.
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{% url "purifier:delete_service_work" service_work.id %}" id="confirmServicerDelete" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% comment %} modal ends {% endcomment %}
 
         </div>
 

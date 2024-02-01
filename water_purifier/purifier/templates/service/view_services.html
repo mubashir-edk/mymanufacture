@@ -21,7 +21,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createServiceModalTitle">Create Service</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <label for="formServiceName" class="form-label mt-3">Service Name</label>
@@ -40,9 +40,9 @@
     <div class="mt-1">
         {% if services_exists %}
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered">
             
-                <thead class="table-secondary">
+                <thead class="table-success">
                     <tr>
                         <th></th>
                         <th>Name</th>
@@ -71,7 +71,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" id="deleteServiceModalTitle">Are you sure?</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" id="deleteServiceModalBody">
                                     You want to delete <b>{{ service.name }}</b> from services list.

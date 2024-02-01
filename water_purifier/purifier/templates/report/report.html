@@ -9,41 +9,75 @@
 
 {% block content %}
 
-    <div class="d-grid">
+    {% comment %} <div class="mb-5"> {% endcomment %}
         <div class="d-flex justify-content-between">
             <span class="page_heading">Reports</span>
-            {% comment %} <a href="" class="anchor_tag"><button type="button" class="btn btn-primary">Create</button></a> {% endcomment %}
         </div>
 
         <hr class="mt-1">
 
-        <div class="report-graph-count d-flex justify-content-center">
+        <div class="report-graph-count d-md-flex">
 
-            <div class="col-6 d-flex justify-content-center">
-                <canvas id="myChart" height="250" width="350"></canvas>
+            <div class="col-12 col-md me-md-2 p-3 report-data-graph">
+                <span class="graph_heading mb-1">Service Work</span>
+                <hr class="m-0">
+                <canvas id="myChart" class="p-4 h-100" width="100" height="50"></canvas>
             </div>
 
-            <div class="col-6">
-                <p>Counts</p>
+            <div class="col-12 col-md ms-md-2 mt-3 mt-md-0 p-3 report-data-count">
+                {% comment %} <div class="mb-3"> {% endcomment %}
+                    <span class="counts_heading">All</span>
+                    <hr class="m-0 mt-1">
+                {% comment %} </div> {% endcomment %}
+                <div class="row row-cols-1 gy-4 mt-1">
+                    <div class="d-flex justify-content-between">
+                        <div class="col d-grid me-2 customers-count">
+                            <span class="report-count">{{customers_count}}</span>
+                            <span class="report-count-heading">Customers</span>
+                        </div>
+                        <div class="col d-grid ms-2 employees-count">
+                            <span class="report-count">{{employees_count}}</span>
+                            <span class="report-count-heading">Employees</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="col d-grid me-2 products-count">
+                            <span class="report-count">{{products_count}}</span>
+                            <span class="report-count-heading">Types of products</span>
+                        </div>
+                        <div class="col d-grid ms-2 today-servicework-count">
+                            <span class="report-count text-warning">{{today_servicework_count}}</span>
+                            <span class="report-count-heading">Today ServiceWorks</span>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <div class="col d-grid me-2 upcoming-servicework-count">
+                            <span class="report-count">{{upcoming_count}}</span>
+                            <span class="report-count-heading">Upcoming Service Works</span>
+                        </div>
+                        <div class="col d-grid ms-2 completed-servicework-count">
+                            <span class="report-count">{{completed_count}}</span>
+                            <span class="report-count-heading">Completed Service Works</span>
+                        </div>
+                    </div>
+                </div>
             </div> 
 
         </div>
 
 
-        <div class="report-tables mt-3 mb-5 d-flex justify-content-between gy-3">
+        <div class="report-tables mt-3 d-md-flex">
 
             <div class="report-upcoming col-12 col-md me-md-2 p-3">
                 {% if servicework_upcoming_exists %}
                 <div class="d-flex justify-content-between">
                     <label class="report-upcoming-label">Upcoming Services</label>
-                    {% comment %} <input type="text" id="searchInput" placeholder="Search"> {% endcomment %}
                 </div>
                     <div class="table-responsive">
                         <table id="serviceNotDoneTable" class="table align-middle">
                         
                             <thead class="table-success">
                                 <tr>
-                                    {% comment %} <th></th> {% endcomment %}
                                     <th>Service Work</th>
                                 </tr>
                             </thead>
@@ -53,7 +87,6 @@
                                 {% for upcoming in servicework_upcoming %}
 
                                     <tr>
-                                        {% comment %} <td class="text-center"><a href="" class="anchor_tag">{{ forloop.counter }}</a></td> {% endcomment %}
                                         <td><a href="" class="anchor_tag">{{ upcoming }}</a></td>
                                     </tr>
 
@@ -70,17 +103,15 @@
                 {% endif %}
             </div>
 
-            <div class="report-completed col-12 col-md ms-md-2 p-3">
+            <div class="report-completed col-12 col-md ms-md-2 mt-3 mt-md-0 p-3">
                 {% if servicework_completed_exists %}
                 <div class="d-flex justify-content-between">
                     <label class="report-completed-label">Completed Services</label>
-                    <input type="text" id="searchInputCompleted" placeholder="Search">
                 </div>
                     <div class="table-responsive">
                         <table id="serviceCompletedTable" class="table align-middle">
                             <thead class="table-success">
                                 <tr>
-                                    {% comment %} <th></th> {% endcomment %}
                                     <th>Service Work</th>
                                 </tr>
                             </thead>
@@ -90,7 +121,6 @@
                                 {% for completed in servicework_completed %}
 
                                     <tr>
-                                        {% comment %} <td class="text-center"><a href="" class="anchor_tag">{{ forloop.counter }}</a></td> {% endcomment %}
                                         <td><a href="" class="anchor_tag">{{ completed }}</a></td>
                                     </tr>
 
@@ -109,12 +139,13 @@
 
         </div>
 
-    </div>
-
+    {% comment %} </div> {% endcomment %}
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            var ctx = document.getElementById('myChart').getContext('2d');
+
+            var canvas = document.getElementById('myChart');
+            var ctx = canvas.getContext('2d');
             
             var completedCount = {{ completed_count }};
             var upcomingCount = {{ upcoming_count }};
@@ -130,15 +161,19 @@
                             '#008080',
                             '#b2d8d8',
                         ],
-                        {% comment %} borderColor: [
+                        borderColor: [
                             '#008080',
                             '#b2d8d8',
-                        ], {% endcomment %}
+                        ],
                         borderWidth: 2,
                     }]
                 },
                 options: {
                     cutout: '60%',
+                    title: {
+                        display: true,
+                        text: "World Wide Wine Production"
+                    },
                     plugins: {
                         legend: {
                             display: true,

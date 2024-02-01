@@ -88,17 +88,15 @@ $(document).ready(function () {
             },
             success: function (data) {
 
-                var option = document.createElement('option');
-                    option.value = '';
-                    option.text = '---------';
-                    option.selected;
-                    serviceSelect.add(option);
-
                 data.services.forEach(function (service) {
-                    var option = document.createElement('option');
-                    option.value = service.id;
-                    option.text = service.name;
-                    serviceSelect.add(option);
+                    var checkbox = $('<input type="checkbox">').attr({
+                        id: 'service_' + service.id,
+                        value: service.id,
+                        name: 'service_' + service.id, // Adjust the name as needed for form submission
+                        class: 'form-checkbox',
+                    });
+                    var label = $('<label>').attr('for', 'service_' + service.id).addClass('form-label').text(service.name);
+                    $(serviceSelect).append(checkbox).append(label).append('<br>');
                 });
 
 

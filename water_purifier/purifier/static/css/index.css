@@ -31,12 +31,9 @@
 .sidenav {
     position: fixed;
     background: #006666;
-    /* background: linear-gradient(to bottom, #9614d0, #bb44f0); */
     margin-top: 45px;
     height: 100%;
     width: 212px;
-    /* box-shadow: .1px .01cm 8px; */
-    /* box-shadow: inset 0px .01cm 8px; */
     z-index: 2;
 }
 
@@ -73,6 +70,12 @@
 }
 
 
+/* Side Navbar Toggle */
+#sideNavBoolean:checked ~ #sideNav {
+    display: none;
+}
+
+
 /* Main Content */
 .main_content {
     position: absolute;
@@ -81,5 +84,4 @@
     margin-left: 212px;
     height: calc(100% - 45px);
     width: calc(100% - 212px);
-    background-color: #ffffff;
 }

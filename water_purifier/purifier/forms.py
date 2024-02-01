@@ -134,11 +134,6 @@ class ServicerForm(forms.ModelForm):
                 'id': 'formServicerName',
             }),
         }
-    
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        # Customize queryset of 'name' field
-        self.fields['name'].queryset = self.fields['name'].queryset.exclude(servicer__isnull=False)
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -161,8 +156,8 @@ class ServiceWorkForm(forms.ModelForm):
                 'class': 'form-select',    
                 'id': 'formServiceWorkProduct',    
             }),
-            'service_name': forms.Select(attrs={
-                'class': 'form-select',    
+            'service_name': forms.CheckboxSelectMultiple(attrs={
+                'class': 'form-checkbox',    
                 'id': 'formServiceWorkService',    
             }),
             'comment_section': forms.Textarea(attrs={

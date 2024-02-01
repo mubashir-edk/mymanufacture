@@ -21,7 +21,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createServiceWorkModalTitle">Add Service for Customer</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
@@ -45,7 +45,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Create</button>
+                        <button type="submit" class="btn btn-secondary">Create</button>
                     </div>
                 </div>
             </div>
@@ -57,9 +57,9 @@
     <div class="mt-1">
         {% if service_works_exists %}
         <div class="table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table table-bordered">
             
-                <thead class="table-secondary">
+                <thead class="table-success">
                     <tr>
                         <th></th>
                         <th>Code</th>

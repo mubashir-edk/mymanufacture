@@ -103,12 +103,4 @@ $(document).ready(function () {
         });
     });
 
-
-    // modal close reload
-    $('.btn-close').click(function() {
-        // Reload the page when the close button is clicked
-        location.reload();
-    });
-
-
 });

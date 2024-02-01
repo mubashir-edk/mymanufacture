@@ -55,7 +55,7 @@ class Customer(models.Model):
     address = models.TextField()
     mobile = models.CharField(max_length=20)
     whatsapp_number = models.CharField(max_length=20)
-    installed_product = models.ManyToManyField(Product)
+    installed_product = models.ManyToManyField(Product, null=True, blank=True)
     customer_code = models.CharField(max_length=50, blank=True, unique=True)
     # location = LocationField(based_fields=[name], zoom=7, blank=True)
     
@@ -99,7 +99,7 @@ class ServiceWork(models.Model):
     service_work_code = models.CharField(max_length=50, blank=True, unique=True)
     customer_code = models.ForeignKey(Customer, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    service_name = models.ForeignKey(Service, models.SET_NULL, null=True)
+    service_name = models.ManyToManyField(Service)
     comment_section = models.TextField(null=True, blank=True)
     service_date = models.DateField()
     remark_section = models.TextField(null=True, blank=True)

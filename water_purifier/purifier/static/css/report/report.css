@@ -1,34 +1,50 @@
 
-/* .report-graph-count {
-    height: 300px;
-    width: 300px;
-} */
+.report-data-graph, .report-data-count{
+    background: #ffffff;
+    border-radius: 10px;
+    height: 500px;
+}
 
-canvas{
-    aspect-ratio: auto;
-    height: 360px;
-    width: 360px;
+.graph_heading {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.counts_heading {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.report-count {
+    font-size: 45px;
+    font-weight: bold;
+    color: #008080;
+}
+
+.customers-count, .employees-count, .products-count, .today-servicework-count, .upcoming-servicework-count, .completed-servicework-count {
+    text-align: center;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 2px solid #008080;
+}
+
+.report-count-heading {
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .report-upcoming, .report-completed {
+    max-height: 500px;
     background: #ffffff;
-    border-radius: 8px;
-    box-shadow: 2px 3px 5px 1px;
+    border-radius: 10px;
+    overflow: auto;
 }
-
-/* .report-tables {
-    background-color: brown;
-} */
 
 .report-upcoming-label, .report-completed-label {
     font-size: 24px;
     font-weight: 500;
     margin-bottom: 5px;
-}
-
-#searchInputCompleted {
-    border-radius: 10px;
-    color: aqua;
 }
 
 #table {
