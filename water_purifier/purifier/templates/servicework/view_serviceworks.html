@@ -14,7 +14,7 @@
     </div>
 
     {% comment %} Create Service modal {% endcomment %}
-    <form action="{% url "purifier:create_servicework" %}" method="post">
+    <form id="serviceWorkFormG" action="{% url "purifier:create_servicework" %}" method="post">
         {% csrf_token %}
         <div class="modal fade" id="createServiceWorkModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createServiceWorkModalTitle" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -54,10 +54,10 @@
 
     <hr class="mt-1">
 
-    <div class="mt-1">
+    <div class="mt-1 border-danger border-5">
         {% if service_works_exists %}
         <div class="table-responsive">
-            <table class="table table-bordered">
+            <table class="table table-light table-bordered align-middle">
             
                 <thead class="table-success">
                     <tr>
@@ -73,7 +73,7 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="">
 
                     {% for service_work in service_works %}
 

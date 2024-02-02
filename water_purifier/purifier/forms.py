@@ -158,7 +158,7 @@ class ServiceWorkForm(forms.ModelForm):
             }),
             'service_name': forms.CheckboxSelectMultiple(attrs={
                 'class': 'form-checkbox',    
-                'id': 'formServiceWorkService',    
+                'id': 'formServiceWorkService',   
             }),
             'comment_section': forms.Textarea(attrs={
                 'class': 'form-control',    
@@ -176,6 +176,15 @@ class ServiceWorkForm(forms.ModelForm):
                 'rows': '3',    
             }),
         }
+        
+        # def clean(self):
+        #     cleaned_data = super().clean()
+        #     service_name = cleaned_data.get('service_name')
+
+        #     if not service_name:
+        #         raise forms.ValidationError("Please select at least one service.")
+
+        #     return cleaned_data
         
 class TestForm(forms.ModelForm):
     class Meta:

@@ -5,6 +5,8 @@ from .forms import *
 from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+import datetime
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -13,6 +15,7 @@ def index(request):
 
 
 # Employee Functions --------------------------------------------------------------------------------------------------------------------------------
+@login_required
 def createEmployee(request):
     
     employee_form = EmployeeForm()
@@ -56,6 +59,7 @@ def createEmployee(request):
             
     return render(request, 'employee/employee.html', context)
 
+@login_required
 def viewEmployees(request):
     
     employees = Employee.objects.all()
@@ -65,6 +69,7 @@ def viewEmployees(request):
     
     return render(request, 'employee/view_employees.html', context)
 
+@login_required
 def eachEmployee(request, id):
     
     employee = get_object_or_404(Employee, pk=id)
@@ -73,6 +78,7 @@ def eachEmployee(request, id):
     
     return render(request, 'employee/each_employee.html', context)
 
+@login_required
 def updateEmployee(request, id):
     
     employee = get_object_or_404(Employee, pk=id)
@@ -99,6 +105,7 @@ def updateEmployee(request, id):
         
     return render(request, 'employee/employee.html', context)
 
+@login_required
 def deleteEmployee(request, id):
     
     employee = get_object_or_404(Employee, pk=id)
@@ -106,6 +113,7 @@ def deleteEmployee(request, id):
     return redirect('purifier:view_employees')
 
 # Customer Functions --------------------------------------------------------------------------------------------------------------------------------
+@login_required
 def createCustomer(request):
     
     customer_form = CustomerForm()
@@ -154,6 +162,7 @@ def createCustomer(request):
             
     return render(request, 'customer/customer.html', context)
 
+@login_required
 def viewCustomers(request):
     
     customers = Customer.objects.all()
@@ -163,6 +172,7 @@ def viewCustomers(request):
     
     return render(request, 'customer/view_customers.html', context)
 
+@login_required
 def eachCustomer(request , id):
     
     customer = get_object_or_404(Customer, pk=id)
@@ -171,6 +181,7 @@ def eachCustomer(request , id):
     
     return render(request, 'customer/each_customer.html', context)
 
+@login_required
 def updateCustomer(request , id):
     
     customer = get_object_or_404(Customer, pk=id)
@@ -198,6 +209,7 @@ def updateCustomer(request , id):
     
     return render(request, 'customer/customer.html', context)
 
+@login_required
 def deleteCustomer(request, id):
     
     customer = get_object_or_404(Customer, pk=id)
@@ -206,6 +218,7 @@ def deleteCustomer(request, id):
 
 
 # Product Functions ---------------------------------------------------------------------------------------------------------------------------------
+@login_required
 def viewCategories(request):
     
     categories = Category.objects.all()
@@ -218,6 +231,7 @@ def viewCategories(request):
     
     return render(request, 'product/category.html', context)
 
+@login_required
 def createCategory(request):
     
     if request.method == 'POST':
@@ -230,6 +244,7 @@ def createCategory(request):
             
         return redirect('purifier:view_categories')
 
+@login_required
 def updateCategory(request, id):
     
     category = get_object_or_404(Category, pk=id)
@@ -267,12 +282,14 @@ def updateCategory(request, id):
         
     return render(request, 'product/category_update_modal.html',context)
 
+@login_required
 def deleteCategory(request, id):
     
     category = get_object_or_404(Category, pk=id)
     category.delete()
     return redirect('purifier:view_categories')
 
+@login_required
 def createProduct(request):
     
     if request.method == 'POST':
@@ -287,6 +304,7 @@ def createProduct(request):
     
     return render(request, 'product/product.html')
 
+@login_required
 def viewProducts(request):
     
     category_form = CategoryForm()
@@ -303,6 +321,7 @@ def viewProducts(request):
 
 
 # Service Functions --------------------------------------------------------------------------------------------------------------------------------
+@login_required
 def viewAndCreateServices(request):
     
     services = Service.objects.all()
@@ -323,6 +342,7 @@ def viewAndCreateServices(request):
     context = {'services': services, 'services_exists': services_exists, 'service_form': service_form}
     return render(request, 'service/view_services.html', context)
 
+@login_required
 def deleteService(request, id):
     
     service = get_object_or_404(Service, pk=id)
@@ -330,6 +350,7 @@ def deleteService(request, id):
     return redirect('purifier:view_services')
 
 # Servicer Functions --------------------------------------------------------------------------------------------------------------------------------
+@login_required
 def viewServicers(request):
     
     servicers = Servicer.objects.all()
@@ -342,6 +363,7 @@ def viewServicers(request):
     
     return render(request, 'servicer/view_servicers.html', context)
 
+@login_required
 def createServicer(request):
     
     if request.method == 'POST':
@@ -356,6 +378,7 @@ def createServicer(request):
         
     return render(request, 'servicer/view_servicers.html')
 
+@login_required
 def fetchEmployeeFiltered(request):
     
     if request.method == 'GET':
@@ -377,6 +400,7 @@ def fetchEmployeeFiltered(request):
         except Employee.DoesNotExist:
             return JsonResponse({'error': 'Employee not found'}, status=404)
 
+@login_required
 def fetchServicer(request, selected_employee):
     
     print("Fetching")
@@ -395,6 +419,7 @@ def fetchServicer(request, selected_employee):
         except Employee.DoesNotExist:
             return JsonResponse({'error': 'Employee not found'}, status=404)
         
+@login_required
 def deleteServicer(request, id):
     
     servicer = get_object_or_404(Servicer, pk=id)
@@ -403,6 +428,7 @@ def deleteServicer(request, id):
         
 
 # Service Work Functions ----------------------------------------------------------------------------------------------------------------------------
+@login_required
 def viewServiceWorks(request):
     
     service_works = ServiceWork.objects.all()
@@ -452,6 +478,8 @@ def viewServiceWorks(request):
                     'services': services_data,
                 }
                 
+                print("in the services ajax")
+                
                 return JsonResponse(data)
             except Product.DoesNotExist:
                 return JsonResponse({'error': 'Product not found'}, status=404)
@@ -460,13 +488,13 @@ def viewServiceWorks(request):
     
     return render(request, 'servicework/view_serviceworks.html', context)
 
+@login_required
 def createServiceWork(request):
     
     if request.method == 'POST':
         
-        
-        
         service_work_form = ServiceWorkForm(request.POST)
+        
         
         # Generating Service Work Code
         servicework_codes_only = ServiceWork.objects.values_list('service_work_code', flat=True)
@@ -493,24 +521,34 @@ def createServiceWork(request):
                 break
         
         if service_work_form.is_valid():
-            print("coming in")
+            print("Saved in the form")
             
             servicework = service_work_form.save(commit=False)
             
             servicework.service_work_code = generated_servicework_code
             
-            service_work_form.save_m2m()
-            servicework.save()
+            selected_service_ids = request.POST.getlist('service_name')
             
+            selected_services = Service.objects.filter(pk__in=selected_service_ids)
+            
+            print(selected_services)
+            
+            servicework.service_name.set(selected_services)
+
+            servicework.save()
             
             servicework_toassign = ServiceAssign(service=servicework, notification=f'{servicework.service_date} is the service date for the customer {servicework.customer_code}')
             
             servicework_toassign.save()
             
             return redirect('purifier:view_serviceworks')
+        
+        else:
+            print(service_work_form.errors)
     
     return redirect('purifier:view_serviceworks')
         
+@login_required
 def eachServiceWork(request, id):
     
     service_work = get_object_or_404(ServiceWork, pk=id)
@@ -535,6 +573,7 @@ def eachServiceWork(request, id):
     
     return render(request, 'servicework/each_servicework.html', context)
 
+@login_required
 def serviceWorkChangeStatus(request, id):
     
     servicework = get_object_or_404(ServiceWork, pk=id)
@@ -566,6 +605,7 @@ def serviceWorkChangeStatus(request, id):
         
     return redirect(reverse('purifier:each_service_work', kwargs={'id': servicework.id}))
 
+@login_required
 def deleteServiceWork(request, id):
     
     servicework = get_object_or_404(ServiceWork, pk=id)
@@ -574,6 +614,7 @@ def deleteServiceWork(request, id):
     
     
 # Test or Quality check Functions -------------------------------------------------------------------------------------------------------------------
+@login_required
 def viewTests(request):
     
     tests = Test.objects.all()
@@ -584,6 +625,7 @@ def viewTests(request):
     
     return render(request, 'test/view_tests.html', context)
 
+@login_required
 def createTest(request):
     
     test_form = TestForm()
@@ -604,6 +646,7 @@ def createTest(request):
 
 
 # Service Assign Functions --------------------------------------------------------------------------------------------------------------------------
+@login_required
 def viewAssigning(request):
     
     servicework_assign_form = ServiceWorkAssignForm()
@@ -620,6 +663,7 @@ def viewAssigning(request):
     
     return render(request, 'service_assigning/view_assigning.html', context) 
 
+@login_required
 def assignServicer(request, id):
     
     print(id)
@@ -650,6 +694,7 @@ def assignServicer(request, id):
         
     return redirect('purifier:view_assigns')
 
+@login_required
 def unAssignServicer(request, id):
     
     service_assigned = get_object_or_404(ServiceAssign, pk=id)
@@ -662,6 +707,7 @@ def unAssignServicer(request, id):
 
 
 # Report Functions ----------------------------------------------------------------------------------------------------------------------------------
+@login_required
 def viewReport(request):
     
     servicework_completed = ServiceWork.objects.filter(status='completed')

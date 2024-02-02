@@ -79,14 +79,4 @@ function updateView() {
     }
 }
 
-console.log("before");
-
-
-$(document).ready(function() {
-    $('#productsTable').DataTable();
-    console.log("Product")
-});
-
-console.log("after");
-
 

@@ -76,8 +76,13 @@
                         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                         <button class="btn btn-outline-success" type="submit">Search</button>
                         </form> {% endcomment %}
-                        <div class="navbar_profile" id="navbarProfile">
+                        <div class="navbar_profile d-flex align-items-center" id="navbarProfile">
+                            {% comment %} <h6 class="me-3 text-white">{{request.user}}</h6> {% endcomment %}
                             <img class="profile_img" src="{% static 'images/default.png' %}">
+                            <form method="post" id="logoutFormUrl" action="/auth/logout/">
+                                {% csrf_token %}
+                                <a href="" onclick="this.closest('#logoutFormUrl').submit(); return false;">Logout</a>
+                            </form>
                         </div>
                     </div>
                 </div>

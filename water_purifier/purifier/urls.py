@@ -57,5 +57,4 @@ urlpatterns = [
     
     # Report
     path('view_reports/', views.viewReport, name='view_reports'),
-    
 ]

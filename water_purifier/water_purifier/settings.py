@@ -60,7 +60,9 @@ ROOT_URLCONF = 'water_purifier.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+                BASE_DIR / 'templates'
+            ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -131,6 +133,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOGIN_REDIRECT_URL = '/view_reports/'
+
+LOGOUT_REDIRECT_URL = '/auth/login/'
+
+LOGIN_URL = '/auth/login/'
+
 
 # TWILIO SMS PROVIDER
 # TWILIO_ACCOUNT_SID = 'AC037fa67dc183876fecb5ca0ae42e650a'
