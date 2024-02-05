@@ -27,6 +27,8 @@ urlpatterns = [
     path('delete_category/<uuid:id>', views.deleteCategory, name='delete_category'),
     path('view_products/', views.viewProducts, name='view_products'),
     path('create_product/', views.createProduct, name='create_product'),
+    path('each_product/<uuid:id>', views.viewAndUpdateEachProduct, name='each_product'),
+    path('delete_product/<uuid:id>', views.deleteProduct, name='delete_product'),
     
     # Service
     path('view_services/', views.viewAndCreateServices, name='view_services'),

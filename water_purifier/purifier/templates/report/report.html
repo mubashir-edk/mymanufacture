@@ -25,10 +25,10 @@
             </div>
 
             <div class="col-12 col-md ms-md-2 mt-3 mt-md-0 p-3 report-data-count">
-                {% comment %} <div class="mb-3"> {% endcomment %}
+
                     <span class="counts_heading">All</span>
                     <hr class="m-0 mt-1">
-                {% comment %} </div> {% endcomment %}
+
                 <div class="row row-cols-1 gy-4 mt-1">
                     <div class="d-flex justify-content-between">
                         <div class="col d-grid me-2 customers-count">
@@ -43,21 +43,21 @@
                     <div class="d-flex justify-content-between">
                         <div class="col d-grid me-2 products-count">
                             <span class="report-count">{{products_count}}</span>
-                            <span class="report-count-heading">Types of products</span>
+                            <span class="report-count-heading">Products</span>
                         </div>
                         <div class="col d-grid ms-2 today-servicework-count">
                             <span class="report-count text-warning">{{today_servicework_count}}</span>
-                            <span class="report-count-heading">Today ServiceWorks</span>
+                            <span class="report-count-heading">Today Works</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <div class="col d-grid me-2 upcoming-servicework-count">
-                            <span class="report-count">{{upcoming_count}}</span>
-                            <span class="report-count-heading">Upcoming Service Works</span>
+                            <span class="report-count text-secondary">{{upcoming_count}}</span>
+                            <span class="report-count-heading">Upcoming Works</span>
                         </div>
                         <div class="col d-grid ms-2 completed-servicework-count">
-                            <span class="report-count">{{completed_count}}</span>
-                            <span class="report-count-heading">Completed Service Works</span>
+                            <span class="report-count text-success">{{completed_count}}</span>
+                            <span class="report-count-heading">Completed Works</span>
                         </div>
                     </div>
                 </div>
@@ -76,13 +76,13 @@
                     <div class="table-responsive">
                         <table id="serviceNotDoneTable" class="table align-middle">
                         
-                            <thead class="table-success">
+                            <thead class="text-white">
                                 <tr>
                                     <th>Service Work</th>
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody class="table-light">
 
                                 {% for upcoming in servicework_upcoming %}
 
@@ -110,13 +110,13 @@
                 </div>
                     <div class="table-responsive">
                         <table id="serviceCompletedTable" class="table align-middle">
-                            <thead class="table-success">
+                            <thead class="text-white">
                                 <tr>
                                     <th>Service Work</th>
                                 </tr>
                             </thead>
 
-                            <tbody>
+                            <tbody class="table-light">
 
                                 {% for completed in servicework_completed %}
 

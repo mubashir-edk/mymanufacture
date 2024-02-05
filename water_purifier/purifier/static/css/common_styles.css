@@ -30,3 +30,8 @@ a {
 .dataTables_filter {
     margin-bottom: 5px;
 }
+
+/* table */
+table thead {
+    background: #0c768a;
+}

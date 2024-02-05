@@ -35,17 +35,18 @@
         {% block head %}{% endblock head %}
 
     </head>
-    <body class="bg-secondary bg-opacity-10">
+    <body class="bg-secondary bg-opacity-10" id="pageBodyView">
 
+        
         {% comment %} NAVBAR {% endcomment %}
         <div id="navBar">
 
             <nav class="navbar navbar-expand-lg navbar-light">
-                <div class="container-fluid">
-                    <label for="sideNavBoolean"><i class="bi bi-arrow-down-right-square-fill"></i></label>
-                    <input type="checkbox" id="sideNavBoolean" class=""/>
 
-                    <a class="navbar-brand" href="/">Water Purifier</a>
+                <label for="sideNavBoolean" id="hideSideNavBtn"><i class="bi bi-arrow-left-circle-fill"></i></label>
+                <input type="checkbox" id="sideNavBoolean" class="d-none"/>
+                
+                <div class="container-fluid">
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -79,17 +80,22 @@
                         <div class="navbar_profile d-flex align-items-center" id="navbarProfile">
                             {% comment %} <h6 class="me-3 text-white">{{request.user}}</h6> {% endcomment %}
                             <img class="profile_img" src="{% static 'images/default.png' %}">
-                            <form method="post" id="logoutFormUrl" action="/auth/logout/">
-                                {% csrf_token %}
-                                <a href="" onclick="this.closest('#logoutFormUrl').submit(); return false;">Logout</a>
-                            </form>
                         </div>
                     </div>
                 </div>
             </nav>
 
-            <div class="sidenav d-flex justify-content-center" id="sideNav">
+
+            <div class="sidenav" id="sideNav">
+
                 <div class="sidenav_content p-2">
+                    <div class="d-flex align-items-center justify-content-center brand-area">
+                        
+                        <a class="anchor_tag d-flex" href="">
+                            <img src="{% static "images/brand-logo.png" %}" style="height: 32px; width: 32px;">
+                            <span class="brand-label ms-2">Water Purifier</span>
+                        </a>
+                    </div>
                     <a href="{% url "purifier:view_customers" %}">
                         <div class="content_link d-flex justify-content-start align-items-center p-1">
                             <i class="fa-solid fa-user-group"></i>
@@ -144,7 +150,21 @@
                             <li class="">Reports</li>
                         </div>
                     </a>
+                    
                 </div>
+
+                <div class="sidenav_logout">
+                    <form method="post" id="logoutFormUrl" action="/auth/logout/">
+                        <div class="logout_link d-flex justify-content-center align-items-center p-2 text-center">
+                            {% csrf_token %}
+                            <a href="" onclick="this.closest('#logoutFormUrl').submit(); return false;">
+                                <span>Logout</span>
+                                <i class="fa fa-sign-out ms-2"></i>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
             </div>
 
         </div>
@@ -152,6 +172,11 @@
         <!-- Extended Contents -->
         <div class="main_content" id="mainContent">
             {% block content %}{% endblock content %}
+        </div>
+
+        {% comment %} Footer {% endcomment %}
+        <div class="footer">
+            <span>&copy;Copyright</span>
         </div>
 
         <!-- common js file -->

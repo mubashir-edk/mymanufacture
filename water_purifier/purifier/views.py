@@ -319,6 +319,34 @@ def viewProducts(request):
     
     return render(request, 'product/product.html', context)
 
+def viewAndUpdateEachProduct(request, id):
+    
+    product = get_object_or_404(Product, pk=id)
+    
+    product_form = ProductForm(instance=product)
+    
+    if request.method == 'POST':
+    
+        product_form = ProductForm(request.POST, request.FILES, instance=product)
+        
+        if product_form.is_valid():
+            
+            product_form.save()
+            
+            return redirect(reverse('purifier:each_product', kwargs={'id': product.id}))
+    
+    context = {'product_form': product_form, 'product': product}
+    
+    return render(request, 'product/each_product.html', context)
+
+def deleteProduct(request, id):
+    
+    product = get_object_or_404(Product, pk=id)
+    
+    product.delete()
+    
+    return redirect('purifier:view_products')
+            
 
 # Service Functions --------------------------------------------------------------------------------------------------------------------------------
 @login_required
