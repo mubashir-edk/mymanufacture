@@ -10,7 +10,7 @@
     <div class="d-grid">
         <div class="d-flex justify-content-between">
             <span class="page_heading">Employees</span>
-            <a href="{% url 'purifier:create_employee' %}" class="anchor_tag"><button type="button" class="btn btn-primary">Create</button></a>
+            <a href="{% url 'purifier:create_employee' %}" class="btn btn-primary">Create</a>
         </div>
 
         <hr class="mt-1">
@@ -29,7 +29,7 @@
                         </tr>
                     </thead>
 
-                    <tbody class="table-light">
+                    <tbody class="bg-white">
 
                         {% for employee in employees %}
 

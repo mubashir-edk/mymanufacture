@@ -18,45 +18,47 @@
 
         <div class="report-graph-count d-md-flex">
 
-            <div class="col-12 col-md me-md-2 p-3 report-data-graph">
+            <div class="col-12 col-md me-md-2 p-3 text-center report-data-graph">
                 <span class="graph_heading mb-1">Service Work</span>
-                <hr class="m-0">
-                <canvas id="myChart" class="p-4 h-100" width="100" height="50"></canvas>
+                {% comment %} <hr class="m-0"> {% endcomment %}
+                <div class="d-flex justify-content-center data-graph">
+                    <canvas id="myChart" class="p-4 h-100" width="100" height="50"></canvas>
+                </div>
             </div>
 
-            <div class="col-12 col-md ms-md-2 mt-3 mt-md-0 p-3 report-data-count">
+            <div class="col-12 col-md ms-md-2 d-flex align-items-stretch report-data-count">
 
-                    <span class="counts_heading">All</span>
-                    <hr class="m-0 mt-1">
+                    {% comment %} <span class="counts_heading">All</span>
+                    <hr class="m-0 mt-1"> {% endcomment %}
 
-                <div class="row row-cols-1 gy-4 mt-1">
+                <div class="row row-cols-1 gy-4">
                     <div class="d-flex justify-content-between">
                         <div class="col d-grid me-2 customers-count">
-                            <span class="report-count">{{customers_count}}</span>
+                            <span class="report-count" data-bs-increment="1" data-bs-duration="4000" data-bs-value="{{ customers_count }}">{{customers_count}}</span>
                             <span class="report-count-heading">Customers</span>
                         </div>
                         <div class="col d-grid ms-2 employees-count">
-                            <span class="report-count">{{employees_count}}</span>
+                            <span class="report-count" data-bs-increment="1" data-bs-duration="4000" data-bs-value="{{ employees_count }}">{{employees_count}}</span>
                             <span class="report-count-heading">Employees</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <div class="col d-grid me-2 products-count">
-                            <span class="report-count">{{products_count}}</span>
+                            <span class="report-count" data-bs-increment="1" data-bs-duration="4000" data-bs-value="{{ products_count }}">{{products_count}}</span>
                             <span class="report-count-heading">Products</span>
                         </div>
                         <div class="col d-grid ms-2 today-servicework-count">
-                            <span class="report-count text-warning">{{today_servicework_count}}</span>
+                            <span class="report-count text-warning" data-bs-increment="1" data-bs-duration="4000" data-bs-value="{{ today_servicework_count }}">{{today_servicework_count}}</span>
                             <span class="report-count-heading">Today Works</span>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between">
                         <div class="col d-grid me-2 upcoming-servicework-count">
-                            <span class="report-count text-secondary">{{upcoming_count}}</span>
+                            <span class="report-count text-secondary" data-bs-increment="1" data-bs-duration="4000" data-bs-value="{{ upcoming_count }}">{{upcoming_count}}</span>
                             <span class="report-count-heading">Upcoming Works</span>
                         </div>
                         <div class="col d-grid ms-2 completed-servicework-count">
-                            <span class="report-count text-success">{{completed_count}}</span>
+                            <span class="report-count text-success" data-bs-increment="1" data-bs-duration="4000" data-bs-value="{{ completed_count }}">{{completed_count}}</span>
                             <span class="report-count-heading">Completed Works</span>
                         </div>
                     </div>
@@ -71,18 +73,18 @@
             <div class="report-upcoming col-12 col-md me-md-2 p-3">
                 {% if servicework_upcoming_exists %}
                 <div class="d-flex justify-content-between">
-                    <label class="report-upcoming-label">Upcoming Services</label>
+                    {% comment %} <label class="report-upcoming-label">Upcoming Services</label> {% endcomment %}
                 </div>
                     <div class="table-responsive">
                         <table id="serviceNotDoneTable" class="table align-middle">
                         
                             <thead class="text-white">
                                 <tr>
-                                    <th>Service Work</th>
+                                    <th>Upcoming Services</th>
                                 </tr>
                             </thead>
 
-                            <tbody class="table-light">
+                            <tbody class="bg-white">
 
                                 {% for upcoming in servicework_upcoming %}
 
@@ -106,17 +108,17 @@
             <div class="report-completed col-12 col-md ms-md-2 mt-3 mt-md-0 p-3">
                 {% if servicework_completed_exists %}
                 <div class="d-flex justify-content-between">
-                    <label class="report-completed-label">Completed Services</label>
+                    {% comment %} <label class="report-completed-label">Completed Services</label> {% endcomment %}
                 </div>
                     <div class="table-responsive">
                         <table id="serviceCompletedTable" class="table align-middle">
                             <thead class="text-white">
                                 <tr>
-                                    <th>Service Work</th>
+                                    <th>Completed Services</th>
                                 </tr>
                             </thead>
 
-                            <tbody class="table-light">
+                            <tbody class="bg-white">
 
                                 {% for completed in servicework_completed %}
 
@@ -159,13 +161,14 @@
                         data: [completedCount, upcomingCount],
                         backgroundColor: [
                             '#008080',
-                            '#b2d8d8',
+                            '#36454F',
                         ],
                         borderColor: [
                             '#008080',
-                            '#b2d8d8',
+                            '#36454F',
                         ],
                         borderWidth: 2,
+                        hoverOffset: 4,
                     }]
                 },
                 options: {
@@ -190,12 +193,13 @@
                     }
                 }
             });
+
         });
 
 
 
         // search filter
-        document.getElementById('searchInputCompleted').addEventListener('input', function() {
+        {% comment %} document.getElementById('searchInputCompleted').addEventListener('input', function() {
             var searchTerm = this.value.toLowerCase();
             var tableRows = document.getElementById('serviceCompletedTable').getElementsByTagName('tr');
           
@@ -216,7 +220,10 @@
                     tableRows[i].style.display = 'none';
                 }
             }
-        });
+        }); {% endcomment %}
+
+
+        
         
     </script>
     

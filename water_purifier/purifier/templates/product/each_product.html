@@ -18,7 +18,7 @@
                     <label for="openProductEdit" id="openProductEditLabel" class="btn btn-dark">Edit</label>
                     <input type="checkbox" id="openProductEdit" class="d-none">
                     <button type="submit" id="productSaveBtn" class="btn btn-primary">Save</button>
-                    <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProductModal">Delete</a>
+                    <a href="" id="productDeleteBtn" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteProductModal">Delete</a>
                 </div>
 
             </div>
@@ -70,9 +70,9 @@
                         <label for="formProductServices" class="form-label mt-3">Services</label>
                         {{ product_form.services }}
                         <div id="servicesView">
-                                {% for service in product.services.all  %}
+                            {% for service in product.services.all  %}
                                 <input type="text" class="form-control mb-1" value="{{service}}" readonly>
-                                {% endfor %}
+                            {% endfor %}
                         </div>
                     </div>
 
@@ -87,11 +87,11 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteProductModalTitle">Delete Product</h5>
+                    <h5 class="modal-title" id="deleteProductModalTitle">Are you sure?</h5>
                     <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    Are you sure?<br>You want to delete product {{ product.name }}({{ product.product_serial}}).
+                    You want to delete the product:<br> <b>{{ product.name }}({{ product.product_serial}})</b>.
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

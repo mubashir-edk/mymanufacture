@@ -1,3 +1,7 @@
+body {
+    background: #f5f8f9;
+}
+
 /* Main Navbar */
 .navbar {
     position: fixed;
@@ -6,8 +10,8 @@
     right: 0;
     padding: 5px;
     margin-left: 245px;
-    background: #f5f8f9;
-    height: 45px;
+    background: #05759a;
+    height: 50px;
     width: 100%;
     width: calc(100% - 245px);
     transition: ease-out 0.3s;
@@ -157,12 +161,16 @@
 /* Main Content */
 .main_content {
     position: absolute;
-    padding: 16px;
-    margin-top: 45px;
+    padding: 20px;
+    padding-top: 5px;
+    /* margin: 100px; */
+    margin-top: 50px;
     margin-left: 245px;
-    height: calc(100% - 45px);
+    height: calc(100% - 50px);
     width: calc(100% - 245px);
     transition: ease-out 0.3s;
+    overflow: auto;
+    /* border-top: 2px solid #0c768a; */
 }
 
 
@@ -176,17 +184,4 @@
 /* hide sidenav icon */
 #hideSideNavBtn {
     font-size: 24px;
-}
-
-
-/* footer */
-.footer {
-    position:relative;
-    margin-left: 245px;
-    padding: 0;
-    top: 100%;
-    background: #0c768a;
-    height: 50px;
-    width: 100%;
-    width: calc(100% - 245px);
 }

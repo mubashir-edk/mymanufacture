@@ -73,7 +73,7 @@
                     </tr>
                 </thead>
 
-                <tbody class="table-light">
+                <tbody class="bg-white">
 
                     {% for service_work in service_works %}
 
@@ -82,7 +82,13 @@
                             <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.service_work_code }}</a></td>
                             <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.customer_code }}</a></td>
                             <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.product }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.service_name }}</a></td>
+                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">
+
+                                {% for service in service_work.service_name.all  %}
+                                    {{ service }},
+                                {% endfor %}
+
+                            </a></td>
                             <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.service_date }}</a></td>
                             <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.comment_section }}</a></td>
                             <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.remark_section }}</a></td>

@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-1wkm=)xq45bwjq&*i5-oouo@o5&()wbir1zj0fr$9rwyjy8g3+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'purifier',
-    
+
     # 'location_field.apps.DefaultConfig',
 ]
 
@@ -139,9 +139,3 @@ LOGIN_REDIRECT_URL = '/view_reports/'
 LOGOUT_REDIRECT_URL = '/auth/login/'
 
 LOGIN_URL = '/auth/login/'
-
-
-# TWILIO SMS PROVIDER
-# TWILIO_ACCOUNT_SID = 'AC037fa67dc183876fecb5ca0ae42e650a'
-# TWILIO_AUTH_TOKEN = 'd99f861aa495c4e3db7b55131031a3a3'
-# TWILIO_PHONE_NUMBER = '+12018904884'

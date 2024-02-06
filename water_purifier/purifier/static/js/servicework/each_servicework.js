@@ -16,10 +16,9 @@ $(document).ready(function () {
         formTextareas[i].setAttribute("readonly", "true");
     }
 
+    $("#productServiceDiv").hide();
+
     $("#serviceworkSaveBtn").hide();
-
-
-
 
 
     $("#serviceworkEditBtn").click(function (event) {
@@ -27,6 +26,9 @@ $(document).ready(function () {
 
         $("#serviceworkEditBtn").hide();
         $("#serviceworkDeleteBtn").hide();
+        $("#serviceworkChangeStatus").hide();
+        $("#servicesView").hide();
+        $("#productServiceDiv").show();
         $("#serviceworkSaveBtn").show();
 
         for (var i = 0; i < formSelects.length; i++) {
@@ -42,9 +44,6 @@ $(document).ready(function () {
         }
 
     });
-
-
-
 
 
     var selectedCustomer = $('#formServiceWorkCustomer').val();
@@ -179,9 +178,6 @@ $(document).ready(function () {
 
     });
 
-
-
-    
 
     $("#formServiceWorkProduct").change(function () {
 

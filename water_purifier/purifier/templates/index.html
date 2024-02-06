@@ -21,7 +21,10 @@
 
         <!-- Chart JS CDN -->
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> <!--char data labels -->
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script> 
+        
+        <!-- Anime js CDN -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
 
 
         <!-- DataTables CSS CDN -->
@@ -35,14 +38,14 @@
         {% block head %}{% endblock head %}
 
     </head>
-    <body class="bg-secondary bg-opacity-10" id="pageBodyView">
+    <body id="pageBodyView">
 
         
         {% comment %} NAVBAR {% endcomment %}
         <div id="navBar">
 
             <nav class="navbar navbar-expand-lg navbar-light">
-
+                
                 <label for="sideNavBoolean" id="hideSideNavBtn"><i class="bi bi-arrow-left-circle-fill"></i></label>
                 <input type="checkbox" id="sideNavBoolean" class="d-none"/>
                 
@@ -91,7 +94,7 @@
                 <div class="sidenav_content p-2">
                     <div class="d-flex align-items-center justify-content-center brand-area">
                         
-                        <a class="anchor_tag d-flex" href="">
+                        <a class="anchor_tag d-flex" href="{% url "purifier:view_reports" %}">
                             <img src="{% static "images/brand-logo.png" %}" style="height: 32px; width: 32px;">
                             <span class="brand-label ms-2">Water Purifier</span>
                         </a>
@@ -172,11 +175,6 @@
         <!-- Extended Contents -->
         <div class="main_content" id="mainContent">
             {% block content %}{% endblock content %}
-        </div>
-
-        {% comment %} Footer {% endcomment %}
-        <div class="footer">
-            <span>&copy;Copyright</span>
         </div>
 
         <!-- common js file -->

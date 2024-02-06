@@ -10,7 +10,7 @@
 
 <div class="d-grid">
     <div class="d-flex justify-content-between">
-        <span class="test_heading">Tests</span>
+        <span class="page_heading">Tests</span>
         <a href="{% url "purifier:create_test" %}" class="btn btn-primary">Add</a>
     </div>
 
@@ -25,7 +25,7 @@
                     <tr>
                         <th></th>
                         <th>Customer</th>
-                        <th>Test Name</th>
+                        <th>Test</th>
                         <th>PH</th>
                         <th>TDS</th>
                         <th>Iron</th>
@@ -34,7 +34,7 @@
                     </tr>
                 </thead>
 
-                <tbody class="table-light">
+                <tbody class="bg-white">
 
                     {% for test in tests %}
 

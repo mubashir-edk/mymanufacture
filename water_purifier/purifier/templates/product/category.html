@@ -60,31 +60,38 @@
 
     <div class="">
         {% if categories_exists %}
-            <div class="row row-cols-6 g-4 category_card">
+        <div class="row row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
 
-                {% for category in categories %}
-                    <div class="col">
-                        <div class="card">
+            {% for category in categories  %}
 
-                            {% if category.image %}
-                                <img src="{{category.image.url}}" alt="Profile not loading..." class="img-card-top">
-                            {% else %}
-                                <img src="{% static 'images/empty_img.jpg' %}" alt="Profile not loading..." class="img-card-top">
-                            {% endif %}
+                <div class="col-12">
+                    
+                        <a href="" class="anchor_tag">
+                            <div class="category-custom-card">
 
-                            <a href="{% url "purifier:update_category" category.id %}" class="anchor_tag update-category-btn" data-bs-id="{{category.id}}" data-bs-toggle="modal" data-bs-target="#updateCategoryModal"><i class="bi bi-pencil-square category_edit"></i></a>
+                                {% if category.image %}
+                                    <img src="{{category.image.url}}" class="category-custom-card-img" alt="Profile not loading...">
+                                    {% else %}
+                                    <img src="{% static 'images/empty_img.jpg' %}" class="category-custom-card-img" alt="Profile not loading...">
+                                {% endif %}
 
-                            <a href="{% url "purifier:delete_category" category.id %}" class="anchor_tag delete-category-btn"><i class="bi bi-trash category_delete"></i></a>
+                                <div class="category-custom-card-body text-center">
 
-                            <div class="card-body ps-1 pe-2">
-                                <h5 class="card-title text-center overflow-hidden text-nowrap text-truncate">{{ category.name }}</h5>
+                                    <p class="category-custom-card-title">{{category.name}}</p>
+
+                                    <div class="d-grid edit-delete-btns">
+                                        <i class="bi bi-pencil-square category_edit" data-bs-toggle="modal" data-bs-target="#updateCategoryModal"></i>
+                                        <i class="bi bi-trash category_delete"></i>
+                                    </div>
+
+                                </div>
                             </div>
+                        </a>
+                </div>
 
-                        </div>
-                    </div>
-                {% endfor %}
-                
-            </div>
+            {% endfor %}
+
+        </div>
 
             {% comment %} Update Category modal {% endcomment %}
             <div class="modal fade" id="updateCategoryModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateCategoryModalTitle" aria-hidden="true">

@@ -7,7 +7,8 @@
 
 {% block content %}
 
-    <form id="serviceworkUpdateForm" method="POST" action="">
+    <form id="serviceworkUpdateForm" method="POST" action="{% url "purifier:each_service_work" service_work.id  %}">
+    {% csrf_token %}
         
         <div class="d-flex justify-content-between">
             <a href="{% url "purifier:view_serviceworks" %}" class="btn btn-secondary">&lt;Back</a>
@@ -19,12 +20,15 @@
                 {% elif service_work.status == 'working' %}
                     <a href="{% url "purifier:servicework_change_status" service_work.id %}" id="serviceworkChangeStatus" class="btn btn-success">Work Done</a>
                 {% else %}
-                    <a href="{% url "purifier:servicework_change_status" service_work.id %}" id="serviceworkChangeStatus" class="btn btn-secondary">Sent to Pending</a>
+                    <a href="" id="serviceworkChangeStatus" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#returnToPendingModal">Sent to Pending</a>
                 {% endif %}
 
-                <a href="" id="serviceworkEditBtn" class="btn btn-dark">Edit</a>
+                {% if service_work.status != 'completed' %}
+                    <a href="" id="serviceworkEditBtn" class="btn btn-dark">Edit</a>
+                {% endif %}
                 <a href="" id="serviceworkDeleteBtn" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteServiceWorkModal">Delete</a>
-                <a href="{% url "purifier:each_service_work" service_work.id %}" id="serviceworkSaveBtn" class="btn btn-primary">Save</a>
+                <button type="submit" id="serviceworkSaveBtn" class="btn btn-primary">Save</button>
+                
             </div>
 
             {% comment %} Delete ServiceWork modal {% endcomment %}
@@ -40,6 +44,25 @@
                         </div>
                         <div class="modal-footer">
                             <a href="{% url "purifier:delete_service_work" service_work.id %}" id="confirmServicerDelete" class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% comment %} modal ends {% endcomment %}
+
+            {% comment %} Return to pending state modal {% endcomment %}
+            <div class="modal fade" id="returnToPendingModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="returnToPendingModalTitle" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="returnToPendingModalTitle">Are you sure?</h5>
+                            <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="returnToPendingModalBody">
+                            You want to go back to <b>Pending</b> state.
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{% url "purifier:servicework_change_status" service_work.id %}" id="confirmPendingStatus" class="btn btn-danger">Confirm</a>
                         </div>
                     </div>
                 </div>
@@ -78,7 +101,14 @@
             {{ service_work_form.product }}
 
             <label for="formServiceWorkService" id="serviceWorkServiceLabel" class="form-label mt-3">Service</label>
-            {{ service_work_form.service_name }}
+            <div id="productServiceDiv">
+                {{ service_work_form.service_name }}
+            </div>
+            <div id="servicesView">
+                {% for service in service_work.service_name.all  %}
+                <input type="text" class="form-control mb-1" value="{{service}}" readonly>
+                {% endfor %}
+            </div>
 
             <label for="formServiceWorkDate" class="form-label mt-3">Service Date</label>
             {{ service_work_form.service_date }}

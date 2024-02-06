@@ -13,8 +13,8 @@ a {
 }
 
 .page_heading {
-    font-size: 25px;
-    font-weight: 500;
+    font-size: 28px;
+    font-weight: 700;
 }
 
 .form-label {
@@ -24,6 +24,11 @@ a {
 /* delete bin */
 .bi-trash {
     color: #ff0000;
+}
+
+/* edit pen */
+.bi-pencil-square {
+    color: dodgerblue;
 }
 
 /* dataTable */

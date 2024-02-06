@@ -28,7 +28,7 @@
                         </tr>
                     </thead>
 
-                    <tbody class="table-light">
+                    <tbody class="bg-white">
 
                         {% for servicework_toassign in serviceworks_toassign %}
 
@@ -38,19 +38,38 @@
                                 <td><a href="" class="anchor_tag">{{ servicework_toassign.servicer }}</a></td>
 
                                 {% if servicework_toassign.servicer %}
-                                    <td><a href="{% url "purifier:unassign_servicer" servicework_toassign.id %}" class="btn btn-danger">UnAssign</a></td>
+                                    <td><a href="" id="confirmWorkUnAssign" data-bs-toggle="modal" data-bs-target="#unassignServiceWorkModal" data-bs-service="{{servicework_toassign.id}}" data-bs-serviceName="{{servicework_toassign.service}}" data-bs-servicer="{{servicework_toassign.servicer}}" class="btn btn-danger">UnAssign</a></td>
                                 {% else %}
                                     {% if servicers_exists %}
-                                        <td><a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#assignServicerModal">Assign</a></td>
+                                        <td><a href="" class="btn btn-dark" id="assignWorkBtn" data-bs-toggle="modal" data-bs-target="#assignServicerModal" data-bs-servicework="{{servicework_toassign.id}}">Assign</a></td>
                                     {% else %}
                                         <td><a href="" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#noAvailableServicerModal">Assign</a></td>
                                     {% endif %}
                                 {% endif %}
                             </tr>
 
+                            {% comment %} UnAssign Servicer modal {% endcomment %}
+                            <div class="modal fade" id="unassignServiceWorkModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="unassignServiceWorkModalTitle" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="unassignServiceWorkModalTitle">Are you sure?</h5>
+                                            <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" id="unAssignModalBody">
+                                            
+                                        </div>
+                                        <div class="modal-footer">
+                                            <a href="" id="confirmUnAssign" class="btn btn-danger">UnAssign</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% comment %} modal ends {% endcomment %}
+
                             {% comment %} Assign Servicer modal {% endcomment %}
                             <div class="modal fade" id="assignServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="assignServicerModalTitle" aria-hidden="true">
-                                <form method="post" action="{% url "purifier:assign_servicer" servicework_toassign.id %}" enctype="multipart/form-data">
+                                <form method="post"  id="confirmWorkAssign" action="" enctype="multipart/form-data">
                                     {% csrf_token %}
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
@@ -71,6 +90,7 @@
                                     </div>
                                 </form>
                             </div>
+                            {% comment %} modal ends {% endcomment %}
 
                             {% comment %} No Servicer Available Message modal {% endcomment %}
                             <div class="modal fade" id="noAvailableServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="noAvailableServicerModalTitle" aria-hidden="true">
@@ -91,6 +111,7 @@
                                     </div>
                                 </form>
                             </div>
+                            {% comment %} modal ends {% endcomment %}
 
                         {% endfor %}
     
@@ -109,6 +130,6 @@
 
     </div>
 
-    {% comment %} <script src="{% static 'js/employee/view_employees.js' %}"></script> {% endcomment %}
+    <script src="{% static 'js/service_assigning/view_assigning.js' %}"></script>
 
 {% endblock content %}

@@ -32,6 +32,7 @@
 .product-custom-card-body .product-custom-card-title {
     margin: 0;
     font-size: 20px;
+    font-weight: 600;
     overflow: hidden;
     text-overflow: ellipsis;
     text-transform: uppercase;
@@ -41,5 +42,10 @@
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-transform: uppercase;
+    font-weight: 500;
+}
+
+.product-custom-card-body .product-custom-card-text span {
+    font-size: 16px;
+    font-weight: 500;
 }

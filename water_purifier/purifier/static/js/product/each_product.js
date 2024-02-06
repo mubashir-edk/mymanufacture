@@ -50,6 +50,8 @@ $(document).ready(function() {
 
             $('#openProductEditLabel').hide();
 
+            $('#productDeleteBtn').hide();
+
             productName.removeAttr('readonly');
             productSerial.removeAttr('readonly');
             productCategory.show();

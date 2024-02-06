@@ -36,7 +36,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createCategoryModalTitle">Create Category</h5>
-                        <button type="button" class=" modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         
@@ -142,7 +142,7 @@
                     </tr>
                 </thead>
 
-                <tbody class="table-light">
+                <tbody class="bg-white">
 
                     {% for product in products %}
 
@@ -196,10 +196,9 @@
 
                                     <div class="product-custom-card-body text-center">
 
-                                        <p class="product-custom-card-title"><b>{{product.name}}</b></p>
-                                        <p class="product-custom-card-text"><b>Serial_no:</b> {{ product.product_serial }}</p>
-
-                                        <p class="product-custom-card-text"><b>Category:</b> {{ product.category }}</p>
+                                        <p class="product-custom-card-title">{{product.name}}</p>
+                                        <p class="product-custom-card-text"><span>Category:</span> {{ product.category }}</p>
+                                        <p class="product-custom-card-text"><span>Sl_no:</span> {{ product.product_serial }}</p>
                                         
 
                                     </div>

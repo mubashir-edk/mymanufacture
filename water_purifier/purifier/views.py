@@ -554,16 +554,13 @@ def createServiceWork(request):
             servicework = service_work_form.save(commit=False)
             
             servicework.service_work_code = generated_servicework_code
-            
-            selected_service_ids = request.POST.getlist('service_name')
-            
-            selected_services = Service.objects.filter(pk__in=selected_service_ids)
-            
-            print(selected_services)
-            
-            servicework.service_name.set(selected_services)
 
             servicework.save()
+            
+            servicework.service_name.clear()
+            selected_service_names = request.POST.getlist('service_name')
+            for service_name_id in selected_service_names:
+                servicework.service_name.add(service_name_id)
             
             servicework_toassign = ServiceAssign(service=servicework, notification=f'{servicework.service_date} is the service date for the customer {servicework.customer_code}')
             
@@ -594,6 +591,11 @@ def eachServiceWork(request, id):
             service_work_save = service_work_form.save(commit=False)
             service_work_save.service_work_code = service_work_code_stored
             service_work_save.save()
+            
+            service_work.service_name.clear()
+            selected_service_names = request.POST.getlist('service_name')
+            for service_name_id in selected_service_names:
+                service_work.service_name.add(service_name_id)
             
             return redirect(reverse('purifier:each_service_work', kwargs={'id': service_work.id}))
     
@@ -710,6 +712,8 @@ def assignServicer(request, id):
         if servicework_assign_form.is_valid():
             
             print('in validation')
+            
+            print(request.POST.get('service'))
             
             save_form = servicework_assign_form.save(commit=False)
             
