@@ -21,33 +21,10 @@ $(document).ready(function () {
     $("#serviceworkSaveBtn").hide();
 
 
-    $("#serviceworkEditBtn").click(function (event) {
-        event.preventDefault();
-
-        $("#serviceworkEditBtn").hide();
-        $("#serviceworkDeleteBtn").hide();
-        $("#serviceworkChangeStatus").hide();
-        $("#servicesView").hide();
-        $("#productServiceDiv").show();
-        $("#serviceworkSaveBtn").show();
-
-        for (var i = 0; i < formSelects.length; i++) {
-            formSelects[i].removeAttribute("disabled");
-        }
-    
-        for (var i = 0; i < formInputs.length; i++) {
-            formInputs[i].removeAttribute("readonly");
-        }
-    
-        for (var i = 0; i < formTextareas.length; i++) {
-            formTextareas[i].removeAttribute("readonly");
-        }
-
-    });
-
-
+    var selectedServiceWorkId = $('#serviceWorkId').val();
     var selectedCustomer = $('#formServiceWorkCustomer').val();
 
+    console.log(selectedServiceWorkId);
     console.log(selectedCustomer);
 
     var productSelect = document.getElementById('formServiceWorkProduct');
@@ -79,7 +56,7 @@ $(document).ready(function () {
             $(productSelect).show();
 
             $.ajax({
-                url: `/view_serviceworks/`,
+                url: `/each_service_work/${selectedServiceWorkId}`,
                 type: "GET",
                 dataType: "json",
                 data: {
@@ -135,7 +112,7 @@ $(document).ready(function () {
             $(serviceSelect).show();
 
             $.ajax({
-                url: `/view_serviceworks/`,
+                url: `/each_service_work/${selectedServiceWorkId}`,
                 type: "GET",
                 dataType: "json",
                 data: {
@@ -143,19 +120,27 @@ $(document).ready(function () {
                 },
                 success: function (data) {
 
-                    console.log(data.products);
-
-                    var option = document.createElement('option');
-                        option.value = '';
-                        option.text = '---------';
-                        option.selected = true;
-                        serviceSelect.add(option);
+                    console.log(data.services);
 
                     data.services.forEach(function (service) {
-                        var option = document.createElement('option');
-                        option.value = service.id;
-                        option.text = service.name;
-                        serviceSelect.add(option);
+                        var checkbox = $('<input type="checkbox">').attr({
+                            id: 'service_' + service.id,
+                            value: service.id,
+                            name: 'service_name', // Use the same name for all checkboxes
+                            class: 'form-checkbox',
+                        });
+
+                        data.default_services.forEach(function (default_service) {
+                            if (service.id == default_service.id) {
+                                checkbox.prop('checked', true);
+                            }
+                        });
+
+
+                        var label = $('<label>').attr('for', 'service_' + service.id).addClass('form-label ms-1').text(service.name);
+
+                        $(serviceSelect).append(checkbox).append(label).append('<br>');
+
                     });
 
 
@@ -171,10 +156,37 @@ $(document).ready(function () {
         }
     }
 
+    $("#serviceworkEditBtn").click(function (event) {
+        event.preventDefault();
+
+        $("#serviceworkEditBtn").hide();
+        $("#serviceworkDeleteBtn").hide();
+        $("#serviceworkChangeStatus").hide();
+        $("#servicesView").hide();
+        $("#productServiceDiv").show();
+        $("#serviceworkSaveBtn").show();
+
+        for (var i = 0; i < formSelects.length; i++) {
+            formSelects[i].removeAttribute("disabled");
+        }
+    
+        for (var i = 0; i < formInputs.length; i++) {
+            formInputs[i].removeAttribute("readonly");
+        }
+    
+        for (var i = 0; i < formTextareas.length; i++) {
+            formTextareas[i].removeAttribute("readonly");
+        }
+
+        serviceChange();
+
+    });
+
 
     $("#formServiceWorkCustomer").change(function () {
 
-        productChange();
+        serviceSelect.innerHTML = '';
+        productChange(); 
 
     });
 

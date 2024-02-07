@@ -7,6 +7,8 @@
 
 {% block content %}
 
+    <input type="hidden" id="serviceWorkId" value="{{service_work.id}}">
+
     <form id="serviceworkUpdateForm" method="POST" action="{% url "purifier:each_service_work" service_work.id  %}">
     {% csrf_token %}
         
@@ -106,7 +108,7 @@
             </div>
             <div id="servicesView">
                 {% for service in service_work.service_name.all  %}
-                <input type="text" class="form-control mb-1" value="{{service}}" readonly>
+                <input type="text" id="eachProductService" class="form-control mb-1" value="{{service}}" readonly>
                 {% endfor %}
             </div>
 

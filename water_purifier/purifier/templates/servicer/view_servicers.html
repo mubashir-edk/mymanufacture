@@ -10,7 +10,7 @@
 <div class="d-grid">
     <div class="d-flex justify-content-between">
         <span class="page_heading">Servicers</span>
-        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServicerModal">Create</a>
+        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServicerModal">Add</a>
     </div>
 
     {% comment %} Create Service modal {% endcomment %}
@@ -19,11 +19,11 @@
         <div class="modal fade" id="createServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="createServicerModalTitle" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header" id="createModalHeader">
                         <h5 class="modal-title" id="createServicerModalTitle">Add Servicer</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body" id="createModalBody">
                         <label for="formServicerName" id="serviceNameLabel" class="form-label mt-3">Servicer Name</label>
                         {{ servicer_form.name }}
 
@@ -36,8 +36,8 @@
                         </div>
 
                     </div>
-                    <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Add</button>
+                    <div class="modal-footer" id="createModalFooter">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Add</button>
                     </div>
                 </div>
             </div>
@@ -85,10 +85,10 @@
                                     <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body" id="deleteServicerModalBody">
-                                    You want to delete <b>{{ service.name }}</b> from services list.
+
                                 </div>
                                 <div class="modal-footer">
-                                    <a href="" id="confirmServicerDelete" class="btn btn-danger">Delete</a>
+                                    <a href="" id="confirmServicerDelete" class="btn btn-danger">Remove</a>
                                 </div>
                             </div>
                         </div>
@@ -107,11 +107,6 @@
     </div>
 
 </div>
-
-
-<script>
-    window.ajaxUrl =  '{% url 'purifier:create_servicer' %}';
-</script>
 
 <script src="{% static 'js/servicer/view_servicers.js' %}"></script>
 

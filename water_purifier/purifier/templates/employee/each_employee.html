@@ -22,14 +22,13 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="deleteEmployeeModalTitle">Delete Employee</h5>
+                            <h5 class="modal-title" id="deleteEmployeeModalTitle">Are you sure?</h5>
                             <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            Are you sure?<br>You want to delete employee {{ employee.name }}({{ employee.employee_code}})
+                            You want to delete employee <b>{{ employee.name }} ({{ employee.employee_code}})</b>.
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <a href="{% url "purifier:delete_employee" employee.id %}" class="btn btn-danger">Delete</a>
                         </div>
                     </div>

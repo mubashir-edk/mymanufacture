@@ -57,7 +57,7 @@ class Customer(models.Model):
     whatsapp_number = models.CharField(max_length=20)
     installed_product = models.ManyToManyField(Product, null=True, blank=True)
     customer_code = models.CharField(max_length=50, blank=True, unique=True)
-    # location = LocationField(based_fields=[name], zoom=7, blank=True)
+    location = models.CharField(max_length=250, null=True, blank=True)
     
     def __str__(self) -> str:
         return self.customer_code

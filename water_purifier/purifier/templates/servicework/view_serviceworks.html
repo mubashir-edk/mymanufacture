@@ -10,7 +10,7 @@
 <div class="d-grid">
     <div class="d-flex justify-content-between">
         <span class="page_heading">Service Works</span>
-        <a href="" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServiceWorkModal">Create</a>
+        <a href="" id="createServiceWorkBtn" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createServiceWorkModal">Create</a>
     </div>
 
     {% comment %} Create Service modal {% endcomment %}
@@ -45,7 +45,7 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary">Create</button>
+                        <button type="submit" class="btn btn-primary">Create</button>
                     </div>
                 </div>
             </div>
@@ -67,8 +67,6 @@
                         <th>Product</th>
                         <th>Service</th>
                         <th>Service Date</th>
-                        <th>Comment</th>
-                        <th>Remark</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -90,8 +88,6 @@
 
                             </a></td>
                             <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.service_date }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.comment_section }}</a></td>
-                            <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">{{ service_work.remark_section }}</a></td>
                             <td><a href='{% url "purifier:each_service_work" service_work.id %}' class="anchor_tag">
 
                                 {% if service_work.status == 'pending' %}

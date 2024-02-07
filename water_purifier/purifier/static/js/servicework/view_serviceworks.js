@@ -59,123 +59,6 @@ $(document).ready(function () {
     });
 
 
-    // var serviceSelect = $('#formServiceWorkService');
-    // var serviceSelectLabel = $('#serviceWorkServiceLabel');
-    // // serviceSelect.innerHTML = '';
-
-    // $(serviceSelectLabel).hide();
-    // $(serviceSelect).hide();
-
-    // $("#formServiceWorkProduct").change(function () {
-
-    //     // serviceSelect.innerHTML = '';
-
-    //     var selectedProduct = $('#formServiceWorkProduct').val();
-
-    //     console.log(selectedProduct);
-
-    //     if (selectedProduct !== '') {
-            
-    //         $(serviceSelectLabel).show();
-    //         $(serviceSelect).show();
-
-    //         $.ajax({
-    //             url: `/view_serviceworks/`,
-    //             type: "GET",
-    //             dataType: "json",
-    //             data: {
-    //                 'selectedProduct': selectedProduct,
-    //             },
-    //             success: function (data) {
-    //                 $(serviceSelect).empty();
-    //                 data.services.forEach(function (service) {
-    //                     var checkbox = $('<input type="checkbox">').attr({
-    //                         id: 'service_' + service.id,
-    //                         value: service.id,
-    //                         name: 'services', // Adjust the name as needed for form submission
-    //                         class: 'form-checkbox',
-    //                     });
-    //                     var label = $('<label>').attr('for', 'service_' + service.id).addClass('form-label').text(service.name);
-    //                     $(serviceSelect).append(checkbox).append(label).append('<br>');
-    //                 });
-
-
-    //             },
-    //             error: function (error) {
-    //                 console.error(error);
-    //             }
-    //         });
-
-    //     } else {
-    //         $(serviceSelectLabel).hide();
-    //         $(serviceSelect).hide();
-    //     }
-
-    // });
-
-
-
-
-
-    // var serviceSelect = document.getElementById('formServiceWorkService');
-    // var serviceSelectLabel = document.getElementById('serviceWorkServiceLabel');
-    // serviceSelect.innerHTML = '';
-
-    // $(serviceSelectLabel).hide();
-    // $(serviceSelect).hide();
-
-    // $("#formServiceWorkProduct").change(function () {
-
-    //     serviceSelect.innerHTML = '';
-
-    //     var selectedProduct = $('#formServiceWorkProduct').val();
-
-    //     console.log(selectedProduct);
-
-    //     if (selectedProduct !== '') {
-            
-    //         $(serviceSelectLabel).show();
-    //         $(serviceSelect).show();
-
-    //         $.ajax({
-    //             url: `/view_serviceworks/`,
-    //             type: "GET",
-    //             dataType: "json",
-    //             data: {
-    //                 'selectedProduct': selectedProduct,
-    //             },
-    //             success: function (data) {
-
-    //                 data.services.forEach(function (service) {
-    //                     var checkbox = $('<input type="checkbox">').attr({
-    //                         id: 'service_' + service.id,
-    //                         value: service.id,
-    //                         name: 'service_' + service.id, // Adjust the name as needed for form submission
-    //                         class: 'form-checkbox',
-    //                     });
-    //                     var label = $('<label>').attr('for', 'service_' + service.id).addClass('form-label').text(service.name);
-    //                     $(serviceSelect).attr('required', 'true');
-    //                     $(serviceSelect).append(checkbox).append(label).append('<br>');
-    //                 });
-
-
-    //             },
-    //             error: function (error) {
-    //                 console.error(error);
-    //             }
-    //         });
-
-    //     } else {
-    //         $(serviceSelectLabel).hide();
-    //         $(serviceSelect).hide();
-    //     }
-
-    // });
-
-
-
-
-
     var serviceSelect = document.getElementById('formServiceWorkService');
     var serviceSelectLabel = document.getElementById('serviceWorkServiceLabel');
 
@@ -207,7 +90,7 @@ $(document).ready(function () {
                             name: 'service_name', // Use the same name for all checkboxes
                             class: 'form-checkbox',
                         });
-                        var label = $('<label>').attr('for', 'service_' + service.id).addClass('form-label').text(service.name);
+                        var label = $('<label>').attr('for', 'service_' + service.id).addClass('form-label ms-1').text(service.name);
 
                         $(serviceSelect).append(checkbox).append(label).append('<br>');
                     });
@@ -222,8 +105,7 @@ $(document).ready(function () {
         }
     });
 
-
-
+    // SERVICES SELECT CHECK
     document.getElementById('serviceWorkFormG').addEventListener('submit', function(event) {
         var checkboxes = document.querySelectorAll('#formServiceWorkService input[type="checkbox"]');
         var checked = false;
@@ -237,16 +119,6 @@ $(document).ready(function () {
             alert('Please select at least one service.');
         }
     });
-
-
-
-
-
-
-
-
-
-
 
 
 

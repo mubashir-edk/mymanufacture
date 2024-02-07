@@ -84,7 +84,7 @@
 
                                             </div>
                                             <div class="modal-footer">
-                                                <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Assign</button>
+                                                <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Assign</button>
                                             </div>
                                         </div>
                                     </div>
@@ -94,22 +94,19 @@
 
                             {% comment %} No Servicer Available Message modal {% endcomment %}
                             <div class="modal fade" id="noAvailableServicerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="noAvailableServicerModalTitle" aria-hidden="true">
-                                <form method="post" action="{% url "purifier:assign_servicer" servicework_toassign.id %}" enctype="multipart/form-data">
-                                    {% csrf_token %}
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="noAvailableServicerModalTitle">No servicers to assign.</h5>
-                                                <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="noAvailableServicerModalTitle">No servicers to assign.</h5>
+                                            <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
 
-                                                <p class="modal-text">To add servicers, <a href="{% url "purifier:view_servicers" %}">click here</a></p>
+                                            <p class="modal-text">To add servicers, <a href="{% url "purifier:view_servicers" %}">click here</a></p>
 
-                                            </div>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                             {% comment %} modal ends {% endcomment %}
 

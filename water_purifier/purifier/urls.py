@@ -32,6 +32,7 @@ urlpatterns = [
     
     # Service
     path('view_services/', views.viewAndCreateServices, name='view_services'),
+    path('update_service/<uuid:id>', views.updateService, name='update_service'),
     path('delete_service/<uuid:id>', views.deleteService, name='delete_service'),
     
     # Servicer

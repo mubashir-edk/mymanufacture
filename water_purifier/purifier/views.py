@@ -253,8 +253,6 @@ def updateCategory(request, id):
     
     if request.method == 'GET':
         
-        print(category)
-        
         if category.image:
             category_data = {
             'image': category.image.url,
@@ -371,6 +369,23 @@ def viewAndCreateServices(request):
     return render(request, 'service/view_services.html', context)
 
 @login_required
+def updateService(request, id):
+    
+    service = get_object_or_404(Service, pk=id)
+    
+    service_form = ServiceForm(instance=service)
+    
+    if request.method == 'POST':
+        
+        service_form = ServiceForm(request.POST, instance=service)
+        
+        if service_form.is_valid():
+            
+            service_form.save()
+            
+            return redirect('purifier:view_services')
+
+@login_required
 def deleteService(request, id):
     
     service = get_object_or_404(Service, pk=id)
@@ -431,8 +446,6 @@ def fetchEmployeeFiltered(request):
 @login_required
 def fetchServicer(request, selected_employee):
     
-    print("Fetching")
-    
     if request.method == 'GET':
     
         try:
@@ -442,7 +455,6 @@ def fetchServicer(request, selected_employee):
                 'mobile': employee.mobile,
                 # Add other fields as needed
             }}
-            print(employee)
             return JsonResponse(data)
         except Employee.DoesNotExist:
             return JsonResponse({'error': 'Employee not found'}, status=404)
@@ -467,15 +479,17 @@ def viewServiceWorks(request):
     
     
     if request.method == 'GET':
+            
+        filter_customer = request.GET.get('customerSelect')
         
         selected_customer = request.GET.get('selectedCustomer')
         
         selected_product = request.GET.get('selectedProduct')
         
-        if selected_customer:
-    
-            try:
-                    
+        try:
+            # filter products
+            if selected_customer:
+
                 customer = get_object_or_404(Customer, pk=selected_customer)
                 installed_products = customer.installed_product.all()
 
@@ -487,18 +501,16 @@ def viewServiceWorks(request):
                     'products': products_data,
                 }
                 return JsonResponse(data)
-            except Customer.DoesNotExist:
-                return JsonResponse({'error': 'Customer not found'}, status=404)
             
-            
-        if selected_product:
-            
-            try:
+            # filter services
+            if selected_product:
                 
                 product = get_object_or_404(Product, pk=selected_product)
                 product_services = product.services.all()
                 
                 services = Service.objects.filter(id__in=product_services)
+                
+                print(services)
                 
                 services_data = [{'id': service.id, 'name': service.name} for service in services]
                 
@@ -506,11 +518,12 @@ def viewServiceWorks(request):
                     'services': services_data,
                 }
                 
-                print("in the services ajax")
-                
                 return JsonResponse(data)
-            except Product.DoesNotExist:
-                return JsonResponse({'error': 'Product not found'}, status=404)
+            
+        except Product.DoesNotExist:
+            return JsonResponse({'error': 'Product not found'}, status=404)
+        except Customer.DoesNotExist:
+                return JsonResponse({'error': 'Customer not found'}, status=404)
     
     context = {'service_works': service_works, 'service_works_exists': service_works_exists, 'service_work_form': service_work_form}
     
@@ -549,7 +562,6 @@ def createServiceWork(request):
                 break
         
         if service_work_form.is_valid():
-            print("Saved in the form")
             
             servicework = service_work_form.save(commit=False)
             
@@ -582,6 +594,61 @@ def eachServiceWork(request, id):
     
     service_work_code_stored = service_work.service_work_code
     
+    
+    # fetching and passing using ajax
+    if request.method == 'GET':
+        
+        selected_customer = request.GET.get('selectedCustomer')
+        
+        selected_product = request.GET.get('selectedProduct')
+        
+    
+        try:
+            if selected_customer:
+                    
+                customer = get_object_or_404(Customer, pk=selected_customer)
+                installed_products = customer.installed_product.all()
+
+                products = Product.objects.filter(id__in=installed_products)
+                
+                products_data = [{'id': product.id, 'name': product.name} for product in products]
+                
+                data = {
+                    'products': products_data,
+                }
+                return JsonResponse(data)
+            
+            if selected_product:
+
+                product = get_object_or_404(Product, pk=selected_product)
+                product_services = product.services.all()
+                
+                services = Service.objects.filter(id__in=product_services)
+                
+                default_services = service_work.service_name.all()
+                
+                print(default_services)
+                
+                
+                
+                default_services_data = [{'id': default_service.id, 'name': default_service.name} for default_service in default_services]
+                
+                print(services)
+                
+                services_data = [{'id': service.id, 'name': service.name} for service in services]
+                
+                data = {
+                    'services': services_data,
+                    'default_services': default_services_data,
+                }
+                
+                return JsonResponse(data)
+        except Product.DoesNotExist:
+            return JsonResponse({'error': 'Product not found'}, status=404)
+        except Customer.DoesNotExist:
+            return JsonResponse({'error': 'Customer not found'}, status=404)
+            
+    
     if request.method == 'POST':
         
         service_work_form = ServiceWorkForm(request.POST, instance=service_work)
@@ -594,6 +661,7 @@ def eachServiceWork(request, id):
             
             service_work.service_name.clear()
             selected_service_names = request.POST.getlist('service_name')
+            
             for service_name_id in selected_service_names:
                 service_work.service_name.add(service_name_id)
             
@@ -607,17 +675,12 @@ def eachServiceWork(request, id):
 def serviceWorkChangeStatus(request, id):
     
     servicework = get_object_or_404(ServiceWork, pk=id)
-    print(servicework)
     
     current_work_status = servicework.status
-    
-    print(current_work_status)
     
     if current_work_status == 'pending':
         
         servicework.status = 'working'
-        
-        print(servicework.status)
             
     elif current_work_status == 'working':
         
@@ -641,8 +704,63 @@ def deleteServiceWork(request, id):
     servicework = get_object_or_404(ServiceWork, pk=id)
     servicework.delete()
     return redirect('purifier:view_serviceworks')
+
+
+# Service Assign Functions --------------------------------------------------------------------------------------------------------------------------
+@login_required
+def viewAssigning(request):
     
+    servicework_assign_form = ServiceWorkAssignForm()
     
+    serviceworks_toassign = ServiceAssign.objects.all()
+    
+    serviceworks_toassign_exists = serviceworks_toassign.exists()
+    
+    servicers = Servicer.objects.all() 
+    
+    servicers_exists = servicers.exists()
+    
+    context = {'servicework_assign_form': servicework_assign_form, 'serviceworks_toassign': serviceworks_toassign, 'serviceworks_toassign_exists':serviceworks_toassign_exists, 'servicers_exists': servicers_exists}
+    
+    return render(request, 'service_assigning/view_assigning.html', context) 
+
+@login_required
+def assignServicer(request, id):
+    
+    servicework = get_object_or_404(ServiceAssign, pk=id)
+    
+    assigned_servicework = servicework.service
+    assigned_servicework_notification = servicework.notification
+    
+    if request.method == 'POST':
+        
+        servicework_assign_form = ServiceWorkAssignForm(request.POST, instance=servicework)
+        
+        if servicework_assign_form.is_valid():
+            
+            save_form = servicework_assign_form.save(commit=False)
+            
+            save_form.service = assigned_servicework
+            save_form.notification = assigned_servicework_notification
+            
+            save_form.save()
+            
+            return redirect('purifier:view_assigns')
+        
+    return redirect('purifier:view_assigns')
+
+@login_required
+def unAssignServicer(request, id):
+    
+    service_assigned = get_object_or_404(ServiceAssign, pk=id)
+    
+    service_assigned.servicer = None
+    
+    service_assigned.save()
+    
+    return redirect('purifier:view_assigns')
+
+
 # Test or Quality check Functions -------------------------------------------------------------------------------------------------------------------
 @login_required
 def viewTests(request):
@@ -674,68 +792,8 @@ def createTest(request):
         
     return render(request, 'test/test.html', context)
 
-
-# Service Assign Functions --------------------------------------------------------------------------------------------------------------------------
 @login_required
-def viewAssigning(request):
-    
-    servicework_assign_form = ServiceWorkAssignForm()
-    
-    serviceworks_toassign = ServiceAssign.objects.all()
-    
-    serviceworks_toassign_exists = serviceworks_toassign.exists()
-    
-    servicers = Servicer.objects.all() 
-    
-    servicers_exists = servicers.exists()
-    
-    context = {'servicework_assign_form': servicework_assign_form, 'serviceworks_toassign': serviceworks_toassign, 'serviceworks_toassign_exists':serviceworks_toassign_exists, 'servicers_exists': servicers_exists}
-    
-    return render(request, 'service_assigning/view_assigning.html', context) 
 
-@login_required
-def assignServicer(request, id):
-    
-    print(id)
-    
-    servicework = get_object_or_404(ServiceAssign, pk=id)
-    
-    assigned_servicework = servicework.service
-    assigned_servicework_notification = servicework.notification
-    
-    if request.method == 'POST':
-        
-        print('in instance')
-        
-        servicework_assign_form = ServiceWorkAssignForm(request.POST, instance=servicework)
-        
-        if servicework_assign_form.is_valid():
-            
-            print('in validation')
-            
-            print(request.POST.get('service'))
-            
-            save_form = servicework_assign_form.save(commit=False)
-            
-            save_form.service = assigned_servicework
-            save_form.notification = assigned_servicework_notification
-            
-            save_form.save()
-            
-            return redirect('purifier:view_assigns')
-        
-    return redirect('purifier:view_assigns')
-
-@login_required
-def unAssignServicer(request, id):
-    
-    service_assigned = get_object_or_404(ServiceAssign, pk=id)
-    
-    service_assigned.servicer = None
-    
-    service_assigned.save()
-    
-    return redirect('purifier:view_assigns')
 
 
 # Report Functions ----------------------------------------------------------------------------------------------------------------------------------
@@ -744,11 +802,9 @@ def viewReport(request):
     
     servicework_completed = ServiceWork.objects.filter(status='completed')
     servicework_completed_exists = servicework_completed.exists()
-    print(servicework_completed)
     
     servicework_upcoming = ServiceWork.objects.filter(status='pending')
     servicework_upcoming_exists = servicework_upcoming.exists()
-    print(servicework_upcoming)
     
     completed_count = servicework_completed.count()
     upcoming_count = servicework_upcoming.count()
@@ -760,10 +816,7 @@ def viewReport(request):
     today_date = timezone.now().date()
     
     today_servicework_count = ServiceWork.objects.filter(service_date=today_date).count()
-    
-    
-    print(completed_count)
-    print(upcoming_count)
+
     
     context = {'servicework_completed': servicework_completed, 'servicework_completed_exists': servicework_completed_exists, 'servicework_upcoming': servicework_upcoming, 'servicework_upcoming_exists': servicework_upcoming_exists, 'completed_count': completed_count, 'upcoming_count': upcoming_count, 'customers_count': customers_count, 'employees_count': employees_count, 'products_count': products_count, 'today_servicework_count': today_servicework_count}
     

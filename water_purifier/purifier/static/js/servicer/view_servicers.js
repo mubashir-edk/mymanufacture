@@ -36,8 +36,14 @@ $(document).ready(function () {
 
                 } else {
 
-                    employeeSelector.hide()
-                    serviceNameLabel.hide()
+                    employeeSelector.hide();
+                    serviceNameLabel.hide();
+
+                    var createServicerModalTitle = document.getElementById('createServicerModalTitle');
+
+                    createServicerModalTitle.innerHTML = 'No employees to add.';
+                    $('#createModalBody').hide();
+                    $('#createModalFooter').hide();
 
                 }
 
@@ -99,7 +105,7 @@ $(document).ready(function () {
             deleteUrl = `/delete_servicer/${servicer_id}`;
 
             confirmDeleteLink.href = deleteUrl;
-            deleteModalBody.innerHTML = 'you want to delete <b>' + servicer_code + '</b> from servicer.';
+            deleteModalBody.innerHTML = 'you want to remove <b>' + servicer_code + '</b> from servicer.';
         });
     });
 

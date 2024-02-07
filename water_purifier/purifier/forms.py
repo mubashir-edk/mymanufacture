@@ -65,6 +65,10 @@ class CustomerForm(forms.ModelForm):
                 'class': 'form-checkbox', 
                 'id': 'formCustomerInstalledProduct', 
             }),
+            'location': forms.TextInput(attrs={
+                'class': 'form-control', 
+                'id': 'formCustomerLocation', 
+            }),
         }
         
 class CategoryForm(forms.ModelForm):
@@ -143,7 +147,6 @@ class ServicerForm(forms.ModelForm):
 class ServiceWorkForm(forms.ModelForm):
     class Meta:
         model = ServiceWork
-        # fields = '__all__'
         exclude = ('status',)
         
         
@@ -177,14 +180,10 @@ class ServiceWorkForm(forms.ModelForm):
             }),
         }
         
-        # def clean(self):
-        #     cleaned_data = super().clean()
-        #     service_name = cleaned_data.get('service_name')
-
-        #     if not service_name:
-        #         raise forms.ValidationError("Please select at least one service.")
-
-        #     return cleaned_data
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Filter customer_code queryset to exclude customers with empty products
+        self.fields['customer_code'].queryset = self.fields['customer_code'].queryset.exclude(installed_product=None)
         
 class TestForm(forms.ModelForm):
     class Meta:

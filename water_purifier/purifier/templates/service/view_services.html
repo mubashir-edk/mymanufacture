@@ -28,12 +28,36 @@
                         {{ service_form.name }}
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">Create</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Create</button>
                     </div>
                 </div>
             </div>
         </div>
     </form>
+    {% comment %} modal ends {% endcomment %}
+
+    {% comment %} Update Service modal {% endcomment %}
+    <form action="" id="serviceUpdateForm" method="post">
+        {% csrf_token %}
+        <div class="modal fade" id="updateServiceModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="updateServiceModalTitle" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateServiceModalTitle">Rename Service</h5>
+                        <button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="formServiceName" class="form-label mt-3">Service Name</label>
+                        {{ service_form.name }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    {% comment %} modal ends {% endcomment %}
 
     <hr class="mt-1">
 
@@ -57,7 +81,11 @@
                             <td class="text-center">{{ forloop.counter }}</td>
                             <td class="d-flex justify-content-between">{{ service.name }}
 
-                                <a href="" class="anchor_tag delete-service-btn" data-bs-serviceId="{{service.id}}" data-bs-serviceName="{{service.name}}" data-bs-toggle="modal" data-bs-target="#deleteServiceModal"><i class="bi bi-trash"></i></a>
+                                <div>
+                                    <a href="" class="anchor_tag update-service-btn" id="updateServiceBtn" data-bs-serviceId="{{service.id}}" data-bs-serviceName="{{service.name}}" data-bs-toggle="modal" data-bs-target="#updateServiceModal"><i class="bi bi-pencil-square"></i></a>
+
+                                    <a href="" class="anchor_tag delete-service-btn" data-bs-serviceId="{{service.id}}" data-bs-serviceName="{{service.name}}" data-bs-toggle="modal" data-bs-target="#deleteServiceModal"><i class="bi bi-trash ms-2"></i></a>
+                                </div>
 
                             </td>
 
